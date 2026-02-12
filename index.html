@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TestPilotAI - Automated Checkout Monitoring</title>
+    <meta name="description" content="Stop manually testing checkout. TestPilotAI monitors your store 24/7 and alerts you when checkout breaks.">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .pricing-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex justify-between items-center">
+                <div class="text-2xl font-bold text-indigo-600">TestPilotAI</div>
+                <a href="#pricing" class="bg-indigo-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-indigo-700 transition">
+                    Start Free Trial
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="gradient-bg text-white py-20 px-4">
+        <div class="max-w-4xl mx-auto text-center">
+            <h1 class="text-5xl md:text-6xl font-bold mb-6">
+                Stop Manually Testing Checkout Before Every Deploy
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 text-indigo-100">
+                TestPilotAI monitors your checkout flow 24/7 and alerts you the instant something breaks — before customers find out.
+            </p>
+            <a href="#pricing" class="inline-block bg-white text-indigo-600 px-8 py-4 rounded-lg text-lg font-bold hover:bg-gray-100 transition shadow-xl">
+                Start 14-Day Free Trial
+            </a>
+            <p class="mt-4 text-indigo-200">No credit card required • First 10 customers lock in $79/month forever</p>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section class="py-16 px-4 bg-white">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-900">The Problem</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="flex items-start space-x-4">
+                    <div class="flex-shrink-0">
+                        <svg class="w-8 h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold mb-2 text-gray-900">Wasting Time on Manual Tests</h3>
+                        <p class="text-gray-600">You spend 30+ minutes testing checkout before every deploy, 4+ times per week</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start space-x-4">
+                    <div class="flex-shrink-0">
+                        <svg class="w-8 h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold mb-2 text-gray-900">Can't Test Every Combination</h3>
+                        <p class="text-gray-600">Guest checkout, PayPal, promo codes, mobile — impossible to test them all</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start space-x-4">
+                    <div class="flex-shrink-0">
+                        <svg class="w-8 h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold mb-2 text-gray-900">Bugs Reach Customers First</h3>
+                        <p class="text-gray-600">Despite testing, bugs slip through and customers report them before you catch them</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start space-x-4">
+                    <div class="flex-shrink-0">
+                        <svg class="w-8 h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold mb-2 text-gray-900">Lost Revenue</h3>
+                        <p class="text-gray-600">Each checkout bug costs thousands in abandoned carts and lost sales</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section class="py-16 px-4 bg-gray-50">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 text-gray-900">The Solution</h2>
+            <p class="text-xl text-center mb-12 text-gray-600">TestPilotAI automatically tests your checkout every 30 minutes</p>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-gray-900">No Code Required</h3>
+                    <p class="text-gray-600">Just enter your store URL. We automatically detect and test your checkout flow.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-gray-900">Works Everywhere</h3>
+                    <p class="text-gray-600">Shopify, WooCommerce, BigCommerce, Magento, and custom stores all supported.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-gray-900">Self-Healing Tests</h3>
+                    <p class="text-gray-600">Tests automatically adapt when you update your theme. No maintenance required.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-gray-900">Instant Slack Alerts</h3>
+                    <p class="text-gray-600">Get notified the moment checkout breaks, not when customers complain.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-gray-900">Screenshot Evidence</h3>
+                    <p class="text-gray-600">Every test includes a full screenshot so you can see exactly what broke.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-gray-900">90-Day History</h3>
+                    <p class="text-gray-600">Track checkout health over time with detailed test history and uptime metrics.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ROI Calculator -->
+    <section class="py-16 px-4 bg-white">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-900">The ROI Is Obvious</h2>
+            
+            <div class="bg-gradient-to-r from-indigo-50 to-purple-50 p-8 rounded-xl border-2 border-indigo-200">
+                <div class="space-y-4 text-lg">
+                    <div class="flex justify-between items-center pb-4 border-b border-indigo-200">
+                        <span class="text-gray-700">Manual testing time:</span>
+                        <span class="font-semibold text-gray-900">30 min × 4 deploys/week = 2 hours/week</span>
+                    </div>
+                    <div class="flex justify-between items-center pb-4 border-b border-indigo-200">
+                        <span class="text-gray-700">Your hourly rate:</span>
+                        <span class="font-semibold text-gray-900">$50/hour</span>
+                    </div>
+                    <div class="flex justify-between items-center pb-4 border-b border-indigo-200">
+                        <span class="text-gray-700 font-semibold">Monthly cost of manual testing:</span>
+                        <span class="font-bold text-red-600 text-xl">$400/month</span>
+                    </div>
+                    <div class="flex justify-between items-center pb-4 border-b border-indigo-200">
+                        <span class="text-gray-700 font-semibold">TestPilotAI:</span>
+                        <span class="font-bold text-indigo-600 text-xl">$79/month</span>
+                    </div>
+                    <div class="flex justify-between items-center pt-4">
+                        <span class="text-gray-900 font-bold text-xl">You save:</span>
+                        <span class="font-bold text-green-600 text-2xl">$321/month</span>
+                    </div>
+                </div>
+                
+                <div class="mt-8 p-6 bg-white rounded-lg border-2 border-green-200">
+                    <p class="text-center text-gray-900 font-semibold text-lg">
+                        Plus: One prevented checkout bug (avg $5,000 in lost sales) = 
+                        <span class="text-green-600">63 months of TestPilotAI paid for</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="pricing" class="py-16 px-4 bg-gray-50">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 text-gray-900">Simple Pricing</h2>
+            <p class="text-xl text-center mb-12 text-gray-600">Everything you need to protect your checkout</p>
+            
+            <div class="pricing-card bg-white rounded-2xl shadow-xl overflow-hidden border-4 border-indigo-600">
+                <div class="bg-indigo-600 text-white text-center py-4">
+                    <p class="text-sm font-semibold uppercase tracking-wide">Limited Time Offer</p>
+                </div>
+                
+                <div class="p-8">
+                    <div class="text-center mb-8">
+                        <div class="text-5xl font-bold text-gray-900 mb-2">
+                            $79<span class="text-2xl text-gray-600">/month</span>
+                        </div>
+                        <p class="text-gray-600">First 10 customers lock in this price forever</p>
+                        <p class="text-sm text-indigo-600 font-semibold mt-2">(Price increases to $149/month after)</p>
+                    </div>
+                    
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-start">
+                            <svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-gray-700">1 store monitored</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-gray-700">Unlimited checkout flows</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-gray-700">Tests every 30 minutes (48x/day)</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-gray-700">Email + Slack alerts</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-gray-700">Screenshot evidence</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-gray-700">90-day test history</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-gray-700">Auto-healing tests</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-gray-700 font-semibold">14-day free trial</span>
+                        </li>
+                    </ul>
+                    
+                    <a href="mailto:joanna@testpilotai.com?subject=Start%20Free%20Trial&body=Store%20URL:%0AEmail:%0A" 
+                       class="block w-full bg-indigo-600 text-white text-center px-8 py-4 rounded-lg text-lg font-bold hover:bg-indigo-700 transition">
+                        Start 14-Day Free Trial
+                    </a>
+                    <p class="text-center text-sm text-gray-600 mt-4">No credit card required</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Proof -->
+    <section class="py-16 px-4 bg-white">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-3xl font-bold mb-8 text-gray-900">Trusted By</h2>
+            <div class="bg-gray-50 p-8 rounded-lg border-2 border-gray-200">
+                <p class="text-lg text-gray-700 mb-4">
+                    "TestPilotAI successfully monitors checkout on stores like <span class="font-semibold text-indigo-600">Gymshark.com</span>"
+                </p>
+                <p class="text-gray-600">Tested on Shopify, WooCommerce, and custom ecommerce platforms</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-16 px-4 bg-gray-50">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-900">Frequently Asked Questions</h2>
+            
+            <div class="space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-semibold mb-2 text-gray-900">How is this different from uptime monitoring?</h3>
+                    <p class="text-gray-600">Uptime monitors just check if your site is online. TestPilotAI actually tests your checkout flow end-to-end — adding products to cart, proceeding to checkout, and verifying the payment form loads. We catch bugs that uptime monitors miss.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-semibold mb-2 text-gray-900">What if my checkout changes or I update my theme?</h3>
+                    <p class="text-gray-600">Our tests are self-healing. We use multiple strategies to find elements (text content, ARIA labels, semantic analysis), so when your theme updates, tests automatically adapt. No maintenance required from you.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-semibold mb-2 text-gray-900">Do you support my platform?</h3>
+                    <p class="text-gray-600">Yes! TestPilotAI works with Shopify, WooCommerce, BigCommerce, Magento, and custom ecommerce stores. We automatically detect your platform and adapt our testing strategy.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-semibold mb-2 text-gray-900">How does the 14-day free trial work?</h3>
+                    <p class="text-gray-600">Sign up and start monitoring immediately — no credit card required. After 14 days, if you love it, add payment details to continue. If not, no charge and no hassle.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-semibold mb-2 text-gray-900">Can I cancel anytime?</h3>
+                    <p class="text-gray-600">Absolutely. Cancel anytime with one click. No contracts, no commitments. We only want customers who get value from TestPilotAI.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-semibold mb-2 text-gray-900">What happens when a test fails?</h3>
+                    <p class="text-gray-600">You get an instant alert via email and Slack (if configured) with a screenshot showing exactly what broke. You can see the full test history and artifacts in your dashboard.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="gradient-bg text-white py-16 px-4">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-4xl md:text-5xl font-bold mb-6">
+                Ready to Stop Manually Testing Checkout?
+            </h2>
+            <p class="text-xl mb-8 text-indigo-100">
+                Join the first 10 customers and lock in $79/month forever
+            </p>
+            <a href="mailto:joanna@testpilotai.com?subject=Start%20Free%20Trial&body=Store%20URL:%0AEmail:%0A" 
+               class="inline-block bg-white text-indigo-600 px-8 py-4 rounded-lg text-lg font-bold hover:bg-gray-100 transition shadow-xl">
+                Start 14-Day Free Trial
+            </a>
+            <p class="mt-4 text-indigo-200">No credit card required • Setup takes 5 minutes</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-8 px-4">
+        <div class="max-w-6xl mx-auto text-center">
+            <p class="mb-2">&copy; 2025 TestPilotAI. All rights reserved.</p>
+            <p>Questions? Email <a href="mailto:joanna@testpilotai.com" class="text-indigo-400 hover:text-indigo-300">joanna@testpilotai.com</a></p>
+        </div>
+    </footer>
+
+</body>
+</html>
