@@ -3,578 +3,396 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <!-- SEO Meta Tags -->
-  <title>TestPilotAI - Automated Checkout Monitoring for Shopify Stores</title>
-  <meta name="description" content="Stop losing sales to broken checkout. TestPilotAI monitors your Shopify store every 30 minutes and alerts you instantly with screenshot proof when checkout breaks.">
-  <meta name="keywords" content="shopify monitoring, checkout monitoring, shopify testing, automated testing, e-commerce monitoring, shopify alerts">
-  
-  <!-- Open Graph (Facebook, LinkedIn, Product Hunt) -->
-  <meta property="og:title" content="TestPilotAI - Never Lose Sales to Broken Checkout">
-  <meta property="og:description" content="Automated checkout monitoring for Shopify. Get instant alerts with screenshots when your checkout breaks.">
+
+  <!-- SEO -->
+  <title>TestPilotAI - Automated Checkout Monitoring for Shopify</title>
+  <meta name="description" content="TestPilotAI simulates real customers to monitor Shopify checkout. Get instant alerts with screenshots when payments, carts, or buttons break.">
+  <meta name="keywords" content="shopify monitoring, checkout monitoring, ecommerce testing, synthetic monitoring, revenue protection">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="TestPilotAI - Protect Your Shopify Revenue">
+  <meta property="og:description" content="Real checkout simulation with instant alerts and screenshots. Never lose sales to broken checkout.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://testpilotai.io">
   <meta property="og:image" content="https://testpilotai.io/og-image.png">
-  
-  <!-- Twitter Card -->
+
+  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="TestPilotAI - Never Lose Sales to Broken Checkout">
-  <meta name="twitter:description" content="Automated checkout monitoring for Shopify. Get instant alerts with screenshots.">
-  <meta name="twitter:image" content="https://testpilotai.io/og-image.png">
-  
+
   <!-- Favicon -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
-  
+
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    
+    * { margin:0; padding:0; box-sizing:border-box; }
+
     @keyframes scan {
-      0%, 100% { transform: translateY(-100%); }
-      50% { transform: translateY(100vh); }
+      0%,100%{transform:translateY(-100%)}
+      50%{transform:translateY(100vh)}
     }
-
     @keyframes pulse {
-      0%, 100% { opacity: 0.3; }
-      50% { opacity: 0.8; }
+      0%,100%{opacity:.3}
+      50%{opacity:.8}
     }
-
     @keyframes float {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-20px); }
+      0%,100%{transform:translateY(0)}
+      50%{transform:translateY(-20px)}
     }
-
     @keyframes glow {
-      0%, 100% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.3); }
-      50% { box-shadow: 0 0 40px rgba(99, 102, 241, 0.6); }
-    }
-    
-    body {
-      font-family: 'Courier New', monospace;
-      background: #0a0a0f;
-      color: white;
-      position: relative;
-      overflow-x: hidden;
-      min-height: 100vh;
+      0%,100%{box-shadow:0 0 20px rgba(99,102,241,.3)}
+      50%{box-shadow:0 0 40px rgba(99,102,241,.6)}
     }
 
-    /* Animated grid background */
-    .grid-bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: 
-        linear-gradient(rgba(99, 102, 241, 0.08) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(99, 102, 241, 0.08) 1px, transparent 1px);
-      background-size: 40px 40px;
-      pointer-events: none;
-      z-index: 0;
+    body{
+      font-family:'Courier New', monospace;
+      background:#0a0a0f;
+      color:white;
+      overflow_attach: hidden;
+      min-height:100vh;
     }
 
-    /* Scanline effect */
-    .scanline {
-      position: fixed;
-      top: -2px;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.8), transparent);
-      animation: scan 8s linear infinite;
-      pointer-events: none;
-      z-index: 10;
-      opacity: 0.6;
+    .grid-bg{
+      position:fixed; inset:0;
+      background-image:
+        linear-gradient(rgba(99,102,241,.08) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(99,102,241,.08) 1px,transparent 1px);
+      background-size:40px 40px;
+      z-index:0;
     }
 
-    /* Glowing orbs */
-    .orb {
-      position: fixed;
-      border-radius: 50%;
-      filter: blur(80px);
-      pointer-events: none;
-      z-index: 1;
-      animation: pulse 4s ease-in-out infinite;
+    .scanline{
+      position:fixed; top:-2px; width:100%; height:2px;
+      background:linear-gradient(90deg,transparent,rgba(99,102,241,.8),transparent);
+      animation:scan 8s linear infinite;
+      z-index:10;
     }
 
-    .orb1 {
-      width: 400px;
-      height: 400px;
-      background: radial-gradient(circle, rgba(99, 102, 241, 0.4), transparent);
-      top: -100px;
-      left: -100px;
+    .orb{
+      position:fixed;
+      border-radius:50%;
+      filter:blur(80px);
+      animation:pulse 4s ease-in-out infinite;
+      z-index:1;
     }
 
-    .orb2 {
-      width: 300px;
-      height: 300px;
-      background: radial-gradient(circle, rgba(139, 92, 246, 0.3), transparent);
-      top: 30%;
-      right: -50px;
-      animation-delay: 2s;
+    .orb1{width:400px;height:400px;background:radial-gradient(circle,rgba(99,102,241,.4),transparent);top:-100px;left:-100px}
+    .orb2{width:300px;height:300px;background:radial-gradient(circle,rgba(139,92,246,.3),transparent);top:30%;right:-50px;animation-delay:2s}
+    .orb3{width:350px;height:350px;background:radial-gradient(circle,rgba(16,185,129,.2),transparent);bottom:-100px;right:20%;animation-delay:1s}
+
+    .container{
+      position:relative;
+      z-index:2;
+      max-width:1200px;
+      margin:auto;
+      padding:0 20px;
     }
 
-    .orb3 {
-      width: 350px;
-      height: 350px;
-      background: radial-gradient(circle, rgba(16, 185, 129, 0.2), transparent);
-      bottom: -100px;
-      right: 20%;
-      animation-delay: 1s;
-    }
-    
-    .container {
-      position: relative;
-      z-index: 2;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
-    
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 30px 0;
-    }
-    
-    .logo {
-      font-size: 24px;
-      font-weight: 700;
-      letter-spacing: -0.5px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+    header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:30px 0;
     }
 
-    .logo-icon {
-      width: 28px;
-      height: 28px;
-      background: linear-gradient(135deg, #6366f1, #8b5cf6);
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-      animation: glow 3s ease-in-out infinite;
+    .logo{
+      font-size:24px;
+      font-weight:700;
+      display:flex;
+      gap:8px;
+      align-items:center;
     }
 
-    .logo-text {
-      color: white;
+    .logo-icon{
+      width:28px;height:28px;
+      background:linear-gradient(135deg,#6366f1,#8b5cf6);
+      border-radius:6px;
+      display:flex;align-items:center;justify-content:center;
+      animation:glow 3s ease-in-out infinite;
     }
 
-    .logo-ai {
-      color: #6366f1;
-    }
-    
-    .btn {
-      padding: 12px 24px;
-      background: rgba(99, 102, 241, 0.1);
-      color: white;
-      border: 1px solid rgba(99, 102, 241, 0.3);
-      border-radius: 8px;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-block;
-      transition: all 0.3s;
-      font-family: 'Courier New', monospace;
-      letter-spacing: 0.5px;
-    }
-    
-    .btn:hover {
-      background: rgba(99, 102, 241, 0.2);
-      border-color: rgba(99, 102, 241, 0.6);
-      transform: translateY(-2px);
-    }
-    
-    .hero {
-      text-align: center;
-      padding: 100px 20px 80px;
-      max-width: 900px;
-      margin: 0 auto;
+    .logo-ai{color:#6366f1}
+
+    .btn{
+      padding:12px 24px;
+      background:rgba(99,102,241,.1);
+      border:1px solid rgba(99,102,241,.3);
+      border-radius:8px;
+      color:white;
+      text-decoration:none;
+      font-weight:600;
+      transition:.3s;
     }
 
-    .status-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(16, 185, 129, 0.1);
-      border: 1px solid rgba(16, 185, 129, 0.3);
-      padding: 6px 16px;
-      border-radius: 20px;
-      font-size: 12px;
-      margin-bottom: 24px;
-      letter-spacing: 1px;
-      text-transform: uppercase;
+    .btn:hover{
+      background:rgba(99,102,241,.2);
+      border-color:rgba(99,102,241,.6);
+      transform:translateY(-2px);
     }
 
-    .status-dot {
-      width: 8px;
-      height: 8px;
-      background: #10b981;
-      border-radius: 50%;
-      animation: pulse 2s ease-in-out infinite;
-    }
-    
-    h1 {
-      font-size: 56px;
-      font-weight: 700;
-      margin-bottom: 24px;
-      line-height: 1.1;
-      letter-spacing: -1px;
-      animation: float 6s ease-in-out infinite;
+    .hero{
+      text-align:center;
+      padding:100px 20px 80px;
+      max-width:900px;
+      margin:auto;
     }
 
-    h1 .gradient-text {
-      background: linear-gradient(135deg, #6366f1, #8b5cf6, #10b981);
-      background-size: 200% 200%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    
-    .subtitle {
-      font-size: 18px;
-      color: rgba(255,255,255,0.6);
-      margin-bottom: 40px;
-      line-height: 1.6;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    }
-    
-    .cta-btn {
-      padding: 16px 32px;
-      background: linear-gradient(135deg, #6366f1, #8b5cf6);
-      color: white;
-      border: none;
-      border-radius: 10px;
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-block;
-      transition: all 0.3s;
-      font-family: 'Courier New', monospace;
-      letter-spacing: 0.5px;
-      box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
-    }
-    
-    .cta-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 15px 40px rgba(99, 102, 241, 0.5);
-    }
-    
-    .benefits {
-      padding: 60px 20px;
-      text-align: center;
-    }
-    
-    .benefits-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 20px;
-      max-width: 900px;
-      margin: 0 auto;
+    .status-badge{
+      display:inline-flex;
+      gap:8px;
+      padding:6px 16px;
+      border-radius:20px;
+      background:rgba(16,185,129,.1);
+      border:1px solid rgba(16,185,129,.3);
+      font-size:12px;
+      margin-bottom:24px;
     }
 
-    .benefit-item {
-      background: rgba(99, 102, 241, 0.05);
-      border: 1px solid rgba(99, 102, 241, 0.2);
-      border-radius: 12px;
-      padding: 20px;
-      transition: all 0.3s;
+    .status-dot{
+      width:8px;height:8px;
+      background:#10b981;
+      border-radius:50%;
+      animation:pulse 2s infinite;
     }
 
-    .benefit-item:hover {
-      background: rgba(99, 102, 241, 0.1);
-      border-color: rgba(99, 102, 241, 0.4);
-      transform: translateY(-4px);
+    h1{
+      font-size:56px;
+      margin-bottom:24px;
+      animation:float 6s infinite;
     }
 
-    .benefit-icon {
-      font-size: 28px;
-      margin-bottom: 8px;
+    .gradient-text{
+      background:linear-gradient(135deg,#6366f1,#8b5cf6,#10b981);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
     }
 
-    .benefit-text {
-      font-size: 13px;
-      color: rgba(255, 255, 255, 0.7);
-      line-height: 1.4;
-    }
-    
-    .pricing {
-      padding: 60px 20px;
-      max-width: 450px;
-      margin: 0 auto;
-    }
-    
-    .pricing-card {
-      background: rgba(10, 10, 15, 0.6);
-      backdrop-filter: blur(20px);
-      border-radius: 16px;
-      padding: 40px;
-      border: 1px solid rgba(99, 102, 241, 0.3);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-      position: relative;
-      overflow: hidden;
+    .subtitle{
+      font-size:18px;
+      color:rgba(255,255,255,.6);
+      margin-bottom:40px;
+      line-height:1.6;
+      font-family:system-ui;
     }
 
-    .pricing-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.8), transparent);
-    }
-    
-    .badge {
-      background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(139, 92, 246, 0.2));
-      border: 1px solid rgba(99, 102, 241, 0.3);
-      padding: 8px 16px;
-      border-radius: 20px;
-      display: inline-block;
-      margin-bottom: 20px;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
-    
-    .price {
-      font-size: 52px;
-      font-weight: 700;
-      margin-bottom: 8px;
-      letter-spacing: -2px;
-    }
-    
-    .price-small {
-      font-size: 20px;
-      opacity: 0.6;
-      font-weight: 400;
-    }
-    
-    .old-price {
-      color: rgba(255,255,255,0.4);
-      margin-bottom: 8px;
-      text-decoration: line-through;
-      font-size: 14px;
-    }
-    
-    .features {
-      text-align: left;
-      line-height: 2.2;
-      margin: 32px 0;
-      list-style: none;
-      font-size: 14px;
-      color: rgba(255, 255, 255, 0.8);
+    .cta-btn{
+      padding:16px 32px;
+      background:linear-gradient(135deg,#6366f1,#8b5cf6);
+      border-radius:10px;
+      color:white;
+      font-weight:600;
+      text-decoration:none;
+      box-shadow:0 10px 30px rgba(99,102,241,.3);
+      transition:.3s;
+      display:inline-block;
     }
 
-    .features li::before {
-      content: '→ ';
-      color: #10b981;
-      font-weight: bold;
-      margin-right: 8px;
-    }
-    
-    .platforms {
-      padding: 60px 20px;
-      text-align: center;
-      max-width: 700px;
-      margin: 0 auto;
+    .cta-btn:hover{
+      transform:translateY(-2px);
+      box-shadow:0 15px 40px rgba(99,102,241,.5);
     }
 
-    .platforms h3 {
-      font-size: 14px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      margin-bottom: 24px;
-      color: rgba(255, 255, 255, 0.5);
-    }
-    
-    .platform-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
-      margin-top: 24px;
+    .benefits{padding:60px 20px;text-align:center}
+
+    .benefits-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+      gap:20px;
+      max-width:900px;
+      margin:auto;
     }
 
-    .platform-item {
-      background: rgba(99, 102, 241, 0.05);
-      border: 1px solid rgba(99, 102, 241, 0.2);
-      padding: 16px;
-      border-radius: 10px;
-      font-size: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-    }
-    
-    footer {
-      text-align: center;
-      padding: 60px 20px 40px;
-      color: rgba(255,255,255,0.4);
-      border-top: 1px solid rgba(99, 102, 241, 0.1);
-      margin-top: 80px;
-      font-size: 12px;
-    }
-    
-    footer a {
-      color: rgba(255,255,255,0.6);
-      text-decoration: none;
-      transition: color 0.3s;
+    .benefit-item{
+      background:rgba(99,102,241,.05);
+      border:1px solid rgba(99,102,241,.2);
+      border-radius:12px;
+      padding:20px;
+      transition:.3s;
     }
 
-    footer a:hover {
-      color: #6366f1;
+    .benefit-item:hover{
+      background:rgba(99,102,241,.1);
+      transform:translateY(-4px);
     }
-    
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 36px;
-      }
-      
-      .subtitle {
-        font-size: 16px;
-      }
-      
-      .price {
-        font-size: 40px;
-      }
 
-      .benefits-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
+    .benefit-icon{font-size:28px;margin-bottom:8px}
+
+    .benefit-text{font-size:13px;color:rgba(255,255,255,.7)}
+
+    .pricing{padding:60px 20px;max-width:450px;margin:auto}
+
+    .pricing-card{
+      background:rgba(10,10,15,.6);
+      backdrop-filter:blur(20px);
+      border-radius:16px;
+      padding:40px;
+      border:1px solid rgba(99,102,241,.3);
+      box-shadow:0 20px 60px rgba(0,0,0,.5);
+    }
+
+    .badge{
+      background:linear-gradient(135deg,rgba(99,102,241,.2),rgba(139,92,246,.2));
+      border:1px solid rgba(99,102,241,.3);
+      padding:8px 16px;
+      border-radius:20px;
+      font-size:11px;
+      font-weight:700;
+      letter-spacing:2px;
+      margin-bottom:20px;
+      display:inline-block;
+    }
+
+    .price{font-size:52px;font-weight:700}
+    .price-small{font-size:20px;opacity:.6}
+    .old-price{text-decoration:line-through;color:rgba(255,255,255,.4)}
+
+    .features{
+      list-style:none;
+      line-height:2.2;
+      margin:32px 0;
+      font-size:14px;
+      color:rgba(255,255,255,.8);
+      text-align:left;
+    }
+
+    .features li::before{
+      content:'→ ';
+      color:#10b981;
+      margin-right:8px;
+    }
+
+    footer{
+      text-align:center;
+      padding:60px 20px;
+      color:rgba(255,255,255,.4);
+      font-size:12px;
+      border-top:1px solid rgba(99,102,241,.1);
+      margin-top:80px;
+    }
+
+    footer a{color:rgba(255,255,255,.6);text-decoration:none}
+    footer a:hover{color:#6366f1}
+
+    @media(max-width:768px){
+      h1{font-size:36px}
+      .subtitle{font-size:16px}
+      .price{font-size:40px}
+      .benefits-grid{grid-template-columns:repeat(2,1fr)}
     }
   </style>
-
- <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-NLLSCNN9KC"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-  
-    gtag('config', 'G-NLLSCNN9KC');
-  </script> 
 </head>
-<body>
-  <!-- Background effects -->
-  <div class="grid-bg"></div>
-  <div class="scanline"></div>
-  <div class="orb orb1"></div>
-  <div class="orb orb2"></div>
-  <div class="orb orb3"></div>
-  
-  <div class="container">
-    <header>
-      <div class="logo">
-        <div class="logo-icon">🧠</div>
-        <span class="logo-text">TestPilot<span class="logo-ai">AI</span></span>
-      </div>
-      <a href="https://app.testpilotai.io/app/createflow" class="btn">START FREE TRIAL</a>
-    </header>
-    
-    <section class="hero">
-      <div class="status-badge">
-        <span class="status-dot"></span>
-        <span>TRUSTED BY EARLY SHOPIFY STORES</span>
-      </div>
-      <h1>
-        <span class="gradient-text">Never Lose Sales</span><br>
-        to Broken Checkout
-      </h1>
-      <p class="subtitle">
-        TestPilotAI automatically monitors your Shopify checkout and alerts you instantly when something breaks - with real screenshots.
-      </p>
-      <a href="https://app.testpilotai.io/app/createflow" class="cta-btn">Protect My Store Free →</a>
-    </section>
-    
-    <section class="benefits">
-      <div class="benefits-grid">
-        <div class="benefit-item">
-          <div class="benefit-icon">⚡</div>
-          <div class="benefit-text">Runs every<br>30 minutes</div>
-        </div>
-        <div class="benefit-item">
-          <div class="benefit-icon">🔍</div>
-          <div class="benefit-text">Finds real<br>products</div>
-        </div>
-        <div class="benefit-item">
-          <div class="benefit-icon">📸</div>
-          <div class="benefit-text">Visual<br>evidence</div>
-        </div>
-        <div class="benefit-item">
-          <div class="benefit-icon">📧</div>
-          <div class="benefit-text">Real-time<br>alerts</div>
-        </div>
-        <div class="benefit-item">
-          <div class="benefit-icon">🌙</div>
-          <div class="benefit-text">Always-on<br>monitoring</div>
-        </div>
-      </div>
-    </section>
-    
-    <section class="pricing">
-      <div class="pricing-card">
-        <div class="badge">BETA ACCESS · LIMITED</div>
-        <div class="price">$49<span class="price-small">/month</span></div>
-        <p class="old-price">$79/month</p>
-        <p style="margin-bottom: 24px; font-weight: 600; font-size: 14px; color: rgba(255,255,255,0.8);">
-          Early access pricing · Lock in $49/month forever
-        </p>
-        <ul class="features">
-          <li>1 Shopify store monitored</li>
-          <li>Automated tests every 30 minutes</li>
-          <li>Email alerts with screenshots</li>
-          <li>Instant failure detection</li>
-          <li>Priority Founder Support</li>
-          <li>Cancel anytime</li>
-        </ul>
-        <a href="https://app.testpilotai.io/app/createflow" class="cta-btn" style="width: 100%; text-align: center; display: block;">
-          START FREE TRIAL
-        </a>
 
-        <p style="margin-top: 16px; font-size: 12px; color: rgba(255,255,255,0.5); text-align: center;">
-          
-        </p>
-      </div>
-    </section>
-    
-    <section class="platforms">
-      <h3>Platform Support</h3>
-      <div class="platform-grid">
-        <div class="platform-item">✅ Shopify Liquid</div>
-        <div class="platform-item">🚧 Shopify Headless</div>
-        <div class="platform-item">🚧 WooCommerce</div>
-        <div class="platform-item">🚧 BigCommerce</div>
-      </div>
-      <p style="margin-top: 20px; font-size: 12px; color: rgba(255,255,255,0.4);">
-        🚧 = Coming soon
-      </p>
-    </section>
-    
-    <footer>
-      <p style="margin-bottom: 12px;">© 2026 TestPilotAI. All rights reserved.</p>
-      <p><a href="mailto:info@testpilotai.io">info@testpilotai.io</a></p>
-    </footer>
+<body>
+
+<div class="grid-bg"></div>
+<div class="scanline"></div>
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+<div class="orb orb3"></div>
+
+<div class="container">
+
+<header>
+  <div class="logo">
+    <div class="logo-icon">🧠</div>
+    <span>TestPilot<span class="logo-ai">AI</span></span>
   </div>
+  <a href="https://app.testpilotai.io/app/createflow" class="btn">START FREE TRIAL</a>
+</header>
+
+<section class="hero">
+
+  <div class="status-badge">
+    <span class="status-dot"></span>
+    <span>TRUSTED BY EARLY SHOPIFY STORES</span>
+  </div>
+
+  <h1>
+    <span class="gradient-text">Never Lose Sales</span><br>
+    to Broken Checkout
+  </h1>
+
+  <p class="subtitle">
+    TestPilotAI simulates real customers completing checkout every 30 minutes — so you know instantly when payments, carts, or buttons break.
+  </p>
+
+  <a href="https://app.testpilotai.io/app/createflow" class="cta-btn">
+    Start Protecting My Revenue →
+  </a>
+
+  <p style="margin-top:16px;font-size:13px;color:rgba(255,255,255,.5)">
+    No credit card required · Setup in under 3 minutes
+  </p>
+
+</section>
+
+<section class="benefits">
+
+<div class="benefits-grid">
+
+  <div class="benefit-item">
+    <div class="benefit-icon">🛒</div>
+    <div class="benefit-text">Real checkout<br>simulation</div>
+  </div>
+
+  <div class="benefit-item">
+    <div class="benefit-icon">🧠</div>
+    <div class="benefit-text">Smart product<br>detection</div>
+  </div>
+
+  <div class="benefit-item">
+    <div class="benefit-icon">📸</div>
+    <div class="benefit-text">Screenshot<br>proof</div>
+  </div>
+
+  <div class="benefit-item">
+    <div class="benefit-icon">⚠️</div>
+    <div class="benefit-text">Degraded vs<br>failed alerts</div>
+  </div>
+
+  <div class="benefit-item">
+    <div class="benefit-icon">🌙</div>
+    <div class="benefit-text">24/7 automated<br>monitoring</div>
+  </div>
+
+</div>
+</section>
+
+<section class="pricing">
+
+<div class="pricing-card">
+
+  <div class="badge">BETA ACCESS · LIMITED</div>
+
+  <div class="price">$49<span class="price-small">/month</span></div>
+
+  <p class="old-price">$79/month</p>
+
+  <p style="margin:24px 0;font-weight:600;font-size:14px;color:rgba(255,255,255,.8)">
+    Beta pricing · Lock in $49/month forever (Founders Plan)
+  </p>
+
+  <ul class="features">
+    <li>Real customer checkout simulation</li>
+    <li>Automated tests every 30 minutes</li>
+    <li>Screenshots + HTML evidence</li>
+    <li>Smart product & variant detection</li>
+    <li>Degraded vs Fail health scoring</li>
+    <li>Founder priority support</li>
+    <li>Cancel anytime</li>
+  </ul>
+
+  <a href="https://app.testpilotai.io/app/createflow" class="cta-btn" style="width:100%;display:block;text-align:center">
+    START FREE TRIAL
+  </a>
+
+</div>
+</section>
+
+<footer>
+  <p>© 2026 TestPilotAI. All rights reserved.</p>
+  <p><a href="mailto:info@testpilotai.io">info@testpilotai.io</a></p>
+</footer>
+
+</div>
+
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
