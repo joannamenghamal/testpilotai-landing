@@ -77,15 +77,42 @@ z-index:1;
 .orb3{width:350px;height:350px;background:radial-gradient(circle,rgba(16,185,129,.2),transparent);bottom:-100px;right:20%;animation-delay:1s}
 
 /* LAYOUT */
-.container{position:relative;z-index:2;max-width:1200px;margin:auto;padding:0 20px}
-header{display:flex;justify-content:space-between;align-items:center;padding:30px 0}
-.logo{font-size:24px;font-weight:700;display:flex;gap:8px;align-items:center}
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+.container{
+  position:relative;
+  z-index:2;
+  max-width:1200px;
+  margin:auto;
+  padding:0 20px;
 }
-.logo-ai{color:#6366f1}
+
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:30px 0;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.logo-img{
+  height:40px;
+  width:auto;
+  display:block;
+}
+
+.brand-text{
+  font-size:20px;
+  font-weight:500;
+  letter-spacing:1px;
+}
+
+.logo-ai{
+  color:#6366f1;
+}
 
 .btn{padding:12px 24px;background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.3);border-radius:8px;color:white;text-decoration:none;font-weight:600;transition:.3s}
 .btn:hover{background:rgba(99,102,241,.2);border-color:rgba(99,102,241,.6);transform:translateY(-2px)}
@@ -132,7 +159,10 @@ footer{text-align:center;padding:60px 20px;color:rgba(255,255,255,.4);font-size:
 
 <header>
   <div class="logo">
-    <img src="assets/favicon-512x512.png" alt="TestPilotAI Logo" class="logo-img">
+    <img src="assets/brain-icon.png" alt="TestPilotAI" class="logo-img">
+    <span class="brand-text">
+      TestPilot<span class="logo-ai">AI</span>
+    </span>
   </div>
 
   <a href="waitlist.html" class="btn">JOIN WAITLIST</a>
@@ -246,6 +276,7 @@ Get Early Access →
 </div>
 </body>
 </html>
+
 
 
 
