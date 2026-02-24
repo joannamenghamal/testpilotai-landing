@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>TestPilotAI Waitlist - Early Access for Shopify Checkout Monitoring</title>
+  <meta name="description" content="Join the TestPilotAI waitlist for early access. Get alerted when your Shopify checkout breaks with screenshot proof." />
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    @keyframes scan {
+      0%, 100% { transform: translateY(-100%); }
+      50% { transform: translateY(100vh); }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 0.8; }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+    @keyframes glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.3); }
+      50% { box-shadow: 0 0 40px rgba(99, 102, 241, 0.6); }
+    }
+
+    body {
+      font-family: 'Courier New', monospace;
+      background: #0a0a0f;
+      color: white;
+      position: relative;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    .grid-bg {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-image:
+        linear-gradient(rgba(99, 102, 241, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(99, 102, 241, 0.08) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .scanline {
+      position: fixed;
+      top: -2px; left: 0;
+      width: 100%; height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.8), transparent);
+      animation: scan 8s linear infinite;
+      pointer-events: none;
+      z-index: 10;
+      opacity: 0.6;
+    }
+
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 1;
+      animation: pulse 4s ease-in-out infinite;
+    }
+    .orb1 {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.4), transparent);
+      top: -100px; left: -100px;
+    }
+    .orb2 {
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(139, 92, 246, 0.3), transparent);
+      top: 30%; right: -50px;
+      animation-delay: 2s;
+    }
+    .orb3 {
+      width: 350px; height: 350px;
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.2), transparent);
+      bottom: -100px; right: 20%;
+      animation-delay: 1s;
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 30px 0;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: white;
+    }
+    .logo-icon {
+      width: 28px; height: 28px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      animation: glow 3s ease-in-out infinite;
+    }
+    .logo-text { color: white; }
+    .logo-ai { color: #6366f1; }
+
+    .btn {
+      padding: 12px 24px;
+      background: rgba(99, 102, 241, 0.1);
+      color: white;
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.3s;
+      font-family: 'Courier New', monospace;
+      letter-spacing: 0.5px;
+    }
+    .btn:hover {
+      background: rgba(99, 102, 241, 0.2);
+      border-color: rgba(99, 102, 241, 0.6);
+      transform: translateY(-2px);
+    }
+
+    .hero {
+      text-align: center;
+      padding: 90px 20px 50px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 12px;
+      margin-bottom: 24px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .status-dot {
+      width: 8px; height: 8px;
+      background: #10b981;
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    h1 {
+      font-size: 52px;
+      font-weight: 700;
+      margin-bottom: 18px;
+      line-height: 1.1;
+      letter-spacing: -1px;
+      animation: float 6s ease-in-out infinite;
+    }
+    h1 .gradient-text {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6, #10b981);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .subtitle {
+      font-size: 18px;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 28px;
+      line-height: 1.6;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    .card {
+      max-width: 560px;
+      margin: 0 auto 60px;
+      background: rgba(10, 10, 15, 0.6);
+      backdrop-filter: blur(20px);
+      border-radius: 16px;
+      padding: 32px;
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.8), transparent);
+    }
+
+    .badge {
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(139, 92, 246, 0.2));
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      padding: 8px 16px;
+      border-radius: 20px;
+      display: inline-block;
+      margin-bottom: 18px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .form {
+      display: grid;
+      gap: 14px;
+      margin-top: 10px;
+      text-align: left;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    label {
+      font-size: 12px;
+      color: rgba(255,255,255,0.65);
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid rgba(99, 102, 241, 0.25);
+      background: rgba(99, 102, 241, 0.06);
+      color: white;
+      outline: none;
+      font-size: 14px;
+    }
+
+    input::placeholder, textarea::placeholder {
+      color: rgba(255,255,255,0.35);
+    }
+
+    textarea {
+      min-height: 88px;
+      resize: vertical;
+    }
+
+    .cta-btn {
+      padding: 14px 18px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.3s;
+      font-family: 'Courier New', monospace;
+      letter-spacing: 0.5px;
+      box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+      width: 100%;
+    }
+
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 40px rgba(99, 102, 241, 0.5);
+    }
+
+    .fineprint {
+      margin-top: 12px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.45);
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    .success {
+      display: none;
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      background: rgba(16, 185, 129, 0.12);
+      color: rgba(255,255,255,0.9);
+      font-size: 14px;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    .error {
+      display: none;
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      background: rgba(239, 68, 68, 0.10);
+      color: rgba(255,255,255,0.9);
+      font-size: 14px;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    footer {
+      text-align: center;
+      padding: 60px 20px 40px;
+      color: rgba(255,255,255,0.4);
+      border-top: 1px solid rgba(99, 102, 241, 0.1);
+      margin-top: 40px;
+      font-size: 12px;
+    }
+    footer a {
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    footer a:hover { color: #6366f1; }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 36px; }
+      .subtitle { font-size: 16px; }
+      .card { padding: 22px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="grid-bg"></div>
+  <div class="scanline"></div>
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+
+  <div class="container">
+    <header>
+      <a class="logo" href="/">
+        <div class="logo-icon">🧠</div>
+        <span class="logo-text">TestPilot<span class="logo-ai">AI</span></span>
+      </a>
+      <a href="/" class="btn">BACK TO HOME</a>
+    </header>
+
+    <section class="hero">
+      <div class="status-badge">
+        <span class="status-dot"></span>
+        <span>EARLY ACCESS · INVITE ONLY</span>
+      </div>
+
+      <h1>
+        <span class="gradient-text">Join the Waitlist</span><br />
+        for Shopify Checkout Monitoring
+      </h1>
+
+      <p class="subtitle">
+        Get early access + founder onboarding. We’ll help you set up your first monitor and confirm your checkout is protected.
+      </p>
+    </section>
+
+    <section class="card">
+      <div class="badge">GET BETA ACCESS</div>
+
+      <!-- ✅ Replace action with your Formspree endpoint -->
+      <form id="waitlistForm" class="form" action="https://formspree.io/f/xdalpvel" method="POST">
+        <!-- Helps email notifications -->
+        <input type="hidden" name="_subject" value="New TestPilotAI Waitlist Signup" />
+        <input type="hidden" name="_format" value="plain" />
+
+        <div>
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" placeholder="you@store.com" required />
+        </div>
+
+        <div>
+          <label for="store">Shopify Store URL</label>
+          <input id="store" name="store" type="url" placeholder="https://yourstore.com" required />
+        </div>
+
+        <div>
+          <label for="volume">Approx. monthly orders (optional)</label>
+          <input id="volume" name="monthly_orders" type="text" placeholder="ex: 500 / month" />
+        </div>
+
+        <div>
+          <label for="note">What are you most worried about? (optional)</label>
+          <textarea id="note" name="note" placeholder="ex: checkout breaks after theme updates, cart button missing, etc."></textarea>
+        </div>
+
+        <button class="cta-btn" type="submit">REQUEST INVITE →</button>
+
+        <div class="fineprint">
+          You’ll get an email confirmation. We’ll reach out with setup steps + onboarding.
+          <br />No spam. Cancel anytime.
+        </div>
+
+        <div id="success" class="success">
+          ✅ You’re on the list! Check your inbox — we’ll reach out soon with early access.
+        </div>
+
+        <div id="error" class="error">
+          ❌ Something went wrong. Please try again, or email info@testpilotai.io.
+        </div>
+      </form>
+    </section>
+
+    <footer>
+      <p style="margin-bottom: 12px;">© 2026 TestPilotAI. All rights reserved.</p>
+      <p><a href="mailto:info@testpilotai.io">info@testpilotai.io</a></p>
+    </footer>
+  </div>
+
+  <script>
+    // Optional: AJAX submit (keeps the same page & shows success message)
+    const form = document.getElementById("waitlistForm");
+    const success = document.getElementById("success");
+    const error = document.getElementById("error");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      success.style.display = "none";
+      error.style.display = "none";
+
+      try {
+        const formData = new FormData(form);
+        const res = await fetch(form.action, {
+          method: "POST",
+          body: formData,
+          headers: { "Accept": "application/json" }
+        });
+
+        if (res.ok) {
+          form.reset();
+          success.style.display = "block";
+        } else {
+          error.style.display = "block";
+        }
+      } catch (err) {
+        error.style.display = "block";
+      }
+    });
+  </script>
+</body>
+</html>
