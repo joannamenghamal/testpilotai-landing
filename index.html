@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- SEO -->
-<title>Never Lose Sales to Broken Shopify Checkout</title>
+<title>TestPilotAI - Never Lose Sales to Broken Shopify Checkout</title>
 
 <meta name="description" content="TestPilotAI automatically simulates real Shopify customer checkouts every 30 minutes. Detect broken checkout buttons, payment failures, auth redirects, missing UI elements, and silent cart errors before you lose revenue. Instant alerts with screenshots and root cause analysis.">
 
@@ -28,7 +28,7 @@
 *{margin:0;padding:0;box-sizing:border-box}
 
 /* ANIMATIONS */
-@keyframes scan{0%,100%{transform:translateY(-100%)}50%{transform:translateY(100vh)}}
+/* @keyframes scan{0%,100%{transform:translateY(-100%)}50%{transform:translateY(100vh)}} */
 @keyframes pulse{0%,100%{opacity:.3}50%{opacity:.8}}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
 @keyframes glow{0%,100%{box-shadow:0 0 20px rgba(99,102,241,.3)}50%{box-shadow:0 0 40px rgba(99,102,241,.6)}}
@@ -53,7 +53,7 @@ background-size:40px 40px;
 z-index:0;
 }
 
-.scanline{
+/* .scanline{
 position:fixed;
 top:-2px;
 width:100%;
@@ -61,7 +61,7 @@ height:2px;
 background:linear-gradient(90deg,transparent,rgba(99,102,241,.8),transparent);
 animation:scan 8s linear infinite;
 z-index:10;
-}
+} */
 
 .orb{
 position:fixed;
@@ -79,7 +79,9 @@ z-index:1;
 .container{position:relative;z-index:2;max-width:1200px;margin:auto;padding:0 20px}
 header{display:flex;justify-content:space-between;align-items:center;padding:30px 0}
 .logo{font-size:24px;font-weight:700;display:flex;gap:8px;align-items:center}
-.logo-icon{width:28px;height:28px;background:linear-gradient(135deg,#6366f1,#8b5cf6);border-radius:6px;display:flex;align-items:center;justify-content:center;animation:glow 3s infinite}
+.logo-img {
+  height: 42px;
+}
 .logo-ai{color:#6366f1}
 
 .btn{padding:12px 24px;background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.3);border-radius:8px;color:white;text-decoration:none;font-weight:600;transition:.3s}
@@ -118,7 +120,7 @@ footer{text-align:center;padding:60px 20px;color:rgba(255,255,255,.4);font-size:
 <body>
 
 <div class="grid-bg"></div>
-<div class="scanline"></div>
+<!-- <div class="scanline"></div> -->
 <div class="orb orb1"></div>
 <div class="orb orb2"></div>
 <div class="orb orb3"></div>
@@ -127,10 +129,11 @@ footer{text-align:center;padding:60px 20px;color:rgba(255,255,255,.4);font-size:
 
 <header>
 <div class="logo">
-<div class="logo-icon">🧠</div>
+  <img src="assets/logo.svg" alt="TestPilotAI Logo" class="logo-img">
+</div>
 <span>TestPilot<span class="logo-ai">AI</span></span>
 </div>
-<a href="waitlist.html" class="btn">REQUEST ACCESS</a>
+<a href="waitlist.html" class="btn">JOIN WAITLIST</a>
 </header>
 
 <section class="hero">
@@ -145,10 +148,10 @@ TestPilotAI automatically simulates real customer checkouts on your Shopify stor
 It detects broken checkout buttons, cart failures, payment redirects, auth loops, and missing UI — and sends instant alerts with screenshots and root cause analysis.
 </p>
 
-<a href="waitlist.html" class="cta">Protect My Store →</a>
+<a href="waitlist.html" class="cta">Stop Losing Sales →</a>
 
 <p style="margin-top:16px;font-size:13px;color:rgba(255,255,255,.5)">
-Built for Shopify founders who can't afford silent failures.
+Revenue protection for serious Shopify operators.
 </p>
 
 </section>
@@ -181,9 +184,6 @@ Signals:<br>
 ⚠️ Redirected to Login<br><br>
 Confidence Score: 92%<br>
 Root Cause: Auth redirect detected during checkout<br><br>
-Recommended Action:<br>
-→ Verify checkout does not require login<br>
-→ Review theme or third-party app changes
 </div>
 </section>
 
@@ -205,7 +205,7 @@ Recommended Action:<br>
 <li>Founder priority support</li>
 </ul>
 <a href="waitlist.html" class="cta" style="width:100%;display:block;text-align:center">
-Get Checkout Protection →
+Get Early Access →
 </a>
 </div>
 </section>
@@ -241,3 +241,4 @@ Get Checkout Protection →
 </div>
 </body>
 </html>
+
