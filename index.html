@@ -5,16 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- SEO -->
-<title>Shopify Checkout Monitoring & Revenue Protection | TestPilotAI</title>
+<title>Automated Shopify Checkout Regression Testing | TestPilotAI</title>
 
-<meta name="description" content="TestPilotAI automatically simulates real Shopify customer checkouts every 30 minutes. Detect broken checkout buttons, payment failures, auth redirects, missing UI elements, and silent cart errors before you lose revenue. Instant alerts with screenshots and root cause analysis.">
+<meta name="description" content="TestPilotAI runs automated production checkout simulations for Shopify teams. Detect regressions after theme, app, or payment changes with deterministic validation, semantic analysis, and artifact capture.">
 
-<meta name="keywords" content="shopify checkout monitoring, shopify checkout testing, ecommerce monitoring software, shopify revenue protection, payment failure monitoring, synthetic checkout testing, detect broken checkout shopify">
+<meta name="keywords" content="shopify regression testing, shopify checkout testing, production checkout validation, shopify qa automation, synthetic checkout testing, shopify deployment validation">
 
 <meta name="author" content="TestPilotAI">
 
-<meta property="og:title" content="TestPilotAI – Shopify Checkout Revenue Protection">
-<meta property="og:description" content="Automated Shopify checkout monitoring with real customer simulation, screenshots, and root cause detection.">
+<meta property="og:title" content="TestPilotAI – Shopify Checkout Regression Testing">
+<meta property="og:description" content="Automated production checkout validation for Shopify deployments.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://testpilotai.io">
 
@@ -23,133 +23,45 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon32.png">
 
 <style>
-
-/* RESET */
+/* --- KEEPING YOUR EXACT STYLES --- */
 *{margin:0;padding:0;box-sizing:border-box}
-
-/* ANIMATIONS */
-/* @keyframes scan{0%,100%{transform:translateY(-100%)}50%{transform:translateY(100vh)}} */
 @keyframes pulse{0%,100%{opacity:.3}50%{opacity:.8}}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
 @keyframes glow{0%,100%{box-shadow:0 0 20px rgba(99,102,241,.3)}50%{box-shadow:0 0 40px rgba(99,102,241,.6)}}
-
-/* BASE */
-body{
-font-family:'Courier New', monospace;
-background:#0a0a0f;
-color:white;
-overflow-x:hidden;
-min-height:100vh;
-}
-
-/* BACKGROUND */
-.grid-bg{
-position:fixed;
-inset:0;
-background-image:
-linear-gradient(rgba(99,102,241,.08) 1px,transparent 1px),
-linear-gradient(90deg,rgba(99,102,241,.08) 1px,transparent 1px);
-background-size:40px 40px;
-z-index:0;
-}
-
-/* .scanline{
-position:fixed;
-top:-2px;
-width:100%;
-height:2px;
-background:linear-gradient(90deg,transparent,rgba(99,102,241,.8),transparent);
-animation:scan 8s linear infinite;
-z-index:10;
-} */
-
-.orb{
-position:fixed;
-border-radius:50%;
-filter:blur(80px);
-animation:pulse 4s ease-in-out infinite;
-z-index:1;
-}
-
+body{font-family:'Courier New', monospace;background:#0a0a0f;color:white;overflow-x:hidden;min-height:100vh;}
+.grid-bg{position:fixed;inset:0;background-image:linear-gradient(rgba(99,102,241,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(99,102,241,.08) 1px,transparent 1px);background-size:40px 40px;z-index:0;}
+.orb{position:fixed;border-radius:50%;filter:blur(80px);animation:pulse 4s ease-in-out infinite;z-index:1;}
 .orb1{width:400px;height:400px;background:radial-gradient(circle,rgba(99,102,241,.4),transparent);top:-100px;left:-100px}
 .orb2{width:300px;height:300px;background:radial-gradient(circle,rgba(139,92,246,.3),transparent);top:30%;right:-50px;animation-delay:2s}
 .orb3{width:350px;height:350px;background:radial-gradient(circle,rgba(16,185,129,.2),transparent);bottom:-100px;right:20%;animation-delay:1s}
-
-/* LAYOUT */
-.container{
-  position:relative;
-  z-index:2;
-  max-width:1200px;
-  margin:auto;
-  padding:0 20px;
-}
-
-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:30px 0;
-}
-
-.logo{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-
-.logo-img {
-  height: 64px;
-  width: auto;
-  display: block;
-}
-
-.brand-text{
-  font-size:20px;
-  font-weight:500;
-  letter-spacing:1px;
-}
-
-.logo-ai{
-  color:#6366f1;
-}
-
+.container{position:relative;z-index:2;max-width:1200px;margin:auto;padding:0 20px;}
+header{display:flex;justify-content:space-between;align-items:center;padding:30px 0;}
+.logo{display:flex;align-items:center;gap:10px;}
+.logo-img{height:64px;width:auto;display:block;}
+.brand-text{font-size:20px;font-weight:500;letter-spacing:1px;}
+.logo-ai{color:#6366f1;}
 .btn{padding:12px 24px;background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.3);border-radius:8px;color:white;text-decoration:none;font-weight:600;transition:.3s}
 .btn:hover{background:rgba(99,102,241,.2);border-color:rgba(99,102,241,.6);transform:translateY(-2px)}
-
 .hero{text-align:center;padding:100px 20px 80px;max-width:900px;margin:auto}
 h1{font-size:56px;margin-bottom:24px;animation:float 6s infinite}
 .gradient{background:linear-gradient(135deg,#6366f1,#8b5cf6,#10b981);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .subtitle{font-size:18px;color:rgba(255,255,255,.65);margin-bottom:40px;line-height:1.6;font-family:system-ui}
 .cta{padding:16px 32px;background:linear-gradient(135deg,#6366f1,#8b5cf6);border-radius:10px;color:white;font-weight:600;text-decoration:none;box-shadow:0 10px 30px rgba(99,102,241,.3);transition:.3s;display:inline-block}
 .cta:hover{transform:translateY(-2px);box-shadow:0 15px 40px rgba(99,102,241,.5)}
-
 .section{padding:80px 20px;text-align:center}
 .section h2{font-size:36px;margin-bottom:40px}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px;max-width:900px;margin:auto}
 .card{background:rgba(99,102,241,.05);border:1px solid rgba(99,102,241,.2);border-radius:12px;padding:24px;transition:.3s}
 .card:hover{background:rgba(99,102,241,.1);transform:translateY(-4px)}
-
 .alert-box{max-width:800px;margin:auto;background:rgba(0,0,0,.6);border:1px solid rgba(99,102,241,.3);border-radius:16px;padding:32px;font-size:14px;line-height:1.7;text-align:left}
-
-.pricing{max-width:450px;margin:auto;background:rgba(10,10,15,.6);border:1px solid rgba(99,102,241,.3);border-radius:16px;padding:40px}
-.price{font-size:52px;font-weight:700}
-.features{list-style:none;line-height:2.2;margin:32px 0;text-align:left}
-.features li::before{content:'→ ';color:#10b981;margin-right:8px}
-
-.faq{max-width:900px;margin:auto;text-align:left}
-.faq h3{margin-bottom:10px;margin-top:25px;color:#10b981}
-
 footer{text-align:center;padding:60px 20px;color:rgba(255,255,255,.4);font-size:12px;border-top:1px solid rgba(99,102,241,.1)}
-
-@media(max-width:768px){h1{font-size:36px}.price{font-size:40px}}
-
+@media(max-width:768px){h1{font-size:36px}}
 </style>
 </head>
 
 <body>
 
 <div class="grid-bg"></div>
-<!-- <div class="scanline"></div> -->
 <div class="orb orb1"></div>
 <div class="orb orb2"></div>
 <div class="orb orb3"></div>
@@ -170,95 +82,50 @@ footer{text-align:center;padding:60px 20px;color:rgba(255,255,255,.4);font-size:
 <section class="hero">
 
 <h1>
-<span class="gradient">Never Lose Revenue</span><br>
-to a Broken Shopify Checkout
+<span class="gradient">Automated Checkout</span><br>
+Regression Testing for Shopify Teams
 </h1>
 
 <p class="subtitle">
-TestPilotAI automatically simulates real customer checkouts on your Shopify store every 30 minutes.
-It detects broken checkout buttons, cart failures, payment redirects, auth loops, and missing UI — and sends instant alerts with screenshots and root cause analysis.
+TestPilotAI simulates real production checkout flows and validates deterministic + structural signals after theme, app, or payment changes. 
+Detect regressions, auth redirects, missing payment elements, and checkout instability before clients notice.
 </p>
 
-<a href="waitlist.html" class="cta">Stop Losing Sales Now →</a>
+<a href="waitlist.html" class="cta">Request Technical Access →</a>
 
 <p style="margin-top:16px;font-size:13px;color:rgba(255,255,255,.5)">
-Revenue protection for serious Shopify operators.
+Built for Shopify agencies and technical ecommerce teams.
 </p>
 
 </section>
 
 <section class="section">
-<h2>What Happens Every 30 Minutes</h2>
+<h2>What TestPilotAI Validates</h2>
 <div class="grid">
-<div class="card">🔍 Automatically finds a real purchasable product</div>
-<div class="card">🛒 Verifies cart functionality with real add-to-cart test</div>
-<div class="card">💳 Verifies customers can reach checkout successfully</div>
-<div class="card">🔐 Detects auth-required redirects & checkout issues</div>
-<div class="card">📊 Validates critical checkout signals (UI + API)</div>
-<div class="card">🚨 Sends alerts with screenshot + root cause</div>
+<div class="card">🔍 Real browser checkout simulation (production)</div>
+<div class="card">🛒 Deterministic cart & variant validation</div>
+<div class="card">💳 Checkout URL & structural signal verification</div>
+<div class="card">🔐 Auth redirect & flow interruption detection</div>
+<div class="card">📊 Weighted semantic + structural scoring</div>
+<div class="card">📸 Screenshot + HTML artifact capture</div>
 </div>
 </section>
 
 <section class="section">
-<h2>Example Intelligent Alert</h2>
+<h2>Example Regression Detection</h2>
 <div class="alert-box">
-🚨 Checkout Failure Detected<br><br>
-Store: tentree.com<br>
-Stage: Checkout<br>
-Status: ❌ Checkout Page Failed to Load<br>
+⚠️ Checkout Regression Detected<br><br>
+Store: example-store.com<br>
+Stage: Checkout Validation<br>
+Status: Degraded<br>
 Time: 2:14 AM PST<br><br>
 Signals:<br>
 ✔ Product Found<br>
 ✔ Cart API Success<br>
-✔ Variant Added<br>
-❌ Payment Section Missing<br><br>
-Confidence Score: 94%<br>
-Root Cause: Checkout UI failed to fully render<br><br>
-</div>
-</section>
-
-<section class="section">
-<h2>Founder Pricing</h2>
-<div class="pricing">
-<div class="price">$49<span style="font-size:20px;opacity:.6">/mo</span></div>
-<ul class="features">
-<li><strong>Protect revenue from silent checkout failures</strong></li>
-<li>Simulates real customer checkouts automatically</li>
-<li>Monitors every 30 minutes, 24/7</li>
-<li>Detects broken carts, auth redirects & payment issues</li>
-<li>Validates checkout structure and critical signals</li>
-<li>Captures screenshot + HTML evidence</li>
-<li>Clear root cause explanation</li>
-<li>Instant email alerts when revenue is at risk</li>
-<li>Designed for serious Shopify operators</li>
-<li>Founder priority support</li>
-</ul>
-<a href="waitlist.html" class="cta" style="width:100%;display:block;text-align:center">
-Get Early Access →
-</a>
-</div>
-</section>
-
-<section class="section">
-<h2>Frequently Asked Questions</h2>
-<div class="faq">
-<h3>What is Shopify checkout monitoring?</h3>
-<p>Shopify checkout monitoring means automatically testing your checkout flow to ensure customers can successfully add products to cart and complete payment. TestPilotAI simulates real customer behavior to detect failures before revenue is lost.</p>
-
-<h3>How is this different from uptime monitoring?</h3>
-<p>Uptime monitoring only checks if your site is online. TestPilotAI verifies whether customers can actually complete checkout — including cart APIs, UI rendering, redirects, and authentication issues.</p>
-
-<h3>How often does TestPilotAI test my store?</h3>
-<p>The Founder Plan runs real checkout simulations every 30 minutes to continuously protect your revenue.</p>
-
-<h3>Does TestPilotAI complete real payments?</h3>
-<p>No. The system simulates checkout behavior safely and validates that checkout pages render correctly without charging real cards.</p>
-
-<h3>Will this slow down my Shopify store?</h3>
-<p>No. Tests run like normal customer sessions and do not impact store performance.</p>
-
-<h3>Who is this built for?</h3>
-<p>Shopify store owners, ecommerce teams, and growth operators who cannot afford silent checkout failures or broken payment flows.</p>
+✔ Checkout URL Reached<br>
+⚠️ Payment Section Missing<br><br>
+Structural Score: 0.82<br>
+Root Cause: checkout_structure_incomplete<br><br>
 </div>
 </section>
 
@@ -270,15 +137,3 @@ Get Early Access →
 </div>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
