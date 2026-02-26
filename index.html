@@ -7,7 +7,7 @@
 <!-- SEO -->
 <title>Automated Shopify Checkout Regression Testing | TestPilotAI</title>
 
-<meta name="description" content="TestPilotAI runs automated production checkout simulations for Shopify teams. Detect regressions after theme, app, or payment changes with deterministic validation, semantic analysis, and artifact capture.">
+<meta name="description" content="TestPilotAI runs automated production checkout simulations for Shopify teams. Detect regressions after theme, app, or payment changes using deterministic validation and structural scoring.">
 
 <meta name="keywords" content="shopify regression testing, shopify checkout testing, production checkout validation, shopify qa automation, synthetic checkout testing, shopify deployment validation">
 
@@ -23,39 +23,158 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon32.png">
 
 <style>
-/* --- KEEPING YOUR EXACT STYLES --- */
+
+/* RESET */
 *{margin:0;padding:0;box-sizing:border-box}
+
 @keyframes pulse{0%,100%{opacity:.3}50%{opacity:.8}}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
-@keyframes glow{0%,100%{box-shadow:0 0 20px rgba(99,102,241,.3)}50%{box-shadow:0 0 40px rgba(99,102,241,.6)}}
-body{font-family:'Courier New', monospace;background:#0a0a0f;color:white;overflow-x:hidden;min-height:100vh;}
-.grid-bg{position:fixed;inset:0;background-image:linear-gradient(rgba(99,102,241,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(99,102,241,.08) 1px,transparent 1px);background-size:40px 40px;z-index:0;}
-.orb{position:fixed;border-radius:50%;filter:blur(80px);animation:pulse 4s ease-in-out infinite;z-index:1;}
+
+body{
+font-family:'Courier New', monospace;
+background:#0a0a0f;
+color:white;
+overflow-x:hidden;
+min-height:100vh;
+}
+
+.grid-bg{
+position:fixed;
+inset:0;
+background-image:
+linear-gradient(rgba(99,102,241,.08) 1px,transparent 1px),
+linear-gradient(90deg,rgba(99,102,241,.08) 1px,transparent 1px);
+background-size:40px 40px;
+z-index:0;
+}
+
+.orb{
+position:fixed;
+border-radius:50%;
+filter:blur(80px);
+animation:pulse 4s ease-in-out infinite;
+z-index:1;
+}
+
 .orb1{width:400px;height:400px;background:radial-gradient(circle,rgba(99,102,241,.4),transparent);top:-100px;left:-100px}
 .orb2{width:300px;height:300px;background:radial-gradient(circle,rgba(139,92,246,.3),transparent);top:30%;right:-50px;animation-delay:2s}
 .orb3{width:350px;height:350px;background:radial-gradient(circle,rgba(16,185,129,.2),transparent);bottom:-100px;right:20%;animation-delay:1s}
-.container{position:relative;z-index:2;max-width:1200px;margin:auto;padding:0 20px;}
-header{display:flex;justify-content:space-between;align-items:center;padding:30px 0;}
-.logo{display:flex;align-items:center;gap:10px;}
-.logo-img{height:64px;width:auto;display:block;}
-.brand-text{font-size:20px;font-weight:500;letter-spacing:1px;}
-.logo-ai{color:#6366f1;}
-.btn{padding:12px 24px;background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.3);border-radius:8px;color:white;text-decoration:none;font-weight:600;transition:.3s}
-.btn:hover{background:rgba(99,102,241,.2);border-color:rgba(99,102,241,.6);transform:translateY(-2px)}
+
+.container{position:relative;z-index:2;max-width:1200px;margin:auto;padding:0 20px}
+
+header{display:flex;justify-content:space-between;align-items:center;padding:30px 0}
+
+.logo{display:flex;align-items:center;gap:10px}
+
+.logo-img{height:64px;width:auto;display:block}
+
+.brand-text{font-size:20px;font-weight:500;letter-spacing:1px}
+
+.logo-ai{color:#6366f1}
+
+.btn{
+padding:12px 24px;
+background:rgba(99,102,241,.1);
+border:1px solid rgba(99,102,241,.3);
+border-radius:8px;
+color:white;
+text-decoration:none;
+font-weight:600;
+transition:.3s
+}
+
+.btn:hover{
+background:rgba(99,102,241,.2);
+border-color:rgba(99,102,241,.6);
+transform:translateY(-2px)
+}
+
 .hero{text-align:center;padding:100px 20px 80px;max-width:900px;margin:auto}
+
 h1{font-size:56px;margin-bottom:24px;animation:float 6s infinite}
-.gradient{background:linear-gradient(135deg,#6366f1,#8b5cf6,#10b981);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.subtitle{font-size:18px;color:rgba(255,255,255,.65);margin-bottom:40px;line-height:1.6;font-family:system-ui}
-.cta{padding:16px 32px;background:linear-gradient(135deg,#6366f1,#8b5cf6);border-radius:10px;color:white;font-weight:600;text-decoration:none;box-shadow:0 10px 30px rgba(99,102,241,.3);transition:.3s;display:inline-block}
-.cta:hover{transform:translateY(-2px);box-shadow:0 15px 40px rgba(99,102,241,.5)}
+
+.gradient{
+background:linear-gradient(135deg,#6366f1,#8b5cf6,#10b981);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent
+}
+
+.subtitle{
+font-size:18px;
+color:rgba(255,255,255,.65);
+margin-bottom:40px;
+line-height:1.6;
+font-family:system-ui
+}
+
+.cta{
+padding:16px 32px;
+background:linear-gradient(135deg,#6366f1,#8b5cf6);
+border-radius:10px;
+color:white;
+font-weight:600;
+text-decoration:none;
+box-shadow:0 10px 30px rgba(99,102,241,.3);
+transition:.3s;
+display:inline-block
+}
+
+.cta:hover{
+transform:translateY(-2px);
+box-shadow:0 15px 40px rgba(99,102,241,.5)
+}
+
 .section{padding:80px 20px;text-align:center}
+
 .section h2{font-size:36px;margin-bottom:40px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px;max-width:900px;margin:auto}
-.card{background:rgba(99,102,241,.05);border:1px solid rgba(99,102,241,.2);border-radius:12px;padding:24px;transition:.3s}
-.card:hover{background:rgba(99,102,241,.1);transform:translateY(-4px)}
-.alert-box{max-width:800px;margin:auto;background:rgba(0,0,0,.6);border:1px solid rgba(99,102,241,.3);border-radius:16px;padding:32px;font-size:14px;line-height:1.7;text-align:left}
-footer{text-align:center;padding:60px 20px;color:rgba(255,255,255,.4);font-size:12px;border-top:1px solid rgba(99,102,241,.1)}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:24px;
+max-width:900px;
+margin:auto
+}
+
+.card{
+background:rgba(99,102,241,.05);
+border:1px solid rgba(99,102,241,.2);
+border-radius:12px;
+padding:24px;
+transition:.3s
+}
+
+.card:hover{
+background:rgba(99,102,241,.1);
+transform:translateY(-4px)
+}
+
+.alert-box{
+max-width:800px;
+margin:auto;
+background:rgba(0,0,0,.6);
+border:1px solid rgba(99,102,241,.3);
+border-radius:16px;
+padding:32px;
+font-size:14px;
+line-height:1.7;
+text-align:left
+}
+
+.faq{max-width:900px;margin:auto;text-align:left}
+
+.faq h3{margin-bottom:10px;margin-top:25px;color:#10b981}
+
+footer{
+text-align:center;
+padding:60px 20px;
+color:rgba(255,255,255,.4);
+font-size:12px;
+border-top:1px solid rgba(99,102,241,.1)
+}
+
 @media(max-width:768px){h1{font-size:36px}}
+
 </style>
 </head>
 
@@ -69,14 +188,11 @@ footer{text-align:center;padding:60px 20px;color:rgba(255,255,255,.4);font-size:
 <div class="container">
 
 <header>
-  <div class="logo">
-    <img src="assets/brain-icon.png" alt="TestPilotAI" class="logo-img">
-    <span class="brand-text">
-      TestPilot<span class="logo-ai">AI</span>
-    </span>
-  </div>
-  
-  <a href="waitlist.html" class="btn">REQUEST ACCESS</a>
+<div class="logo">
+<img src="assets/brain-icon.png" alt="TestPilotAI" class="logo-img">
+<span class="brand-text">TestPilot<span class="logo-ai">AI</span></span>
+</div>
+<a href="waitlist.html" class="btn">REQUEST ACCESS</a>
 </header>
 
 <section class="hero">
@@ -87,8 +203,8 @@ Regression Testing for Shopify Teams
 </h1>
 
 <p class="subtitle">
-TestPilotAI simulates real production checkout flows and validates deterministic + structural signals after theme, app, or payment changes. 
-Detect regressions, auth redirects, missing payment elements, and checkout instability before clients notice.
+Simulate real production checkout flows and validate deterministic + structural signals after theme, app, or payment changes. 
+Detect regressions, auth redirects, missing payment elements, and structural instability before clients notice.
 </p>
 
 <a href="waitlist.html" class="cta">Request Technical Access →</a>
@@ -106,7 +222,7 @@ Built for Shopify agencies and technical ecommerce teams.
 <div class="card">🛒 Deterministic cart & variant validation</div>
 <div class="card">💳 Checkout URL & structural signal verification</div>
 <div class="card">🔐 Auth redirect & flow interruption detection</div>
-<div class="card">📊 Weighted semantic + structural scoring</div>
+<div class="card">📊 Weighted structural + semantic scoring</div>
 <div class="card">📸 Screenshot + HTML artifact capture</div>
 </div>
 </section>
@@ -116,16 +232,35 @@ Built for Shopify agencies and technical ecommerce teams.
 <div class="alert-box">
 ⚠️ Checkout Regression Detected<br><br>
 Store: example-store.com<br>
-Stage: Checkout Validation<br>
 Status: Degraded<br>
-Time: 2:14 AM PST<br><br>
-Signals:<br>
-✔ Product Found<br>
-✔ Cart API Success<br>
-✔ Checkout URL Reached<br>
-⚠️ Payment Section Missing<br><br>
 Structural Score: 0.82<br>
 Root Cause: checkout_structure_incomplete<br><br>
+Artifacts: Screenshot + HTML snapshot available for debugging
+</div>
+</section>
+
+<section class="section">
+<h2>Technical FAQ</h2>
+<div class="faq">
+
+<h3>Where does TestPilotAI run?</h3>
+<p>Checkout simulations run against your live production storefront. The system validates real-world behavior after theme, app, or payment changes — not staging-only assumptions.</p>
+
+<h3>Does it execute real transactions?</h3>
+<p>No. The engine validates deterministic checkout signals without completing live payments.</p>
+
+<h3>How is this different from Cypress or Playwright tests?</h3>
+<p>Traditional test suites typically run in staging. TestPilotAI continuously validates production checkout flows and detects regressions that only surface in live storefront conditions.</p>
+
+<h3>What signals are evaluated?</h3>
+<p>The engine combines deterministic signals (URL state, cart integrity, variant confirmation) with weighted structural scoring across critical checkout elements.</p>
+
+<h3>What happens when a regression is detected?</h3>
+<p>Each run generates structured output including status (pass, degraded, fail), confidence score, root cause classification, and screenshot + HTML artifacts for debugging.</p>
+
+<h3>Is CI/CD integration supported?</h3>
+<p>Early access focuses on continuous production validation. API-triggered runs and CI integrations are planned based on team feedback.</p>
+
 </div>
 </section>
 
@@ -137,4 +272,3 @@ Root Cause: checkout_structure_incomplete<br><br>
 </div>
 </body>
 </html>
-
