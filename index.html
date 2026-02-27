@@ -5,20 +5,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- SEO -->
-<title>Continuous Revenue Flow Validation for Shopify | TestPilotAI</title>
+<title>TestPilotAI — Checkout Health Monitoring for Ecommerce Agencies</title>
 
-<meta name="description" content="TestPilotAI continuously validates live Shopify checkout flows in production. Detect structural regressions and revenue-impacting issues introduced by theme, app, or payment changes.">
+<meta name="description" content="One dashboard. Every client. Every checkout. Continuous checkout health monitoring for ecommerce agencies — no scripts, no Playwright, just a URL per store.">
 
-<meta name="keywords" content="shopify checkout validation, shopify regression testing, production checkout validation, ecommerce revenue monitoring, shopify deployment verification">
+<meta name="keywords" content="checkout monitoring, ecommerce agency tools, checkout health score, no code checkout testing, multi-store checkout monitoring">
 
 <meta name="author" content="TestPilotAI">
 
-<meta property="og:title" content="TestPilotAI – Continuous Revenue Flow Validation">
-<meta property="og:description" content="Continuous production checkout validation for Shopify deployments.">
+<!-- Open Graph (LinkedIn, Facebook, Slack previews) -->
+<meta property="og:title" content="TestPilotAI — Know your checkout works. Always.">
+<meta property="og:description" content="One dashboard. Every client. Every checkout. Continuous checkout health monitoring for ecommerce agencies — no scripts, no Playwright, just a URL per store.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://testpilotai.io">
 
+<!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="TestPilotAI — Checkout Health Monitoring for Ecommerce Agencies">
+<meta name="twitter:description" content="One dashboard. Every client. Every checkout. No scripts, no Playwright, no setup. Just paste a URL per store.">`
 
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon32.png">
 
@@ -198,31 +202,33 @@ border-top:1px solid rgba(99,102,241,.1)
 <section class="hero">
 
 <h1>
-<span class="gradient">Continuous Revenue Flow Validation</span><br>
-for Shopify Deployments
+<span class="gradient">Know your checkout works.</span><br>
+Always.
 </h1>
 
 <p class="subtitle">
-TestPilotAI continuously validates live production checkout flows — detecting regressions introduced by theme, app, or payment changes before they impact revenue.
+After every theme update, app install, or payment change — TestPilotAI automatically
+validates your live checkout is still working. No scripts, no Playwright, no setup.
+Just paste a URL.
 </p>
 
-<a href="waitlist.html" class="cta">Request Technical Access →</a>
+<a href="waitlist.html" class="cta">Request Access →</a>
 
 <p style="margin-top:16px;font-size:13px;color:rgba(255,255,255,.5)">
-Built for agencies and technical ecommerce teams that deploy frequently.
+Built for agencies managing multiple stores who need continuous proof their clients' checkout is healthy.
 </p>
 
 </section>
 
 <section class="section">
-<h2>Validation Engine</h2>
+<h2>What gets validated on every run</h2>
 <div class="grid">
-<div class="card">Production product discovery and validation</div>
-<div class="card">Deterministic cart and variant verification</div>
-<div class="card">Checkout reachability and structural integrity validation</div>
-<div class="card">Authentication redirect and flow interruption detection</div>
-<div class="card">Detects structural regressions that impact customer checkout</div>
-<div class="card">Artifact capture (HTML + screenshot) for debugging</div>
+<div class="card">Add to cart — product, variant, and quantity confirmed</div>
+<div class="card">Checkout reachability — page loads with all critical elements</div>
+<div class="card">Payment form integrity — fields visible and functional</div>
+<div class="card">Theme change detection — structural regressions caught automatically</div>
+<div class="card">App conflict detection — flow interruptions and auth redirects</div>
+<div class="card">Screenshot + HTML snapshot captured on every run for instant debugging</div>
 </div>
 </section>
 
@@ -241,33 +247,32 @@ Artifacts: Screenshot + HTML snapshot available for inspection
 <h2>Technical FAQ</h2>
 <div class="faq">
 
-<h3>Where does TestPilotAI run?</h3>
-<p>Validation runs against your live production storefront. The system verifies real-world behavior after theme, app, or payment changes — not staging-only assumptions.</p>
+<h3>Do I need to write any code or scripts?</h3>
+<p>No. TestPilotAI requires zero code, zero Playwright knowledge, and zero configuration. Paste your store URL, set a check frequency, and you're live in under 60 seconds.</p>
+
+<h3>How is this different from Checkly or Datadog?</h3>
+<p>Checkly and Datadog require you to write and maintain Playwright test scripts — one per store. TestPilotAI needs only a URL. For agencies managing 10, 20, or 50 stores, that's the difference between hours of setup and 60 seconds.</p>
 
 <h3>Does it execute real transactions?</h3>
-<p>No. The engine validates deterministic checkout signals without completing live payments.</p>
+<p>No. The engine validates deterministic checkout signals — cart, variant, checkout page structure — without completing live payments.</p>
 
-<h3>How is this different from traditional test suites?</h3>
-<p>Most test suites run in staging environments. TestPilotAI continuously validates production checkout flows and detects regressions that only surface under live storefront conditions.</p>
+<h3>Where does it run?</h3>
+<p>Against your live production storefront, not staging. It catches regressions that only surface under real storefront conditions — after a theme update, app install, or payment config change.</p>
 
-<h3>What signals are evaluated?</h3>
-<p>The engine combines deterministic signals (URL state, cart integrity, variant confirmation) with weighted structural scoring across critical checkout elements.</p>
+<h3>What does a health score mean?</h3>
+<p>Each store gets a health score based on recent run history. A score of 100% means every validation has passed. Degraded runs (partial checkout issues) and failures both affect the score, giving you an at-a-glance view of store health over time.</p>
 
-<h3>What happens when validation detects an issue?</h3>
-<p>Each run produces structured output including status (pass, degraded, fail), confidence score, classification, and debugging artifacts.</p>
-
-<h3>Is CI/CD integration supported?</h3>
-<p>Early access focuses on continuous production validation. API-triggered runs and CI integrations are planned based on team feedback.</p>
+<h3>What happens when an issue is detected?</h3>
+<p>You get an immediate email alert with the status (degraded or fail), what was missing, a screenshot, and an HTML snapshot — everything you need to debug fast.</p>
 
 </div>
 </section>
 
 <footer>
 <p>© 2026 TestPilotAI</p>
-<p><a href="mailto:info@testpilotai.io">info@testpilotai.io</a></p>
+<p style="margin-top:8px"><a href="mailto:info@testpilotai.io" style="color:rgba(255,255,255,.4)">info@testpilotai.io</a></p>
 </footer>
 
 </div>
 </body>
 </html>
-
