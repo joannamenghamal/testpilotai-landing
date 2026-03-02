@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Blog — TestPilotAI</title>
+<meta name="description" content="Insights on checkout health monitoring, Shopify operations, and ecommerce reliability for agencies.">
+<meta name="keywords" content="checkout monitoring blog, Shopify agency insights, ecommerce QA, checkout health score">
+<meta name="author" content="TestPilotAI">
+
+<meta property="og:title" content="Blog — TestPilotAI">
+<meta property="og:description" content="Insights on checkout health monitoring, Shopify operations, and ecommerce reliability for agencies.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://testpilotai.io/blog.html">
+
+<link rel="canonical" href="https://testpilotai.io/blog.html">
+<link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon32.png">
+
+<style>
+
+*{margin:0;padding:0;box-sizing:border-box}
+
+@keyframes pulse{0%,100%{opacity:.3}50%{opacity:.8}}
+
+body{
+font-family:'Courier New', monospace;
+background:#0a0a0f;
+color:white;
+overflow-x:hidden;
+min-height:100vh;
+}
+
+.grid-bg{
+position:fixed;
+inset:0;
+background-image:
+linear-gradient(rgba(99,102,241,.08) 1px,transparent 1px),
+linear-gradient(90deg,rgba(99,102,241,.08) 1px,transparent 1px);
+background-size:40px 40px;
+z-index:0;
+}
+
+.orb{
+position:fixed;
+border-radius:50%;
+filter:blur(80px);
+animation:pulse 4s ease-in-out infinite;
+z-index:1;
+}
+
+.orb1{width:400px;height:400px;background:radial-gradient(circle,rgba(99,102,241,.4),transparent);top:-100px;left:-100px}
+.orb2{width:300px;height:300px;background:radial-gradient(circle,rgba(139,92,246,.3),transparent);top:30%;right:-50px;animation-delay:2s}
+.orb3{width:350px;height:350px;background:radial-gradient(circle,rgba(16,185,129,.2),transparent);bottom:-100px;right:20%;animation-delay:1s}
+
+.container{position:relative;z-index:2;max-width:1200px;margin:auto;padding:0 20px}
+
+header{display:flex;justify-content:space-between;align-items:center;padding:30px 0}
+
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+
+.logo-img{height:64px;width:auto;display:block}
+
+.brand-text{font-size:20px;font-weight:500;letter-spacing:1px;color:white}
+
+.logo-ai{color:#6366f1}
+
+.nav{display:flex;align-items:center;gap:16px}
+
+.btn{
+padding:12px 24px;
+background:rgba(99,102,241,.1);
+border:1px solid rgba(99,102,241,.3);
+border-radius:8px;
+color:white;
+text-decoration:none;
+font-weight:600;
+transition:.3s;
+font-family:'Courier New', monospace;
+}
+
+.btn:hover{
+background:rgba(99,102,241,.2);
+border-color:rgba(99,102,241,.6);
+transform:translateY(-2px)
+}
+
+.nav-link{
+color:rgba(255,255,255,.6);
+text-decoration:none;
+font-size:14px;
+transition:.2s;
+}
+
+.nav-link:hover{color:white}
+.nav-link.active{color:#10b981}
+
+.page-hero{
+text-align:center;
+padding:80px 20px 60px;
+}
+
+.page-hero h1{
+font-size:42px;
+margin-bottom:16px;
+}
+
+.gradient{
+background:linear-gradient(135deg,#6366f1,#8b5cf6,#10b981);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.page-hero p{
+font-size:16px;
+color:rgba(255,255,255,.55);
+font-family:system-ui;
+}
+
+.posts-grid{
+max-width:860px;
+margin:0 auto;
+padding:0 20px 100px;
+display:flex;
+flex-direction:column;
+gap:24px;
+}
+
+.post-card{
+background:rgba(99,102,241,.05);
+border:1px solid rgba(99,102,241,.2);
+border-radius:14px;
+padding:32px;
+transition:.3s;
+text-decoration:none;
+display:block;
+}
+
+.post-card:hover{
+background:rgba(99,102,241,.1);
+border-color:rgba(99,102,241,.5);
+transform:translateY(-3px);
+}
+
+.post-meta{
+font-size:12px;
+color:rgba(255,255,255,.4);
+margin-bottom:12px;
+letter-spacing:.5px;
+}
+
+.post-tag{
+display:inline-block;
+padding:3px 10px;
+background:rgba(16,185,129,.1);
+border:1px solid rgba(16,185,129,.3);
+border-radius:20px;
+font-size:11px;
+color:#10b981;
+margin-right:8px;
+}
+
+.post-card h2{
+font-size:22px;
+font-weight:700;
+color:white;
+margin-bottom:12px;
+line-height:1.4;
+font-family:system-ui;
+}
+
+.post-card p{
+font-size:15px;
+color:rgba(255,255,255,.6);
+line-height:1.7;
+font-family:system-ui;
+}
+
+.read-more{
+display:inline-block;
+margin-top:18px;
+font-size:13px;
+color:#6366f1;
+font-weight:600;
+}
+
+footer{
+text-align:center;
+padding:60px 20px;
+color:rgba(255,255,255,.4);
+font-size:12px;
+border-top:1px solid rgba(99,102,241,.1);
+}
+
+@media(max-width:768px){.page-hero h1{font-size:28px}}
+
+</style>
+</head>
+
+<body>
+
+<div class="grid-bg"></div>
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+<div class="orb orb3"></div>
+
+<div class="container">
+
+<header>
+  <a href="index.html" class="logo">
+    <img src="assets/brain-icon.png" alt="TestPilotAI" class="logo-img">
+    <span class="brand-text">TestPilot<span class="logo-ai">AI</span></span>
+  </a>
+  <div class="nav">
+    <a href="blog.html" class="nav-link active">Blog</a>
+    <a href="waitlist.html" class="btn">REQUEST ACCESS</a>
+  </div>
+</header>
+
+<div class="page-hero">
+  <h1><span class="gradient">Blog</span></h1>
+  <p>Insights on checkout health, Shopify operations, and ecommerce reliability.</p>
+</div>
+
+<div class="posts-grid">
+
+  <a href="posts/checkout-health-monitoring-shopify-agencies.html" class="post-card">
+    <div class="post-meta">
+      <span class="post-tag">Agencies</span>
+      <span class="post-tag">Monitoring</span>
+      March 2, 2026
+    </div>
+    <h2>Checkout Health Monitoring for Shopify Agencies</h2>
+    <p>Most Shopify agencies are great at building and optimizing stores. Far fewer are actively monitoring whether those stores continue to work correctly over time. Themes change. Apps update. Payment providers evolve.</p>
+    <span class="read-more">Read article →</span>
+  </a>
+
+</div>
+
+</div>
+
+<footer>
+  <p>© 2026 TestPilotAI</p>
+  <p style="margin-top:8px"><a href="mailto:info@testpilotai.io" style="color:rgba(255,255,255,.4)">info@testpilotai.io</a></p>
+</footer>
+
+</body>
+</html>

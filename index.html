@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- SEO -->
+<title>TestPilotAI — Checkout Health Monitoring for Ecommerce Agencies</title>
+
+<meta name="description" content="One dashboard. Every client. Every checkout. Continuous checkout health monitoring for ecommerce agencies — no scripts, no Playwright, just a URL per store.">
+
+<meta name="keywords" content="checkout monitoring, ecommerce agency tools, checkout health score, no code checkout testing, multi-store checkout monitoring">
+
+<meta name="author" content="TestPilotAI">
+
+<!-- Open Graph (LinkedIn, Facebook, Slack previews) -->
+<meta property="og:title" content="TestPilotAI — Know your checkout works. Always.">
+<meta property="og:description" content="One dashboard. Every client. Every checkout. Continuous checkout health monitoring for ecommerce agencies — no scripts, no Playwright, just a URL per store.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://testpilotai.io">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="TestPilotAI — Checkout Health Monitoring for Ecommerce Agencies">
+<meta name="twitter:description" content="One dashboard. Every client. Every checkout. No scripts, no Playwright, no setup. Just paste a URL per store.">
+
+<link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon32.png">
+
+<style>
+
+/* RESET */
+*{margin:0;padding:0;box-sizing:border-box}
+
+@keyframes pulse{0%,100%{opacity:.3}50%{opacity:.8}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
+
+body{
+font-family:'Courier New', monospace;
+background:#0a0a0f;
+color:white;
+overflow-x:hidden;
+min-height:100vh;
+}
+
+.grid-bg{
+position:fixed;
+inset:0;
+background-image:
+linear-gradient(rgba(99,102,241,.08) 1px,transparent 1px),
+linear-gradient(90deg,rgba(99,102,241,.08) 1px,transparent 1px);
+background-size:40px 40px;
+z-index:0;
+}
+
+.orb{
+position:fixed;
+border-radius:50%;
+filter:blur(80px);
+animation:pulse 4s ease-in-out infinite;
+z-index:1;
+}
+
+.orb1{width:400px;height:400px;background:radial-gradient(circle,rgba(99,102,241,.4),transparent);top:-100px;left:-100px}
+.orb2{width:300px;height:300px;background:radial-gradient(circle,rgba(139,92,246,.3),transparent);top:30%;right:-50px;animation-delay:2s}
+.orb3{width:350px;height:350px;background:radial-gradient(circle,rgba(16,185,129,.2),transparent);bottom:-100px;right:20%;animation-delay:1s}
+
+.container{position:relative;z-index:2;max-width:1200px;margin:auto;padding:0 20px}
+
+header{display:flex;justify-content:space-between;align-items:center;padding:30px 0}
+
+.logo{display:flex;align-items:center;gap:10px}
+
+.logo-img{height:64px;width:auto;display:block}
+
+.brand-text{font-size:20px;font-weight:500;letter-spacing:1px}
+
+.logo-ai{color:#6366f1}
+
+.btn{
+padding:12px 24px;
+background:rgba(99,102,241,.1);
+border:1px solid rgba(99,102,241,.3);
+border-radius:8px;
+color:white;
+text-decoration:none;
+font-weight:600;
+transition:.3s
+}
+
+.btn:hover{
+background:rgba(99,102,241,.2);
+border-color:rgba(99,102,241,.6);
+transform:translateY(-2px)
+}
+
+.hero{text-align:center;padding:100px 20px 80px;max-width:900px;margin:auto}
+
+h1{font-size:56px;margin-bottom:24px;animation:float 6s infinite}
+
+.gradient{
+background:linear-gradient(135deg,#6366f1,#8b5cf6,#10b981);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent
+}
+
+.subtitle{
+font-size:18px;
+color:rgba(255,255,255,.65);
+margin-bottom:40px;
+line-height:1.6;
+font-family:system-ui
+}
+
+.cta{
+padding:16px 32px;
+background:linear-gradient(135deg,#6366f1,#8b5cf6);
+border-radius:10px;
+color:white;
+font-weight:600;
+text-decoration:none;
+box-shadow:0 10px 30px rgba(99,102,241,.3);
+transition:.3s;
+display:inline-block
+}
+
+.cta:hover{
+transform:translateY(-2px);
+box-shadow:0 15px 40px rgba(99,102,241,.5)
+}
+
+.section{padding:80px 20px;text-align:center}
+
+.section h2{font-size:36px;margin-bottom:40px}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:24px;
+max-width:900px;
+margin:auto
+}
+
+.card{
+background:rgba(99,102,241,.05);
+border:1px solid rgba(99,102,241,.2);
+border-radius:12px;
+padding:24px;
+transition:.3s
+}
+
+.card:hover{
+background:rgba(99,102,241,.1);
+transform:translateY(-4px)
+}
+
+.alert-box{
+max-width:800px;
+margin:auto;
+background:rgba(0,0,0,.6);
+border:1px solid rgba(99,102,241,.3);
+border-radius:16px;
+padding:32px;
+font-size:14px;
+line-height:1.7;
+text-align:left
+}
+
+.faq{max-width:900px;margin:auto;text-align:left}
+
+.faq h3{margin-bottom:10px;margin-top:25px;color:#10b981}
+
+footer{
+text-align:center;
+padding:60px 20px;
+color:rgba(255,255,255,.4);
+font-size:12px;
+border-top:1px solid rgba(99,102,241,.1)
+}
+
+@media(max-width:768px){h1{font-size:36px}}
+
+</style>
+</head>
+
+<body>
+
+<div class="grid-bg"></div>
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+<div class="orb orb3"></div>
+
+<div class="container">
+
+<header>
+<div class="logo">
+<img src="assets/brain-icon.png" alt="TestPilotAI" class="logo-img">
+<span class="brand-text">TestPilot<span class="logo-ai">AI</span></span>
+</div>
+<div style="display:flex;align-items:center;gap:16px">
+<a href="blog.html" style="color:rgba(255,255,255,.6);text-decoration:none;font-size:14px;transition:.2s" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,.6)'">Blog</a>
+<a href="waitlist.html" class="btn">REQUEST ACCESS</a>
+</div>
+</header>
+
+<section class="hero">
+
+<h1>
+<span class="gradient">Know your checkout works.</span><br>
+Always.
+</h1>
+
+<p class="subtitle">
+After every theme update, app install, or payment change — TestPilotAI automatically
+validates your live checkout is still working. No scripts, no Playwright, no setup.
+Just paste a URL.
+</p>
+
+<a href="waitlist.html" class="cta">Request Access →</a>
+
+<p style="margin-top:16px;font-size:13px;color:rgba(255,255,255,.5)">
+Built for agencies managing multiple stores who need continuous proof their clients' checkout is healthy.
+</p>
+
+</section>
+
+<section class="section">
+<h2>What gets validated on every run</h2>
+<div class="grid">
+<div class="card">Add to cart — product, variant, and quantity confirmed</div>
+<div class="card">Checkout reachability — page loads with all critical elements</div>
+<div class="card">Payment form integrity — fields visible and functional</div>
+<div class="card">Theme change detection — structural regressions caught automatically</div>
+<div class="card">App conflict detection — flow interruptions and auth redirects</div>
+<div class="card">Screenshot + HTML snapshot captured on every run for instant debugging</div>
+</div>
+</section>
+
+<section class="section">
+<h2>Structured Validation Output</h2>
+<div class="alert-box">
+Validation Result: Degraded<br><br>
+Store: example-store.com<br>
+Structural Score: 0.82<br>
+Classification: checkout_structure_incomplete<br><br>
+Artifacts: Screenshot + HTML snapshot available for inspection
+</div>
+</section>
+
+<section class="section">
+<h2>Technical FAQ</h2>
+<div class="faq">
+
+<h3>Do I need to write any code or scripts?</h3>
+<p>No. TestPilotAI requires zero code, zero Playwright knowledge, and zero configuration. Paste your store URL, set a check frequency, and you're live in under 60 seconds.</p>
+
+<h3>How is this different from Checkly or Datadog?</h3>
+<p>Checkly and Datadog require you to write and maintain Playwright test scripts — one per store. TestPilotAI needs only a URL. For agencies managing 10, 20, or 50 stores, that's the difference between hours of setup and 60 seconds.</p>
+
+<h3>Does it execute real transactions?</h3>
+<p>No. The engine validates deterministic checkout signals — cart, variant, checkout page structure — without completing live payments.</p>
+
+<h3>Where does it run?</h3>
+<p>Against your live production storefront, not staging. It catches regressions that only surface under real storefront conditions — after a theme update, app install, or payment config change.</p>
+
+<h3>What does a health score mean?</h3>
+<p>Each store gets a health score based on recent run history. A score of 100% means every validation has passed. Degraded runs (partial checkout issues) and failures both affect the score, giving you an at-a-glance view of store health over time.</p>
+
+<h3>What happens when an issue is detected?</h3>
+<p>You get an immediate email alert with the status (degraded or fail), what was missing, a screenshot, and an HTML snapshot — everything you need to debug fast.</p>
+
+</div>
+</section>
+
+<footer>
+<p>© 2026 TestPilotAI</p>
+<p style="margin-top:8px"><a href="mailto:info@testpilotai.io" style="color:rgba(255,255,255,.4)">info@testpilotai.io</a></p>
+</footer>
+
+</div>
+</body>
+</html>
