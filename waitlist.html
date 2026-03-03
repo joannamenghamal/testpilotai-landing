@@ -4,449 +4,427 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Blog — TestPilotAI</title>
-<meta name="description" content="Insights on checkout health monitoring, Shopify operations, and ecommerce reliability for agencies and store owners.">
-<meta name="keywords" content="checkout monitoring blog, Shopify agency insights, ecommerce QA, checkout health score">
-<meta name="author" content="TestPilotAI">
-<meta property="og:title" content="Blog — TestPilotAI">
-<meta property="og:description" content="Insights on checkout health monitoring, Shopify operations, and ecommerce reliability.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://testpilotai.io/blog.html">
-<link rel="canonical" href="https://testpilotai.io/blog.html">
+<title>TestPilotAI — Get Early Access Free</title>
+<meta name="description" content="Get free early access to TestPilotAI. Continuous Shopify checkout health monitoring — no scripts, no Playwright, just paste a URL.">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon32.png">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@300;400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-  --bg: #f5f2eb;
-  --bg2: #ede9e0;
-  --ink: #0f0e0c;
-  --ink2: #3a3830;
-  --muted: #8a8070;
-  --red: #c8391a;
-  --green: #1a6b3a;
-  --border: #d4cfc4;
-  --mono: 'IBM Plex Mono', monospace;
-  --display: 'Bebas Neue', sans-serif;
-  --serif: 'Fraunces', serif;
+–bg: #0b0f1a;
+–bg2: #0f1525;
+–surface: #141929;
+–surface2: #1a2035;
+–border: rgba(255,255,255,0.07);
+–border2: rgba(255,255,255,0.12);
+–text: #e8eaf0;
+–muted: #5a6080;
+–muted2: #8a90a8;
+–green: #00d97e;
+–green-dim: rgba(0,217,126,0.12);
+–red: #ff4757;
+–mono: ‘Space Mono’, monospace;
+–sans: ‘DM Sans’, sans-serif;
 }
 
+html { scroll-behavior: smooth; }
+
 body {
-  background: var(--bg);
-  color: var(--ink);
-  font-family: var(--mono);
-  min-height: 100vh;
-  overflow-x: hidden;
+background: var(–bg);
+color: var(–text);
+font-family: var(–sans);
+min-height: 100vh;
+overflow-x: hidden;
+}
+
+body::before {
+content: ‘’;
+position: fixed;
+inset: 0;
+background-image:
+linear-gradient(rgba(79,142,247,0.03) 1px, transparent 1px),
+linear-gradient(90deg, rgba(79,142,247,0.03) 1px, transparent 1px);
+background-size: 48px 48px;
+pointer-events: none;
+z-index: 0;
 }
 
 body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 999;
+content: ‘’;
+position: fixed;
+top: -200px;
+left: 50%;
+transform: translateX(-50%);
+width: 800px;
+height: 400px;
+background: radial-gradient(ellipse, rgba(0,217,126,0.05) 0%, transparent 70%);
+pointer-events: none;
+z-index: 0;
 }
 
+/* NAV */
 nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 48px;
-  border-bottom: 1px solid var(--border);
-  position: sticky;
-  top: 0;
-  background: rgba(245,242,235,0.95);
-  backdrop-filter: blur(8px);
-  z-index: 100;
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 0 48px;
+height: 64px;
+border-bottom: 1px solid var(–border);
+background: rgba(11,15,26,0.9);
+backdrop-filter: blur(16px);
+position: sticky;
+top: 0;
+z-index: 100;
 }
 
 .nav-logo {
-  font-family: var(--display);
-  font-size: 22px;
-  letter-spacing: 0.05em;
-  color: var(--ink);
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: 10px;
+font-family: var(–mono);
+font-size: 15px;
+font-weight: 700;
+letter-spacing: 0.06em;
+color: var(–text);
+text-decoration: none;
+display: flex;
+align-items: center;
+gap: 10px;
 }
 
-.logo-status {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: var(--green);
-  box-shadow: 0 0 0 3px rgba(26,107,58,0.15);
-  animation: statusPulse 2.5s ease infinite;
+.nav-pulse {
+width: 8px; height: 8px;
+border-radius: 50%;
+background: var(–green);
+animation: navPulse 2s ease infinite;
 }
 
-@keyframes statusPulse {
-  0%,100% { box-shadow: 0 0 0 3px rgba(26,107,58,0.15); }
-  50% { box-shadow: 0 0 0 6px rgba(26,107,58,0.05); }
+@keyframes navPulse {
+0% { box-shadow: 0 0 0 0 rgba(0,217,126,0.4); }
+70% { box-shadow: 0 0 0 8px rgba(0,217,126,0); }
+100% { box-shadow: 0 0 0 0 rgba(0,217,126,0); }
 }
 
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 32px;
+.nav-back {
+font-family: var(–mono);
+font-size: 12px;
+letter-spacing: 0.08em;
+text-transform: uppercase;
+color: var(–muted2);
+text-decoration: none;
+transition: color 0.2s;
+display: flex;
+align-items: center;
+gap: 8px;
 }
 
-.nav-link {
-  font-size: 12px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--muted);
-  text-decoration: none;
-  transition: color 0.2s;
+.nav-back::before { content: ‘←’; }
+.nav-back:hover { color: var(–text); }
+
+/* LAYOUT */
+.page {
+display: grid;
+grid-template-columns: 1fr 1fr;
+min-height: calc(100vh - 64px);
+position: relative;
+z-index: 1;
 }
 
-.nav-link:hover, .nav-link.active { color: var(--ink); }
-
-.nav-cta {
-  font-size: 12px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: white;
-  background: var(--ink);
-  padding: 10px 20px;
-  text-decoration: none;
-  transition: background 0.2s;
-  border: 1px solid var(--ink);
+/* LEFT */
+.page-left {
+padding: 80px 64px;
+border-right: 1px solid var(–border);
+display: flex;
+flex-direction: column;
+justify-content: center;
+background: var(–surface);
+position: relative;
+overflow: hidden;
 }
 
-.nav-cta:hover { background: var(--red); border-color: var(--red); }
-
-/* PAGE HEADER */
-.page-header {
-  padding: 80px 48px 60px;
-  border-bottom: 1px solid var(--border);
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0;
-  align-items: end;
+.page-left::before {
+content: ‘’;
+position: absolute;
+top: -100px;
+left: -100px;
+width: 400px;
+height: 400px;
+background: radial-gradient(ellipse, rgba(0,217,126,0.06) 0%, transparent 65%);
+pointer-events: none;
 }
 
-.header-left { border-right: 1px solid var(--border); padding-right: 48px; }
-
-.header-tag {
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--red);
-  margin-bottom: 16px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  animation: fadeUp 0.6s 0.1s ease both;
+.left-eyebrow {
+font-family: var(–mono);
+font-size: 11px;
+letter-spacing: 0.15em;
+text-transform: uppercase;
+color: var(–green);
+margin-bottom: 24px;
+display: flex;
+align-items: center;
+gap: 10px;
+animation: fadeUp 0.6s 0.1s ease both;
 }
 
-.header-tag::before { content: ''; width: 24px; height: 1px; background: var(--red); }
-
-.page-h1 {
-  font-family: var(--display);
-  font-size: clamp(56px, 7vw, 96px);
-  letter-spacing: 0.02em;
-  line-height: 0.95;
-  animation: fadeUp 0.6s 0.15s ease both;
+.left-eyebrow::before {
+content: ‘’;
+width: 20px; height: 1px;
+background: var(–green);
 }
 
-.header-right {
-  padding-left: 48px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding-bottom: 4px;
-  animation: fadeUp 0.6s 0.2s ease both;
+.left-h1 {
+font-size: clamp(36px, 4vw, 52px);
+font-weight: 600;
+line-height: 1.1;
+letter-spacing: -0.02em;
+color: #f0f2f8;
+margin-bottom: 24px;
+animation: fadeUp 0.6s 0.15s ease both;
 }
 
-.header-desc {
-  font-size: 13px;
-  color: var(--ink2);
-  line-height: 1.8;
-  font-weight: 300;
-  max-width: 360px;
-  margin-bottom: 24px;
+.left-h1 .green { color: var(–green); }
+
+.left-body {
+font-size: 14px;
+line-height: 1.8;
+color: var(–muted2);
+font-weight: 300;
+max-width: 380px;
+margin-bottom: 48px;
+animation: fadeUp 0.6s 0.2s ease both;
 }
 
-.post-count {
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--muted);
+.left-body strong { color: var(–text); font-weight: 500; }
+
+/* PERKS */
+.perks {
+display: flex;
+flex-direction: column;
+animation: fadeUp 0.6s 0.25s ease both;
 }
 
-/* POSTS */
-.posts-section {
-  padding: 0 48px 80px;
+.perk {
+display: flex;
+align-items: flex-start;
+gap: 16px;
+padding: 16px 0;
+border-top: 1px solid var(–border);
 }
 
-.posts-grid {
-  display: flex;
-  flex-direction: column;
+.perk:last-child { border-bottom: 1px solid var(–border); }
+
+.perk-icon {
+width: 32px; height: 32px;
+border-radius: 8px;
+background: var(–green-dim);
+border: 1px solid rgba(0,217,126,0.15);
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 14px;
+flex-shrink: 0;
 }
 
-/* Featured first post */
-.post-card-featured {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  border-bottom: 1px solid var(--border);
-  text-decoration: none;
-  color: inherit;
-  transition: background 0.2s;
-  padding: 48px 0;
+.perk-text { flex: 1; }
+
+.perk-title {
+font-size: 14px;
+font-weight: 500;
+color: var(–text);
+margin-bottom: 3px;
 }
 
-.post-card-featured:hover { background: var(--bg2); }
-.post-card-featured:hover .post-arrow { transform: translateX(4px); }
-
-.featured-left { padding-right: 48px; border-right: 1px solid var(--border); }
-.featured-right { padding-left: 48px; display: flex; flex-direction: column; justify-content: center; }
-
-.post-meta {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 16px;
+.perk-desc {
+font-size: 13px;
+color: var(–muted2);
+font-weight: 300;
+line-height: 1.5;
 }
 
-.post-tag {
-  font-size: 10px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--red);
-  border: 1px solid rgba(200,57,26,0.3);
-  padding: 3px 10px;
+/* RIGHT — form */
+.page-right {
+padding: 80px 64px;
+display: flex;
+flex-direction: column;
+justify-content: center;
 }
 
-.post-date {
-  font-size: 11px;
-  color: var(--muted);
-  letter-spacing: 0.05em;
+.form-eyebrow {
+font-family: var(–mono);
+font-size: 11px;
+letter-spacing: 0.15em;
+text-transform: uppercase;
+color: var(–muted);
+margin-bottom: 20px;
+animation: fadeUp 0.6s 0.1s ease both;
 }
 
-.post-h2 {
-  font-family: var(--display);
-  font-size: clamp(28px, 3vw, 44px);
-  letter-spacing: 0.02em;
-  line-height: 1;
-  margin-bottom: 16px;
-  color: var(--ink);
+.form-h2 {
+font-size: clamp(28px, 3vw, 40px);
+font-weight: 600;
+letter-spacing: -0.02em;
+line-height: 1.1;
+color: #f0f2f8;
+margin-bottom: 8px;
+animation: fadeUp 0.6s 0.15s ease both;
 }
 
-.post-excerpt {
-  font-size: 13px;
-  color: var(--ink2);
-  line-height: 1.8;
-  font-weight: 300;
-  margin-bottom: 24px;
+.form-sub {
+font-size: 14px;
+color: var(–muted2);
+font-weight: 300;
+margin-bottom: 40px;
+line-height: 1.6;
+animation: fadeUp 0.6s 0.2s ease both;
 }
 
-.post-readmore {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--red);
+.form {
+display: flex;
+flex-direction: column;
+gap: 20px;
+animation: fadeUp 0.6s 0.25s ease both;
 }
 
-.post-arrow { transition: transform 0.2s; }
+.field { display: flex; flex-direction: column; gap: 8px; }
 
-.featured-label {
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 20px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid var(--border);
+.field-label {
+font-family: var(–mono);
+font-size: 10px;
+letter-spacing: 0.12em;
+text-transform: uppercase;
+color: var(–muted2);
 }
 
-.featured-stat {
-  margin-bottom: 20px;
+.field-input {
+font-family: var(–mono);
+font-size: 13px;
+font-weight: 400;
+color: var(–text);
+background: var(–surface);
+border: 1px solid var(–border2);
+border-radius: 6px;
+padding: 12px 16px;
+outline: none;
+transition: border-color 0.2s, box-shadow 0.2s;
+width: 100%;
 }
 
-.fstat-num {
-  font-family: var(--display);
-  font-size: 48px;
-  letter-spacing: 0.02em;
-  color: var(--red);
-  line-height: 1;
+.field-input:focus {
+border-color: rgba(0,217,126,0.4);
+box-shadow: 0 0 0 3px rgba(0,217,126,0.08);
 }
 
-.fstat-label {
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-top: 4px;
+.field-input::placeholder { color: var(–muted); }
+
+textarea.field-input {
+min-height: 80px;
+resize: vertical;
+line-height: 1.6;
 }
 
-/* Regular post cards */
-.post-card {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  gap: 32px;
-  padding: 28px 0;
-  border-bottom: 1px solid var(--border);
-  text-decoration: none;
-  color: inherit;
-  transition: background 0.2s;
+.submit-btn {
+font-family: var(–mono);
+font-size: 12px;
+font-weight: 700;
+letter-spacing: 0.08em;
+text-transform: uppercase;
+color: var(–bg);
+background: var(–green);
+border: none;
+border-radius: 4px;
+padding: 15px 28px;
+cursor: pointer;
+transition: all 0.2s;
+width: 100%;
+margin-top: 4px;
 }
 
-.post-card:hover { background: var(--bg2); }
-.post-card:hover .post-arrow { transform: translateX(4px); }
-
-.post-num {
-  font-family: var(--display);
-  font-size: 24px;
-  color: var(--muted);
-  letter-spacing: 0.02em;
-  width: 40px;
-  flex-shrink: 0;
+.submit-btn:hover {
+background: #00f090;
+box-shadow: 0 8px 28px rgba(0,217,126,0.3);
 }
 
-.post-info { flex: 1; }
-
-.post-card .post-h2 {
-  font-size: 18px;
-  margin-bottom: 6px;
+.form-note {
+font-family: var(–mono);
+font-size: 11px;
+color: var(–muted);
+text-align: center;
+letter-spacing: 0.04em;
+line-height: 1.6;
 }
 
-.post-card .post-excerpt {
-  font-size: 12px;
-  margin-bottom: 0;
+.success-msg {
+display: none;
+padding: 16px 20px;
+border: 1px solid rgba(0,217,126,0.3);
+background: var(–green-dim);
+border-radius: 6px;
+font-size: 13px;
+color: var(–green);
+line-height: 1.6;
+margin-top: 8px;
 }
 
-/* EMPTY STATE */
-.empty-state {
-  padding: 60px 0;
-  border-bottom: 1px solid var(--border);
-  text-align: center;
+.error-msg {
+display: none;
+padding: 16px 20px;
+border: 1px solid rgba(255,71,87,0.3);
+background: rgba(255,71,87,0.08);
+border-radius: 6px;
+font-size: 13px;
+color: var(–red);
+line-height: 1.6;
+margin-top: 8px;
 }
 
-.empty-text {
-  font-size: 13px;
-  color: var(--muted);
-  font-weight: 300;
-  line-height: 1.8;
-}
-
-/* NEWSLETTER / CTA */
-.blog-cta {
-  padding: 60px 0;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 48px;
-  border-bottom: 1px solid var(--border);
-  align-items: center;
-}
-
-.blog-cta-text {
-  font-family: var(--display);
-  font-size: 36px;
-  letter-spacing: 0.02em;
-  line-height: 1;
-  margin-bottom: 12px;
-}
-
-.blog-cta-sub {
-  font-size: 12px;
-  color: var(--muted);
-  font-weight: 300;
-  line-height: 1.7;
-}
-
-.cta-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  font-family: var(--mono);
-  font-size: 13px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: white;
-  background: var(--red);
-  padding: 16px 28px;
-  text-decoration: none;
-  transition: all 0.2s;
-  width: fit-content;
-  border: 1px solid var(--red);
-}
-
-.cta-btn::after { content: '→'; }
-.cta-btn:hover { background: #a82e14; border-color: #a82e14; }
-
+/* FOOTER */
 footer {
-  padding: 32px 48px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: var(--bg2);
-  border-top: 1px solid var(--border);
+padding: 32px 48px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+border-top: 1px solid var(–border);
+position: relative;
+z-index: 1;
 }
 
 .footer-logo {
-  font-family: var(--display);
-  font-size: 18px;
-  letter-spacing: 0.05em;
-  color: var(--ink);
-  text-decoration: none;
+font-family: var(–mono);
+font-size: 14px;
+font-weight: 700;
+letter-spacing: 0.06em;
+color: var(–muted2);
+text-decoration: none;
+display: flex;
+align-items: center;
+gap: 8px;
 }
 
 .footer-right {
-  display: flex;
-  align-items: center;
-  gap: 32px;
+display: flex;
+align-items: center;
+gap: 32px;
 }
 
 .footer-link {
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--muted);
-  text-decoration: none;
-  transition: color 0.2s;
+font-size: 13px;
+color: var(–muted);
+text-decoration: none;
+transition: color 0.2s;
 }
 
-.footer-link:hover { color: var(--ink); }
+.footer-link:hover { color: var(–text); }
 
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.reveal {
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.js-ready .reveal {
-  opacity: 0;
-  transform: translateY(20px);
-}
-
-.js-ready .reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
+from { opacity: 0; transform: translateY(16px); }
+to { opacity: 1; transform: translateY(0); }
 }
 
 @media (max-width: 900px) {
-  nav { padding: 16px 24px; }
-  .page-header { grid-template-columns: 1fr; padding: 60px 24px 40px; }
-  .header-left { border-right: none; padding-right: 0; border-bottom: 1px solid var(--border); padding-bottom: 32px; margin-bottom: 32px; }
-  .header-right { padding-left: 0; }
-  .posts-section { padding: 0 24px 60px; }
-  .post-card-featured { grid-template-columns: 1fr; }
-  .featured-left { border-right: none; padding-right: 0; border-bottom: 1px solid var(--border); padding-bottom: 32px; margin-bottom: 32px; }
-  .featured-right { padding-left: 0; }
-  .blog-cta { grid-template-columns: 1fr; gap: 24px; }
-  footer { padding: 24px; flex-direction: column; gap: 16px; text-align: center; }
+nav { padding: 0 20px; }
+.page { grid-template-columns: 1fr; }
+.page-left { padding: 60px 20px; border-right: none; border-bottom: 1px solid var(–border); }
+.page-right { padding: 60px 20px; }
+footer { padding: 24px 20px; flex-direction: column; gap: 16px; text-align: center; }
+.footer-right { flex-direction: column; gap: 12px; }
 }
 </style>
 
@@ -455,98 +433,140 @@ footer {
 
 <nav>
   <a class="nav-logo" href="index.html">
-    <span class="logo-status"></span>
-    TESTPILOT<span style="opacity:0.4">AI</span>
+    <span class="nav-pulse"></span>
+    TESTPILOTAI
   </a>
-  <div class="nav-links">
-    <a href="blog.html" class="nav-link active">Blog</a>
-    <a href="waitlist.html" class="nav-cta">Get Early Access</a>
-  </div>
+  <a href="index.html" class="nav-back">Back to home</a>
 </nav>
 
-<div class="page-header">
-  <div class="header-left">
-    <div class="header-tag">TestPilotAI Journal</div>
-    <h1 class="page-h1">The<br>Checkout<br>Blog</h1>
+<div class="page">
+  <div class="page-left">
+    <div class="left-eyebrow">Early Access</div>
+    <h1 class="left-h1">
+      Know your stores<br>are <span class="green">healthy.</span><br>Always.
+    </h1>
+    <p class="left-body">
+      No waitlist. No gatekeeping. Get immediate free access to TestPilotAI and
+      <strong>know your Shopify checkout works after every update</strong> —
+      before a customer finds out it doesn't.
+    </p>
+    <div class="perks">
+      <div class="perk">
+        <div class="perk-icon">⚡</div>
+        <div class="perk-text">
+          <div class="perk-title">60-second setup</div>
+          <div class="perk-desc">Paste your store URL and you're live. No scripts, no Playwright, no configuration.</div>
+        </div>
+      </div>
+      <div class="perk">
+        <div class="perk-icon">🔍</div>
+        <div class="perk-text">
+          <div class="perk-title">Full purchase flow validation</div>
+          <div class="perk-desc">Product discovery, variant selection, add to cart, checkout, payment form — all validated on every run.</div>
+        </div>
+      </div>
+      <div class="perk">
+        <div class="perk-icon">🔴</div>
+        <div class="perk-text">
+          <div class="perk-title">Real-time failure alerts</div>
+          <div class="perk-desc">Email alerts with screenshot + HTML snapshot within seconds of detection.</div>
+        </div>
+      </div>
+      <div class="perk">
+        <div class="perk-icon">🤝</div>
+        <div class="perk-text">
+          <div class="perk-title">Founder onboarding</div>
+          <div class="perk-desc">Direct access to the founder. We'll help you get set up personally.</div>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="header-right">
-    <p class="header-desc">Insights on Shopify checkout failures, ecommerce reliability, and what it actually costs when your store breaks silently.</p>
-    <span class="post-count">1 article published</span>
-  </div>
-</div>
 
-<div class="posts-section">
-  <div class="posts-grid">
+  <div class="page-right">
+    <div class="form-eyebrow">Get started</div>
+    <h2 class="form-h2">Request Access</h2>
+    <p class="form-sub">Free for early users. We'll reach out within 24 hours with your login.</p>
 
 ```
-<!-- Featured post -->
-<a href="posts/checkout-health-monitoring-shopify-agencies.html" class="post-card-featured reveal">
-  <div class="featured-left">
-    <div class="post-meta">
-      <span class="post-tag">Agencies</span>
-      <span class="post-tag">Monitoring</span>
-      <span class="post-date">March 2, 2026</span>
-    </div>
-    <h2 class="post-h2">Checkout Health Monitoring for Shopify Agencies</h2>
-    <p class="post-excerpt">Most Shopify agencies are great at building and optimizing stores. Far fewer are actively monitoring whether those stores continue to work correctly over time. Themes change. Apps update. Payment providers evolve. Here's what breaks — and how to catch it before your clients do.</p>
-    <div class="post-readmore">
-      <span>Read article</span>
-      <span class="post-arrow">→</span>
-    </div>
-  </div>
-  <div class="featured-right">
-    <div class="featured-label">By the numbers</div>
-    <div class="featured-stat">
-      <div class="fstat-num">$18B</div>
-      <div class="fstat-label">Lost annually to checkout abandonment — silent failures make it worse</div>
-    </div>
-    <div class="featured-stat">
-      <div class="fstat-num" style="color:var(--ink)">$0</div>
-      <div class="fstat-label">Cost to monitor with TestPilotAI early access</div>
-    </div>
-  </div>
-</a>
+<form id="accessForm" class="form" action="https://formspree.io/f/xdalpvel" method="POST">
+  <input type="hidden" name="_subject" value="New TestPilotAI Access Request">
+  <input type="hidden" name="_format" value="plain">
 
-<!-- More posts placeholder — remove when you add real posts -->
-<div class="empty-state reveal">
-  <p class="empty-text">More articles coming soon — on Shopify checkout failures, agency workflows, and ecommerce reliability.</p>
-</div>
+  <div class="field">
+    <label class="field-label" for="email">Email address</label>
+    <input class="field-input" id="email" name="email" type="email" placeholder="you@store.com" required>
+  </div>
+
+  <div class="field">
+    <label class="field-label" for="store">Store URL</label>
+    <input class="field-input" id="store" name="store" type="url" placeholder="https://yourstore.com" required>
+  </div>
+
+  <div class="field">
+    <label class="field-label" for="role">Your role</label>
+    <input class="field-input" id="role" name="role" type="text" placeholder="e.g. Store owner, Agency developer, CTO">
+  </div>
+
+  <div class="field">
+    <label class="field-label" for="note">What's your biggest checkout concern? (optional)</label>
+    <textarea class="field-input" id="note" name="note" placeholder="e.g. theme updates breaking checkout, managing multiple client stores, no visibility after deployments..."></textarea>
+  </div>
+
+  <button class="submit-btn" type="submit">Get Free Access →</button>
+
+  <p class="form-note">Free early access · No credit card · We'll reach out within 24hrs</p>
+
+  <div id="success" class="success-msg">
+    ✓ You're in. Check your inbox — we'll reach out within 24 hours with your access details.
+  </div>
+  <div id="error" class="error-msg">
+    Something went wrong. Please try again or email info@testpilotai.io directly.
+  </div>
+</form>
 ```
 
-  </div>
-
-  <!-- Blog CTA -->
-
-  <div class="blog-cta reveal">
-    <div>
-      <div class="blog-cta-text">Stop finding out from customers.</div>
-      <p class="blog-cta-sub">Get free early access to TestPilotAI and know your checkout works after every theme update, app install, or payment change.</p>
-    </div>
-    <a href="waitlist.html" class="cta-btn">Get Early Access Free</a>
   </div>
 </div>
 
 <footer>
-  <a class="footer-logo" href="index.html">TESTPILOTAI</a>
+  <a class="footer-logo" href="index.html">
+    <span style="width:6px;height:6px;border-radius:50%;background:var(--green);display:inline-block"></span>
+    TESTPILOTAI
+  </a>
   <div class="footer-right">
-    <a href="blog.html" class="footer-link active">Blog</a>
+    <a href="blog.html" class="footer-link">Blog</a>
     <a href="mailto:info@testpilotai.io" class="footer-link">info@testpilotai.io</a>
-    <span style="font-size:11px;color:var(--muted);">© 2026 TestPilotAI</span>
+    <span style="font-size:11px;color:var(--muted)">© 2026 TestPilotAI</span>
   </div>
 </footer>
 
 <script>
-  document.documentElement.classList.add('js-ready');
-  const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        observer.unobserve(e.target);
+  const form = document.getElementById('accessForm');
+  const success = document.getElementById('success');
+  const error = document.getElementById('error');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    success.style.display = 'none';
+    error.style.display = 'none';
+
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (res.ok) {
+        form.reset();
+        success.style.display = 'block';
+      } else {
+        error.style.display = 'block';
       }
-    });
-  }, { threshold: 0.08 });
-  reveals.forEach(el => observer.observe(el));
+    } catch (err) {
+      error.style.display = 'block';
+    }
+  });
 </script>
 
 </body>
