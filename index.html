@@ -4,732 +4,941 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>TestPilotAI — Your Shopify Checkout Broke. You Just Don't Know It Yet.</title>
-<meta name="description" content="TestPilotAI catches silent Shopify checkout failures before your customers do. No scripts, no setup — paste a URL and know your checkout works after every theme update, app install, or payment change.">
-<meta name="keywords" content="shopify checkout monitoring, checkout health, shopify theme update testing, ecommerce agency tools, checkout validation">
+<title>TestPilotAI — Checkout Health Monitoring for Shopify</title>
+<meta name="description" content="TestPilotAI gives Shopify agencies a live health score for every store they manage. Know what's working, what's degraded, and what needs attention — before your clients do.">
+<meta name="keywords" content="shopify checkout monitoring, store health score, shopify agency tools, checkout health, ecommerce monitoring">
 <meta name="author" content="TestPilotAI">
-
-<meta property="og:title" content="TestPilotAI — Silent checkout failures are costing Shopify stores thousands.">
-<meta property="og:description" content="TestPilotAI catches checkout failures before your customers do. No scripts, no Playwright, no setup. Just paste a URL.">
+<meta property="og:title" content="TestPilotAI — Every store. Every checkout. One health score.">
+<meta property="og:description" content="Live checkout health monitoring for Shopify agencies. Know your stores are healthy — always.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://testpilotai.io">
-
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="TestPilotAI — Shopify Checkout Monitoring">
-<meta name="twitter:description" content="Know when your checkout breaks — before a customer tells you. No scripts, no setup. Paste a URL.">
-
+<meta name="twitter:title" content="TestPilotAI — Shopify Store Health Monitoring">
+<meta name="twitter:description" content="A live health score for every store you manage. Know what's working, what's degraded, what needs attention.">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon32.png">
 <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon-512x512.png">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@300;400;500&family=Fraunces:ital,wght@0,300;0,600;1,300&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&family=Clash+Display:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-  --bg: #f5f2eb;
-  --bg2: #ede9e0;
-  --ink: #0f0e0c;
-  --ink2: #3a3830;
-  --muted: #8a8070;
-  --red: #c8391a;
-  --red-light: #fdf0ec;
-  --green: #1a6b3a;
-  --green-light: #edf5f0;
-  --border: #d4cfc4;
-  --mono: 'IBM Plex Mono', monospace;
-  --display: 'Bebas Neue', sans-serif;
-  --serif: 'Fraunces', serif;
+–bg: #0b0f1a;
+–bg2: #0f1525;
+–surface: #141929;
+–surface2: #1a2035;
+–border: rgba(255,255,255,0.07);
+–border2: rgba(255,255,255,0.12);
+–text: #e8eaf0;
+–muted: #5a6080;
+–muted2: #8a90a8;
+–green: #00d97e;
+–green-dim: rgba(0,217,126,0.12);
+–amber: #f5a623;
+–amber-dim: rgba(245,166,35,0.12);
+–red: #ff4757;
+–red-dim: rgba(255,71,87,0.12);
+–blue: #4f8ef7;
+–mono: ‘Space Mono’, monospace;
+–sans: ‘DM Sans’, sans-serif;
+–display: ‘DM Sans’, sans-serif;
 }
 
 html { scroll-behavior: smooth; }
 
 body {
-  background: var(--bg);
-  color: var(--ink);
-  font-family: var(--mono);
-  min-height: 100vh;
-  overflow-x: hidden;
+background: var(–bg);
+color: var(–text);
+font-family: var(–sans);
+min-height: 100vh;
+overflow-x: hidden;
 }
 
-/* Subtle noise texture */
+/* Subtle grid */
+body::before {
+content: ‘’;
+position: fixed;
+inset: 0;
+background-image:
+linear-gradient(rgba(79,142,247,0.03) 1px, transparent 1px),
+linear-gradient(90deg, rgba(79,142,247,0.03) 1px, transparent 1px);
+background-size: 48px 48px;
+pointer-events: none;
+z-index: 0;
+}
+
+/* Ambient glow */
 body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 999;
+content: ‘’;
+position: fixed;
+top: -200px;
+left: 50%;
+transform: translateX(-50%);
+width: 800px;
+height: 400px;
+background: radial-gradient(ellipse, rgba(0,217,126,0.06) 0%, transparent 70%);
+pointer-events: none;
+z-index: 0;
 }
 
 /* NAV */
 nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 48px;
-  border-bottom: 1px solid var(--border);
-  position: sticky;
-  top: 0;
-  background: rgba(245, 242, 235, 0.95);
-  backdrop-filter: blur(8px);
-  z-index: 100;
-  animation: fadeDown 0.5s ease both;
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 0 48px;
+height: 64px;
+border-bottom: 1px solid var(–border);
+position: sticky;
+top: 0;
+background: rgba(11,15,26,0.9);
+backdrop-filter: blur(16px);
+z-index: 100;
+position: relative;
 }
 
 .nav-logo {
-  font-family: var(--display);
-  font-size: 22px;
-  letter-spacing: 0.05em;
-  color: var(--ink);
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: 10px;
+font-family: var(–mono);
+font-size: 15px;
+font-weight: 700;
+letter-spacing: 0.06em;
+color: var(–text);
+text-decoration: none;
+display: flex;
+align-items: center;
+gap: 10px;
 }
 
-.logo-status {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: var(--green);
-  box-shadow: 0 0 0 3px rgba(26, 107, 58, 0.15);
-  animation: statusPulse 2.5s ease infinite;
+.nav-pulse {
+width: 8px; height: 8px;
+border-radius: 50%;
+background: var(–green);
+box-shadow: 0 0 0 0 rgba(0,217,126,0.4);
+animation: navPulse 2s ease infinite;
 }
 
-@keyframes statusPulse {
-  0%, 100% { box-shadow: 0 0 0 3px rgba(26,107,58,0.15); }
-  50% { box-shadow: 0 0 0 6px rgba(26,107,58,0.05); }
+@keyframes navPulse {
+0% { box-shadow: 0 0 0 0 rgba(0,217,126,0.4); }
+70% { box-shadow: 0 0 0 8px rgba(0,217,126,0); }
+100% { box-shadow: 0 0 0 0 rgba(0,217,126,0); }
 }
 
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 32px;
-}
+.nav-links { display: flex; align-items: center; gap: 32px; }
 
 .nav-link {
-  font-size: 12px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--muted);
-  text-decoration: none;
-  transition: color 0.2s;
+font-size: 13px;
+color: var(–muted2);
+text-decoration: none;
+transition: color 0.2s;
+font-weight: 400;
 }
 
-.nav-link:hover { color: var(--ink); }
+.nav-link:hover { color: var(–text); }
 
 .nav-cta {
-  font-size: 12px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: white;
-  background: var(--ink);
-  padding: 10px 20px;
-  text-decoration: none;
-  transition: background 0.2s;
-  border: 1px solid var(--ink);
+font-family: var(–mono);
+font-size: 12px;
+font-weight: 700;
+letter-spacing: 0.08em;
+text-transform: uppercase;
+color: var(–bg);
+background: var(–green);
+padding: 9px 20px;
+text-decoration: none;
+transition: all 0.2s;
+border-radius: 4px;
 }
 
-.nav-cta:hover { background: var(--red); border-color: var(--red); }
+.nav-cta:hover {
+background: #00f090;
+box-shadow: 0 4px 20px rgba(0,217,126,0.3);
+}
 
 /* HERO */
 .hero {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  min-height: calc(100vh - 61px);
-  border-bottom: 1px solid var(--border);
+display: grid;
+grid-template-columns: 1fr 1fr;
+min-height: calc(100vh - 64px);
+position: relative;
+z-index: 1;
 }
 
 .hero-left {
-  padding: 80px 48px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  border-right: 1px solid var(--border);
+padding: 80px 64px 80px 48px;
+display: flex;
+flex-direction: column;
+justify-content: center;
+border-right: 1px solid var(–border);
 }
 
-.hero-tag {
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--red);
-  margin-bottom: 24px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  animation: fadeUp 0.6s 0.1s ease both;
+.hero-badge {
+display: inline-flex;
+align-items: center;
+gap: 8px;
+background: var(–green-dim);
+border: 1px solid rgba(0,217,126,0.2);
+padding: 6px 14px;
+border-radius: 100px;
+font-size: 11px;
+font-weight: 500;
+color: var(–green);
+letter-spacing: 0.06em;
+text-transform: uppercase;
+margin-bottom: 32px;
+width: fit-content;
+animation: fadeUp 0.6s 0.1s ease both;
 }
 
-.hero-tag::before {
-  content: '';
-  width: 24px; height: 1px;
-  background: var(--red);
+.badge-dot {
+width: 6px; height: 6px;
+border-radius: 50%;
+background: var(–green);
+animation: navPulse 2s ease infinite;
 }
 
 .hero-h1 {
-  font-family: var(--display);
-  font-size: clamp(52px, 6vw, 84px);
-  line-height: 0.95;
-  letter-spacing: 0.02em;
-  margin-bottom: 28px;
-  animation: fadeUp 0.6s 0.15s ease both;
+font-size: clamp(40px, 4.5vw, 62px);
+font-weight: 600;
+line-height: 1.1;
+letter-spacing: -0.02em;
+margin-bottom: 24px;
+animation: fadeUp 0.6s 0.15s ease both;
+color: #f0f2f8;
 }
 
-.hero-h1 .red { color: var(--red); }
-.hero-h1 .serif-word {
-  font-family: var(--serif);
-  font-style: italic;
-  font-weight: 300;
-  font-size: 0.85em;
+.hero-h1 .green { color: var(–green); }
+.hero-h1 .dim { color: var(–muted2); font-weight: 300; }
+
+.hero-sub {
+font-size: 15px;
+line-height: 1.75;
+color: var(–muted2);
+max-width: 440px;
+margin-bottom: 40px;
+font-weight: 300;
+animation: fadeUp 0.6s 0.2s ease both;
 }
 
-.hero-body {
-  font-size: 14px;
-  line-height: 1.75;
-  color: var(--ink2);
-  max-width: 440px;
-  margin-bottom: 40px;
-  font-weight: 300;
-  animation: fadeUp 0.6s 0.2s ease both;
-}
+.hero-sub strong { color: var(–text); font-weight: 500; }
 
-.hero-body strong { color: var(--ink); font-weight: 500; }
-
-.hero-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  animation: fadeUp 0.6s 0.25s ease both;
+.hero-cta {
+display: flex;
+align-items: center;
+gap: 16px;
+animation: fadeUp 0.6s 0.25s ease both;
+margin-bottom: 56px;
 }
 
 .btn-primary {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  font-family: var(--mono);
-  font-size: 13px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: white;
-  background: var(--red);
-  padding: 16px 28px;
-  text-decoration: none;
-  transition: all 0.2s;
-  width: fit-content;
-  border: 1px solid var(--red);
+display: inline-flex;
+align-items: center;
+gap: 8px;
+font-family: var(–mono);
+font-size: 12px;
+font-weight: 700;
+letter-spacing: 0.08em;
+text-transform: uppercase;
+color: var(–bg);
+background: var(–green);
+padding: 14px 24px;
+text-decoration: none;
+transition: all 0.2s;
+border-radius: 4px;
+border: 1px solid var(–green);
 }
 
 .btn-primary:hover {
-  background: #a82e14;
-  border-color: #a82e14;
-  transform: translateY(-1px);
-  box-shadow: 0 8px 24px rgba(200, 57, 26, 0.25);
+background: #00f090;
+box-shadow: 0 8px 28px rgba(0,217,126,0.3);
+transform: translateY(-1px);
 }
 
-.btn-primary::after { content: '→'; }
+.btn-primary::after { content: ‘→’; }
 
 .hero-note {
-  font-size: 11px;
-  color: var(--muted);
-  letter-spacing: 0.05em;
+font-size: 12px;
+color: var(–muted);
+font-family: var(–mono);
 }
 
-/* INCIDENT COUNTER */
-.incident-strip {
-  display: flex;
-  gap: 0;
-  margin-top: 56px;
-  padding-top: 32px;
-  border-top: 1px solid var(--border);
-  animation: fadeUp 0.6s 0.35s ease both;
+/* METRICS ROW */
+.metrics-row {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 0;
+border: 1px solid var(–border);
+border-radius: 8px;
+overflow: hidden;
+animation: fadeUp 0.6s 0.3s ease both;
 }
 
-.incident-stat {
-  flex: 1;
-  padding-right: 24px;
+.metric {
+padding: 20px 24px;
+border-right: 1px solid var(–border);
+background: var(–surface);
 }
 
-.incident-stat + .incident-stat {
-  padding-left: 24px;
-  border-left: 1px solid var(--border);
+.metric:last-child { border-right: none; }
+
+.metric-val {
+font-family: var(–mono);
+font-size: 24px;
+font-weight: 700;
+color: var(–green);
+line-height: 1;
+margin-bottom: 6px;
 }
 
-.stat-num {
-  font-family: var(--display);
-  font-size: 40px;
-  letter-spacing: 0.02em;
-  color: var(--ink);
-  line-height: 1;
+.metric-val.amber { color: var(–amber); }
+.metric-val.white { color: var(–text); }
+
+.metric-label {
+font-size: 11px;
+color: var(–muted);
+line-height: 1.4;
+font-weight: 400;
 }
 
-.stat-num.red { color: var(--red); }
-
-.stat-label {
-  font-size: 10px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-top: 6px;
-  line-height: 1.4;
-}
-
-/* HERO RIGHT */
+/* HERO RIGHT — dashboard */
 .hero-right {
-  background: var(--ink);
-  padding: 60px 48px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 20px;
-  position: relative;
-  overflow: hidden;
+padding: 48px 48px 48px 40px;
+display: flex;
+flex-direction: column;
+justify-content: center;
+gap: 16px;
+position: relative;
+z-index: 1;
 }
 
-/* Diagonal lines background */
-.hero-right::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: repeating-linear-gradient(
-    -45deg,
-    transparent,
-    transparent 20px,
-    rgba(255,255,255,0.015) 20px,
-    rgba(255,255,255,0.015) 21px
-  );
+/* DASHBOARD MOCKUP */
+.dashboard {
+background: var(–surface);
+border: 1px solid var(–border2);
+border-radius: 12px;
+overflow: hidden;
+box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+animation: fadeUp 0.7s 0.2s ease both;
 }
 
-.terminal-label {
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.3);
-  animation: fadeUp 0.6s 0.3s ease both;
-  position: relative;
+.dash-header {
+padding: 14px 20px;
+background: var(–surface2);
+border-bottom: 1px solid var(–border);
+display: flex;
+align-items: center;
+justify-content: space-between;
 }
 
-.terminal {
-  background: #0a0a08;
-  border: 1px solid rgba(255,255,255,0.08);
-  overflow: hidden;
-  position: relative;
-  animation: fadeUp 0.6s 0.35s ease both;
+.dash-title {
+font-family: var(–mono);
+font-size: 11px;
+color: var(–muted2);
+letter-spacing: 0.08em;
 }
 
-.terminal-bar {
-  background: #161614;
-  padding: 10px 16px;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-  display: flex;
-  align-items: center;
-  gap: 8px;
+.dash-status {
+display: flex;
+align-items: center;
+gap: 6px;
+font-size: 11px;
+color: var(–green);
+font-family: var(–mono);
 }
 
-.tdot { width: 10px; height: 10px; border-radius: 50%; }
-.tdot.r { background: #ff5f57; }
-.tdot.y { background: #febc2e; }
-.tdot.g { background: #28c840; }
-
-.ttitle {
-  font-size: 11px;
-  color: rgba(255,255,255,0.25);
-  margin-left: 8px;
-  letter-spacing: 0.05em;
+.dash-status-dot {
+width: 6px; height: 6px;
+border-radius: 50%;
+background: var(–green);
+animation: navPulse 2s ease infinite;
 }
 
-.terminal-body {
-  padding: 20px 24px;
-  font-size: 12px;
-  line-height: 2;
+.dash-body { padding: 16px; display: flex; flex-direction: column; gap: 8px; }
+
+/* Store rows */
+.store-row {
+display: flex;
+align-items: center;
+gap: 12px;
+padding: 12px 14px;
+background: var(–bg2);
+border: 1px solid var(–border);
+border-radius: 6px;
+transition: border-color 0.2s;
 }
 
-.tl { display: flex; gap: 10px; align-items: flex-start; }
-.tp { color: #c8391a; flex-shrink: 0; }
-.tc { color: rgba(255,255,255,0.7); }
-.to { color: rgba(255,255,255,0.35); padding-left: 18px; }
-.tpass { color: #28c840; }
-.tfail { color: #ff5f57; }
-.twarn { color: #febc2e; }
-.tdivider { border: none; border-top: 1px solid rgba(255,255,255,0.06); margin: 8px 0; }
+.store-indicator {
+width: 8px; height: 8px;
+border-radius: 50%;
+flex-shrink: 0;
+}
 
-.blink { animation: blink 1s step-end infinite; }
-@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+.store-indicator.green { background: var(–green); box-shadow: 0 0 8px rgba(0,217,126,0.5); }
+.store-indicator.amber { background: var(–amber); box-shadow: 0 0 8px rgba(245,166,35,0.5); }
+.store-indicator.red { background: var(–red); box-shadow: 0 0 8px rgba(255,71,87,0.5); animation: redPulse 1s ease infinite; }
 
-/* ALERT CARD */
+@keyframes redPulse {
+0%,100% { box-shadow: 0 0 8px rgba(255,71,87,0.5); }
+50% { box-shadow: 0 0 16px rgba(255,71,87,0.9); }
+}
+
+.store-info { flex: 1; min-width: 0; }
+
+.store-name {
+font-family: var(–mono);
+font-size: 12px;
+color: var(–text);
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+}
+
+.store-meta {
+font-size: 10px;
+color: var(–muted);
+margin-top: 2px;
+font-family: var(–mono);
+}
+
+.store-score {
+font-family: var(–mono);
+font-size: 13px;
+font-weight: 700;
+flex-shrink: 0;
+}
+
+.store-score.green { color: var(–green); }
+.store-score.amber { color: var(–amber); }
+.store-score.red { color: var(–red); }
+
+.store-badge {
+font-size: 10px;
+padding: 2px 8px;
+border-radius: 100px;
+font-family: var(–mono);
+flex-shrink: 0;
+}
+
+.store-badge.healthy { background: var(–green-dim); color: var(–green); border: 1px solid rgba(0,217,126,0.2); }
+.store-badge.degraded { background: var(–amber-dim); color: var(–amber); border: 1px solid rgba(245,166,35,0.2); }
+.store-badge.failing { background: var(–red-dim); color: var(–red); border: 1px solid rgba(255,71,87,0.2); }
+
+/* Alert card */
 .alert-card {
-  border: 1px solid rgba(200, 57, 26, 0.4);
-  background: rgba(200, 57, 26, 0.08);
-  padding: 16px 20px;
-  display: flex;
-  gap: 14px;
-  animation: fadeUp 0.6s 0.45s ease both;
-  position: relative;
+background: var(–red-dim);
+border: 1px solid rgba(255,71,87,0.25);
+border-radius: 8px;
+padding: 14px 16px;
+display: flex;
+gap: 12px;
+align-items: flex-start;
+animation: fadeUp 0.7s 0.4s ease both;
 }
 
-.alert-icon { font-size: 16px; flex-shrink: 0; }
+.alert-icon-wrap {
+width: 28px; height: 28px;
+border-radius: 50%;
+background: var(–red-dim);
+border: 1px solid rgba(255,71,87,0.3);
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 13px;
+flex-shrink: 0;
+}
 
 .alert-content { flex: 1; }
 
 .alert-title {
-  font-size: 10px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: #ff6b4a;
-  margin-bottom: 4px;
+font-family: var(–mono);
+font-size: 11px;
+font-weight: 700;
+color: var(–red);
+letter-spacing: 0.06em;
+text-transform: uppercase;
+margin-bottom: 4px;
 }
 
 .alert-body {
-  font-size: 12px;
-  color: rgba(255,255,255,0.5);
-  line-height: 1.6;
-  font-weight: 300;
+font-size: 12px;
+color: var(–muted2);
+line-height: 1.5;
 }
 
 .alert-time {
-  font-size: 10px;
-  color: rgba(255,255,255,0.2);
-  margin-top: 6px;
-  letter-spacing: 0.05em;
+font-family: var(–mono);
+font-size: 10px;
+color: var(–muted);
+margin-top: 6px;
 }
 
 /* PROOF STRIP */
 .proof-strip {
-  border-bottom: 1px solid var(--border);
-  padding: 16px 48px;
-  display: flex;
-  align-items: center;
-  gap: 40px;
-  background: var(--bg2);
-  overflow: hidden;
+border-top: 1px solid var(–border);
+border-bottom: 1px solid var(–border);
+padding: 14px 48px;
+display: flex;
+align-items: center;
+gap: 36px;
+background: var(–surface);
+position: relative;
+z-index: 1;
+flex-wrap: wrap;
 }
 
 .proof-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--muted);
-  white-space: nowrap;
-  flex-shrink: 0;
+display: flex;
+align-items: center;
+gap: 8px;
+font-size: 12px;
+color: var(–muted2);
+font-weight: 400;
+white-space: nowrap;
 }
 
-.proof-dot {
-  width: 5px; height: 5px;
-  border-radius: 50%;
-  background: var(--green);
-  flex-shrink: 0;
+.proof-check {
+font-size: 12px;
+color: var(–green);
 }
 
-/* DASHBOARD SECTION */
-.dashboard-section {
-  padding: 80px 48px;
-  border-bottom: 1px solid var(--border);
+/* WHAT WE MONITOR */
+.monitors-section {
+padding: 96px 48px;
+border-bottom: 1px solid var(–border);
+position: relative;
+z-index: 1;
 }
 
-.section-label {
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 24px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.section-label::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: var(--border);
-}
-
-.dashboard-section img {
-  width: 100%;
-  border: 1px solid var(--border);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.1);
-}
-
-/* WHAT WE CATCH */
-.catches-section {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  border-bottom: 1px solid var(--border);
-}
-
-.catches-left {
-  padding: 80px 48px;
-  border-right: 1px solid var(--border);
-}
-
-.catches-right {
-  padding: 80px 48px;
+.section-eyebrow {
+font-family: var(–mono);
+font-size: 11px;
+letter-spacing: 0.15em;
+text-transform: uppercase;
+color: var(–green);
+margin-bottom: 16px;
 }
 
 .section-h2 {
-  font-family: var(--display);
-  font-size: 48px;
-  letter-spacing: 0.02em;
-  line-height: 1;
-  margin-bottom: 40px;
+font-size: clamp(28px, 3.5vw, 44px);
+font-weight: 600;
+letter-spacing: -0.02em;
+color: #f0f2f8;
+margin-bottom: 16px;
+line-height: 1.2;
 }
 
-.check-list {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
+.section-sub {
+font-size: 15px;
+color: var(–muted2);
+font-weight: 300;
+max-width: 560px;
+line-height: 1.7;
+margin-bottom: 56px;
 }
 
-.check-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-  padding: 16px 0;
-  border-bottom: 1px solid var(--border);
-  font-size: 13px;
-  line-height: 1.5;
-  color: var(--ink2);
+.monitors-grid {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 1px;
+background: var(–border);
+border: 1px solid var(–border);
+border-radius: 8px;
+overflow: hidden;
 }
 
-.check-item:last-child { border-bottom: none; }
-
-.check-icon {
-  font-size: 12px;
-  flex-shrink: 0;
-  margin-top: 2px;
-  width: 20px;
-  text-align: center;
+.monitor-card {
+background: var(–surface);
+padding: 32px 28px;
+transition: background 0.2s;
 }
 
-/* OUTPUT BOX */
+.monitor-card:hover { background: var(–surface2); }
+
+.monitor-icon {
+width: 36px; height: 36px;
+border-radius: 8px;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 16px;
+margin-bottom: 16px;
+}
+
+.monitor-icon.green { background: var(–green-dim); }
+.monitor-icon.amber { background: var(–amber-dim); }
+.monitor-icon.blue { background: rgba(79,142,247,0.12); }
+
+.monitor-title {
+font-size: 15px;
+font-weight: 600;
+color: var(–text);
+margin-bottom: 8px;
+letter-spacing: -0.01em;
+}
+
+.monitor-desc {
+font-size: 13px;
+color: var(–muted2);
+line-height: 1.65;
+font-weight: 300;
+}
+
+/* SCORE SECTION */
+.score-section {
+display: grid;
+grid-template-columns: 1fr 1fr;
+border-bottom: 1px solid var(–border);
+position: relative;
+z-index: 1;
+}
+
+.score-left {
+padding: 96px 48px;
+display: flex;
+flex-direction: column;
+justify-content: center;
+border-right: 1px solid var(–border);
+}
+
+.score-right {
+padding: 96px 48px;
+background: var(–surface);
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+gap: 32px;
+}
+
+/* Animated health score widget */
+.score-widget {
+width: 200px; height: 200px;
+position: relative;
+flex-shrink: 0;
+}
+
+.score-ring {
+width: 200px; height: 200px;
+transform: rotate(-90deg);
+}
+
+.score-ring-bg {
+fill: none;
+stroke: rgba(255,255,255,0.05);
+stroke-width: 8;
+}
+
+.score-ring-fill {
+fill: none;
+stroke: var(–green);
+stroke-width: 8;
+stroke-linecap: round;
+stroke-dasharray: 534;
+stroke-dashoffset: 80;
+filter: drop-shadow(0 0 8px rgba(0,217,126,0.5));
+animation: scoreAnim 2s 0.5s ease both;
+}
+
+@keyframes scoreAnim {
+from { stroke-dashoffset: 534; }
+to { stroke-dashoffset: 80; }
+}
+
+.score-center {
+position: absolute;
+inset: 0;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+}
+
+.score-num {
+font-family: var(–mono);
+font-size: 44px;
+font-weight: 700;
+color: var(–green);
+line-height: 1;
+filter: drop-shadow(0 0 12px rgba(0,217,126,0.4));
+}
+
+.score-label {
+font-size: 11px;
+color: var(–muted);
+font-family: var(–mono);
+letter-spacing: 0.08em;
+margin-top: 4px;
+}
+
+.score-stores {
+display: flex;
+flex-direction: column;
+gap: 12px;
+width: 100%;
+max-width: 260px;
+}
+
+.score-store-item {
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 12px;
+}
+
+.score-store-name {
+font-family: var(–mono);
+font-size: 11px;
+color: var(–muted2);
+}
+
+.score-bar-wrap {
+flex: 1;
+height: 4px;
+background: rgba(255,255,255,0.06);
+border-radius: 2px;
+overflow: hidden;
+}
+
+.score-bar {
+height: 100%;
+border-radius: 2px;
+animation: barGrow 1.5s ease both;
+}
+
+@keyframes barGrow {
+from { width: 0 !important; }
+}
+
+.score-pct {
+font-family: var(–mono);
+font-size: 11px;
+font-weight: 700;
+min-width: 32px;
+text-align: right;
+}
+
+/* OUTPUT */
+.output-section {
+padding: 96px 48px;
+border-bottom: 1px solid var(–border);
+position: relative;
+z-index: 1;
+}
+
+.output-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 24px;
+margin-top: 48px;
+}
+
 .output-box {
-  background: var(--ink);
-  color: rgba(255,255,255,0.8);
-  padding: 28px;
-  font-size: 12px;
-  line-height: 2;
-  margin-bottom: 20px;
-  border-left: 3px solid var(--red);
+background: var(–bg);
+border: 1px solid var(–border2);
+border-radius: 8px;
+overflow: hidden;
 }
 
-.out-key { color: rgba(255,255,255,0.35); }
-.out-val { color: rgba(255,255,255,0.8); }
-.out-fail { color: #ff5f57; }
-.out-pass { color: #28c840; }
-.out-warn { color: #febc2e; }
+.output-box-header {
+padding: 10px 16px;
+background: var(–surface2);
+border-bottom: 1px solid var(–border);
+display: flex;
+align-items: center;
+justify-content: space-between;
+}
+
+.output-box-title {
+font-family: var(–mono);
+font-size: 11px;
+color: var(–muted2);
+letter-spacing: 0.06em;
+}
+
+.output-status {
+font-family: var(–mono);
+font-size: 10px;
+padding: 2px 8px;
+border-radius: 100px;
+}
+
+.output-status.pass { background: var(–green-dim); color: var(–green); }
+.output-status.fail { background: var(–red-dim); color: var(–red); }
+.output-status.degraded { background: var(–amber-dim); color: var(–amber); }
+
+.output-body {
+padding: 16px;
+font-family: var(–mono);
+font-size: 12px;
+line-height: 2;
+}
+
+.out-row { display: flex; gap: 12px; }
+.out-k { color: var(–muted); min-width: 90px; }
+.out-v { color: var(–text); }
+.out-pass { color: var(–green); }
+.out-fail { color: var(–red); }
+.out-warn { color: var(–amber); }
 
 /* FAQ */
 .faq-section {
-  padding: 80px 48px;
-  border-bottom: 1px solid var(--border);
-  max-width: 800px;
+padding: 96px 48px;
+border-bottom: 1px solid var(–border);
+max-width: 800px;
+position: relative;
+z-index: 1;
 }
-
-.faq-section .section-h2 { margin-bottom: 48px; }
 
 .faq-item {
-  border-top: 1px solid var(--border);
-  padding: 28px 0;
+border-top: 1px solid var(–border);
+padding: 28px 0;
 }
 
-.faq-item:last-child { border-bottom: 1px solid var(--border); }
+.faq-item:last-child { border-bottom: 1px solid var(–border); }
 
 .faq-q {
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--ink);
-  margin-bottom: 12px;
-  letter-spacing: 0.02em;
+font-size: 15px;
+font-weight: 500;
+color: var(–text);
+margin-bottom: 10px;
+letter-spacing: -0.01em;
 }
 
 .faq-a {
-  font-size: 13px;
-  line-height: 1.8;
-  color: var(--ink2);
-  font-weight: 300;
+font-size: 14px;
+line-height: 1.75;
+color: var(–muted2);
+font-weight: 300;
 }
 
-.faq-a strong { color: var(--ink); font-weight: 500; }
+.faq-a strong { color: var(–text); font-weight: 500; }
 
-/* CTA SECTION */
+/* CTA */
 .cta-section {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  border-bottom: 1px solid var(--border);
+padding: 96px 48px;
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 64px;
+align-items: center;
+border-bottom: 1px solid var(–border);
+position: relative;
+z-index: 1;
+background: var(–surface);
 }
 
-.cta-left {
-  background: var(--red);
-  padding: 80px 48px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+.cta-h2 {
+font-size: clamp(28px, 3.5vw, 44px);
+font-weight: 600;
+letter-spacing: -0.02em;
+color: #f0f2f8;
+margin-bottom: 16px;
+line-height: 1.2;
 }
 
-.cta-left .section-h2 {
-  color: white;
-  margin-bottom: 20px;
+.cta-h2 .green { color: var(–green); }
+
+.cta-sub {
+font-size: 15px;
+color: var(–muted2);
+font-weight: 300;
+line-height: 1.7;
+margin-bottom: 32px;
 }
 
-.cta-left p {
-  color: rgba(255,255,255,0.75);
-  font-size: 14px;
-  line-height: 1.7;
-  font-weight: 300;
-  margin-bottom: 36px;
-}
-
-.btn-white {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  font-family: var(--mono);
-  font-size: 13px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--red);
-  background: white;
-  padding: 16px 28px;
-  text-decoration: none;
-  transition: all 0.2s;
-  width: fit-content;
-  border: 1px solid white;
-}
-
-.btn-white:hover {
-  background: var(--ink);
-  color: white;
-  border-color: var(--ink);
-}
-
-.btn-white::after { content: '→'; }
-
-.cta-right {
-  background: var(--bg2);
-  padding: 80px 48px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 24px;
+.cta-right-content {
+display: flex;
+flex-direction: column;
+gap: 16px;
 }
 
 .cta-fact {
-  padding: 20px 24px;
-  border: 1px solid var(--border);
-  background: white;
+background: var(–bg2);
+border: 1px solid var(–border);
+border-radius: 8px;
+padding: 20px 24px;
 }
 
-.fact-label {
-  font-size: 10px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 8px;
+.cta-fact-label {
+font-family: var(–mono);
+font-size: 10px;
+letter-spacing: 0.12em;
+text-transform: uppercase;
+color: var(–muted);
+margin-bottom: 8px;
 }
 
-.fact-text {
-  font-size: 13px;
-  line-height: 1.6;
-  color: var(--ink2);
-  font-weight: 300;
+.cta-fact-text {
+font-size: 13px;
+color: var(–muted2);
+line-height: 1.65;
+font-weight: 300;
 }
 
-.fact-text strong { color: var(--red); font-weight: 500; }
+.cta-fact-text strong { color: var(–green); font-weight: 500; }
 
 /* FOOTER */
 footer {
-  padding: 40px 48px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: var(--bg2);
+padding: 32px 48px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+position: relative;
+z-index: 1;
 }
 
 .footer-logo {
-  font-family: var(--display);
-  font-size: 18px;
-  letter-spacing: 0.05em;
-  color: var(--ink);
-  text-decoration: none;
+font-family: var(–mono);
+font-size: 14px;
+font-weight: 700;
+letter-spacing: 0.06em;
+color: var(–muted2);
+text-decoration: none;
+display: flex;
+align-items: center;
+gap: 8px;
 }
 
 .footer-right {
-  display: flex;
-  align-items: center;
-  gap: 32px;
+display: flex;
+align-items: center;
+gap: 32px;
 }
 
 .footer-link {
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--muted);
-  text-decoration: none;
-  transition: color 0.2s;
+font-size: 13px;
+color: var(–muted);
+text-decoration: none;
+transition: color 0.2s;
 }
 
-.footer-link:hover { color: var(--ink); }
-
-.footer-copy {
-  font-size: 11px;
-  color: var(--muted);
-  letter-spacing: 0.05em;
-}
+.footer-link:hover { color: var(–text); }
 
 /* ANIMATIONS */
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes fadeDown {
-  from { opacity: 0; transform: translateY(-8px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Scroll reveal */
-.reveal {
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.js-ready .reveal {
-  opacity: 0;
-  transform: translateY(20px);
-}
-
-.js-ready .reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
+from { opacity: 0; transform: translateY(16px); }
+to { opacity: 1; transform: translateY(0); }
 }
 
 /* RESPONSIVE */
-@media (max-width: 900px) {
-  .hero { grid-template-columns: 1fr; }
-  .hero-right { display: none; }
-  .catches-section { grid-template-columns: 1fr; }
-  .catches-left { border-right: none; border-bottom: 1px solid var(--border); }
-  .cta-section { grid-template-columns: 1fr; }
-  nav { padding: 16px 20px; }
-  .nav-cta { padding: 8px 14px; font-size: 11px; }
-  .hero-left, .catches-left, .catches-right,
-  .faq-section, .cta-left, .cta-right,
-  .dashboard-section { padding: 48px 20px; }
-  .proof-strip { padding: 16px 20px; gap: 16px; flex-wrap: wrap; }
-  footer { padding: 28px 20px; flex-direction: column; gap: 16px; text-align: center; }
-  .footer-right { flex-direction: column; gap: 12px; }
-  .nav-links { gap: 12px; }
-  .hero-h1 { font-size: clamp(40px, 10vw, 60px); }
-  .incident-strip { flex-direction: column; gap: 0; }
-  .incident-stat { padding: 16px 0; border-left: none !important; border-top: 1px solid var(--border); }
-  .section-h2 { font-size: clamp(32px, 8vw, 48px); }
-  .output-box { font-size: 11px; padding: 16px; overflow-x: auto; }
-  .faq-section { max-width: 100%; }
-  .btn-primary { width: 100%; justify-content: center; }
+@media (max-width: 960px) {
+nav { padding: 0 20px; }
+.nav-links { gap: 16px; }
+.nav-cta { padding: 8px 14px; font-size: 11px; }
+.hero { grid-template-columns: 1fr; }
+.hero-left { padding: 60px 20px; border-right: none; border-bottom: 1px solid var(–border); }
+.hero-right { padding: 40px 20px; }
+.hero-h1 { font-size: clamp(36px, 9vw, 52px); }
+.metrics-row { grid-template-columns: repeat(3, 1fr); }
+.proof-strip { padding: 14px 20px; gap: 16px; }
+.monitors-section { padding: 64px 20px; }
+.monitors-grid { grid-template-columns: 1fr; }
+.score-section { grid-template-columns: 1fr; }
+.score-left { padding: 64px 20px; border-right: none; border-bottom: 1px solid var(–border); }
+.score-right { padding: 48px 20px; }
+.output-section { padding: 64px 20px; }
+.output-grid { grid-template-columns: 1fr; }
+.faq-section { padding: 64px 20px; max-width: 100%; }
+.cta-section { padding: 64px 20px; grid-template-columns: 1fr; gap: 32px; }
+footer { padding: 24px 20px; flex-direction: column; gap: 16px; text-align: center; }
+.footer-right { flex-direction: column; gap: 12px; }
 }
 </style>
 
@@ -738,8 +947,8 @@ footer {
 
 <nav>
   <a class="nav-logo" href="#">
-    <span class="logo-status"></span>
-    TESTPILOT<span style="opacity:0.4">AI</span>
+    <span class="nav-pulse"></span>
+    TESTPILOTAI
   </a>
   <div class="nav-links">
     <a href="blog.html" class="nav-link">Blog</a>
@@ -751,40 +960,41 @@ footer {
 
 <section class="hero">
   <div class="hero-left">
-    <div class="hero-tag">Shopify Checkout Monitoring</div>
+    <div class="hero-badge">
+      <span class="badge-dot"></span>
+      Shopify Store Health Monitoring
+    </div>
 
 ```
 <h1 class="hero-h1">
-  Your checkout<br>
-  <span class="red">broke.</span><br>
-  <span class="serif-word">you had no idea.</span>
+  Every store.<br>
+  Every checkout.<br>
+  <span class="green">One health score.</span>
 </h1>
 
-<p class="hero-body">
-  After every theme update, app install, or payment change —
-  something can silently break your Shopify checkout.
-  <strong>No error message. No alert. Just lost revenue.</strong><br><br>
-  TestPilotAI continuously validates your live checkout and alerts you
-  the moment something fails — before a customer does.
+<p class="hero-sub">
+  TestPilotAI gives Shopify agencies a <strong>live health score for every store they manage</strong> —
+  so you always know what's working, what's degraded, and what needs attention.
+  Before your clients do.
 </p>
 
-<div class="hero-actions">
+<div class="hero-cta">
   <a href="waitlist.html" class="btn-primary">Get Early Access Free</a>
-  <span class="hero-note">No scripts · No Playwright · 60-second setup · Just paste a URL</span>
+  <span class="hero-note">No scripts · 60s setup · Just paste a URL</span>
 </div>
 
-<div class="incident-strip">
-  <div class="incident-stat">
-    <div class="stat-num red">$18B</div>
-    <div class="stat-label">Lost annually to checkout abandonment — broken checkouts make it worse</div>
+<div class="metrics-row">
+  <div class="metric">
+    <div class="metric-val">100%</div>
+    <div class="metric-label">Visibility into every store's checkout health</div>
   </div>
-  <div class="incident-stat">
-    <div class="stat-num">60s</div>
-    <div class="stat-label">Time to set up monitoring per store</div>
+  <div class="metric">
+    <div class="metric-val white">60s</div>
+    <div class="metric-label">Setup time per store — paste a URL and go</div>
   </div>
-  <div class="incident-stat">
-    <div class="stat-num red">$0</div>
-    <div class="stat-label">Cost to get started — free early access</div>
+  <div class="metric">
+    <div class="metric-val amber">Silent</div>
+    <div class="metric-label">Checkout failures show no error — your site looks fine while customers can't buy</div>
   </div>
 </div>
 ```
@@ -792,41 +1002,270 @@ footer {
   </div>
 
   <div class="hero-right">
-    <div class="terminal-label">Live validation run</div>
+    <style>
+      /* App UI faithful styles */
+      .app-mockup {
+        background: #0d1117;
+        border: 1px solid rgba(0,217,126,0.15);
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 24px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(0,217,126,0.08);
+        font-family: 'Space Mono', monospace;
+        animation: fadeUp 0.7s 0.2s ease both;
+      }
+      .app-header {
+        padding: 12px 16px;
+        background: #0a0e14;
+        border-bottom: 1px solid rgba(0,217,126,0.1);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .app-store-name {
+        font-size: 11px;
+        color: #4dd9a0;
+        letter-spacing: 0.06em;
+        font-weight: 700;
+      }
+      .app-healthy-badge {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        color: #0a0e14;
+        background: #00d97e;
+        padding: 3px 10px;
+        border-radius: 100px;
+      }
+      .app-body { padding: 14px; display: flex; flex-direction: column; gap: 10px; }
 
 ```
-<div class="terminal">
-  <div class="terminal-bar">
-    <div class="tdot r"></div>
-    <div class="tdot y"></div>
-    <div class="tdot g"></div>
-    <span class="ttitle">testpilot — checkout-validator · example-store.com</span>
-  </div>
-  <div class="terminal-body">
-    <div class="tl"><span class="tp">▸</span><span class="tc">Trigger: theme-update detected → running validation</span></div>
-    <hr class="tdivider">
-    <div class="tl"><span class="tpass">✓</span><span class="tc">Add to cart — product &amp; variant confirmed</span></div>
-    <div class="tl"><span class="tpass">✓</span><span class="tc">Cart drawer — rendered correctly</span></div>
-    <div class="tl"><span class="tpass">✓</span><span class="tc">Checkout page — reachable &amp; loaded</span></div>
-    <div class="tl"><span class="tfail">✗</span><span class="tc">Payment form — fields missing after update</span></div>
-    <div class="tl"><span class="twarn">⚠</span><span class="tc">App conflict — auth redirect loop detected</span></div>
-    <hr class="tdivider">
-    <div class="tl"><span class="tp">▸</span><span class="twarn">Status: DEGRADED · Score: 0.58 / 1.00</span></div>
-    <div class="to">Classification: payment_form_incomplete</div>
-    <div class="to">Screenshot + HTML snapshot saved ↗</div>
-    <hr class="tdivider">
-    <div class="tl"><span class="tp">▸</span><span class="tc">Alert dispatched → <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1d69787c705d7c7a78737e64337e7270">[email&#160;protected]</a></span></div>
-    <div class="to">Delivered in <span class="tpass">914ms</span> · 2:07 AM</div>
-    <div class="tl"><span class="to"><span class="blink">█</span></span></div>
-  </div>
-</div>
+  /* Metrics row */
+  .app-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .app-metric {
+    background: #111827;
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 8px;
+    padding: 10px 12px;
+  }
+  .app-metric-label {
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #4a5568;
+    margin-bottom: 4px;
+  }
+  .app-metric-val {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .app-metric-val.teal { color: #4dd9a0; }
+  .app-metric-val.red { color: #ff6b6b; }
+  .app-metric-val.white { color: #e2e8f0; }
 
-<div class="alert-card">
-  <span class="alert-icon">🔴</span>
-  <div class="alert-content">
-    <div class="alert-title">Checkout failure detected — 2:07 AM</div>
-    <div class="alert-body">Payment form fields missing on example-store.com after theme v3.2 deployment. Screenshot and HTML snapshot ready for debugging.</div>
-    <div class="alert-time">Detected before any customer reported an issue</div>
+  /* Run history dots */
+  .app-run-history {
+    background: #111827;
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 8px;
+    padding: 10px 12px;
+  }
+  .app-run-label {
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #4a5568;
+    margin-bottom: 8px;
+  }
+  .run-dots {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+  .run-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: #00d97e;
+    box-shadow: 0 0 4px rgba(0,217,126,0.4);
+  }
+  .run-dot.fail { background: #ff6b6b; box-shadow: 0 0 4px rgba(255,107,107,0.4); }
+
+  /* Validation steps */
+  .app-steps {
+    background: #111827;
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 8px;
+    padding: 10px 12px;
+  }
+  .app-steps-label {
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #4a5568;
+    margin-bottom: 8px;
+  }
+  .app-step {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 3px 0;
+    font-size: 11px;
+    color: #4dd9a0;
+    font-weight: 700;
+  }
+  .app-step-check {
+    width: 16px; height: 16px;
+    background: #00d97e;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    color: #0a0e14;
+    flex-shrink: 0;
+    font-weight: 900;
+  }
+  .app-step-detail {
+    color: #4a5568;
+    font-weight: 400;
+    font-size: 10px;
+    margin-left: auto;
+  }
+
+  /* Signal reliability */
+  .app-signals {
+    background: #111827;
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 8px;
+    padding: 10px 12px;
+  }
+  .app-signal-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+  .app-signal-item:last-child { margin-bottom: 0; }
+  .app-signal-name {
+    font-size: 10px;
+    color: #718096;
+    min-width: 110px;
+  }
+  .app-signal-bar-wrap {
+    flex: 1;
+    height: 4px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .app-signal-bar {
+    height: 100%;
+    background: #4dd9a0;
+    border-radius: 2px;
+    width: 100%;
+  }
+  .app-signal-pct {
+    font-size: 11px;
+    font-weight: 700;
+    color: #4dd9a0;
+    min-width: 36px;
+    text-align: right;
+  }
+</style>
+
+<div class="app-mockup">
+  <div class="app-header">
+    <span class="app-store-name">checkout-monitoring-example-com</span>
+    <span class="app-healthy-badge">HEALTHY</span>
+  </div>
+  <div class="app-body">
+
+    <!-- Metrics -->
+    <div class="app-metrics">
+      <div class="app-metric">
+        <div class="app-metric-label">Checkout Uptime</div>
+        <div class="app-metric-val teal">97%</div>
+      </div>
+      <div class="app-metric">
+        <div class="app-metric-label">Total Runs</div>
+        <div class="app-metric-val white">170</div>
+      </div>
+      <div class="app-metric">
+        <div class="app-metric-label">Failures (24h)</div>
+        <div class="app-metric-val teal">0.0%</div>
+      </div>
+    </div>
+
+    <!-- Run history dots -->
+    <div class="app-run-history">
+      <div class="app-run-label">Last 20 Runs</div>
+      <div class="run-dots">
+        <div class="run-dot"></div><div class="run-dot"></div><div class="run-dot"></div>
+        <div class="run-dot"></div><div class="run-dot"></div><div class="run-dot"></div>
+        <div class="run-dot"></div><div class="run-dot"></div><div class="run-dot"></div>
+        <div class="run-dot"></div><div class="run-dot"></div><div class="run-dot"></div>
+        <div class="run-dot"></div><div class="run-dot"></div><div class="run-dot"></div>
+        <div class="run-dot fail"></div><div class="run-dot"></div><div class="run-dot"></div>
+        <div class="run-dot"></div><div class="run-dot"></div>
+      </div>
+    </div>
+
+    <!-- Validation steps -->
+    <div class="app-steps">
+      <div class="app-steps-label">Validation Steps — Last Run: PASS · Confidence 100%</div>
+      <div class="app-step">
+        <span class="app-step-check">✓</span>
+        Browser launched
+      </div>
+      <div class="app-step">
+        <span class="app-step-check">✓</span>
+        Live store accessed
+        <span class="app-step-detail">example-store.com</span>
+      </div>
+      <div class="app-step">
+        <span class="app-step-check">✓</span>
+        Product discovered
+      </div>
+      <div class="app-step">
+        <span class="app-step-check">✓</span>
+        Added to cart
+      </div>
+      <div class="app-step">
+        <span class="app-step-check">✓</span>
+        Cart confirmed
+        <span class="app-step-detail">1 item</span>
+      </div>
+      <div class="app-step">
+        <span class="app-step-check">✓</span>
+        Checkout reached
+        <span class="app-step-detail">Payment form visible</span>
+      </div>
+    </div>
+
+    <!-- Signal reliability -->
+    <div class="app-signals">
+      <div class="app-run-label">Signal Reliability Breakdown</div>
+      <div class="app-signal-item">
+        <span class="app-signal-name">API Reliability</span>
+        <div class="app-signal-bar-wrap"><div class="app-signal-bar"></div></div>
+        <span class="app-signal-pct">100%</span>
+      </div>
+      <div class="app-signal-item">
+        <span class="app-signal-name">UI Reliability</span>
+        <div class="app-signal-bar-wrap"><div class="app-signal-bar"></div></div>
+        <span class="app-signal-pct">100%</span>
+      </div>
+      <div class="app-signal-item">
+        <span class="app-signal-name">Checkout Reachability</span>
+        <div class="app-signal-bar-wrap"><div class="app-signal-bar"></div></div>
+        <span class="app-signal-pct">100%</span>
+      </div>
+    </div>
+
   </div>
 </div>
 ```
@@ -836,122 +1275,229 @@ footer {
 
 <!-- PROOF STRIP -->
 
-<div class="proof-strip reveal">
-  <div class="proof-item"><span class="proof-dot"></span>Zero code required</div>
-  <div class="proof-item"><span class="proof-dot"></span>Runs on your live storefront</div>
-  <div class="proof-item"><span class="proof-dot"></span>Catches what uptime monitoring misses</div>
-  <div class="proof-item"><span class="proof-dot"></span>Built for Shopify — not generic uptime monitoring</div>
-  <div class="proof-item"><span class="proof-dot"></span>Alerts in under 60 seconds of detection</div>
+<div class="proof-strip">
+  <div class="proof-item"><span class="proof-check">✓</span>Zero code required</div>
+  <div class="proof-item"><span class="proof-check">✓</span>Runs on your live storefront</div>
+  <div class="proof-item"><span class="proof-check">✓</span>Catches what uptime monitoring misses</div>
+  <div class="proof-item"><span class="proof-check">✓</span>Built for Shopify — not generic monitoring</div>
+  <div class="proof-item"><span class="proof-check">✓</span>Alerts in under 60 seconds</div>
 </div>
 
-<!-- DASHBOARD -->
+<!-- WHAT WE MONITOR -->
 
-<div class="dashboard-section reveal">
-  <div class="section-label">Live Dashboard</div>
-  <img src="assets/dashboard-run-preview.png" alt="TestPilotAI monitoring dashboard showing checkout health scores and run history">
-</div>
+<section class="monitors-section">
+  <div class="section-eyebrow">What TestPilotAI monitors</div>
+  <h2 class="section-h2">More than uptime.<br>Full checkout health.</h2>
+  <p class="section-sub">Uptime monitoring tells you if your site loads. TestPilotAI tells you if a customer can actually complete a purchase — and exactly what broke if they can't.</p>
 
-<!-- WHAT WE CATCH -->
+  <div class="monitors-grid">
+    <div class="monitor-card">
+      <div class="monitor-icon green">🔍</div>
+      <div class="monitor-title">Product Discovery</div>
+      <div class="monitor-desc">TestPilotAI automatically finds a real product on your live storefront — no configuration needed. If your store changes, it adapts.</div>
+    </div>
+    <div class="monitor-card">
+      <div class="monitor-icon green">🎛️</div>
+      <div class="monitor-title">Variant Selection</div>
+      <div class="monitor-desc">Finds and selects a valid product variant automatically. Catches variant-level failures — like a broken size selector — that a simple uptime check would never see.</div>
+    </div>
+    <div class="monitor-card">
+      <div class="monitor-icon green">🛒</div>
+      <div class="monitor-title">Add to Cart + Confirmation</div>
+      <div class="monitor-desc">Adds the product to cart and confirms the item is present. Catches cart drawer failures, broken add-to-cart buttons, and silent theme regressions.</div>
+    </div>
+    <div class="monitor-card">
+      <div class="monitor-icon green">📄</div>
+      <div class="monitor-title">Checkout Reachability</div>
+      <div class="monitor-desc">Validates the full checkout page loads with all critical elements present — not just an HTTP 200 that tells you nothing about what's actually rendering.</div>
+    </div>
+    <div class="monitor-card">
+      <div class="monitor-icon green">💳</div>
+      <div class="monitor-title">Payment Form Integrity</div>
+      <div class="monitor-desc">Confirms payment fields are visible and the form is intact. Catches the silent failures that only appear after a theme update or app install.</div>
+    </div>
+    <div class="monitor-card">
+      <div class="monitor-icon blue">📸</div>
+      <div class="monitor-title">Screenshot + HTML Snapshot</div>
+      <div class="monitor-desc">Every run captures a full screenshot and HTML snapshot. When something fails, you see exactly what broke, when it broke — no blind debugging.</div>
+    </div>
+  </div>
+</section>
 
-<section class="catches-section">
-  <div class="catches-left reveal">
-    <h2 class="section-h2">What gets caught on every run</h2>
-    <ul class="check-list">
-      <li class="check-item"><span class="check-icon">✓</span>Add to cart — product, variant, and quantity confirmed</li>
-      <li class="check-item"><span class="check-icon">✓</span>Checkout reachability — page loads with all critical elements present</li>
-      <li class="check-item"><span class="check-icon">✓</span>Payment form integrity — fields visible and functional</li>
-      <li class="check-item"><span class="check-icon">✓</span>Theme change detection — structural regressions caught automatically</li>
-      <li class="check-item"><span class="check-icon">✓</span>App conflict detection — flow interruptions and auth redirects flagged</li>
-      <li class="check-item"><span class="check-icon">✓</span>Screenshot + HTML snapshot on every run for instant debugging</li>
-    </ul>
+<!-- HEALTH SCORE -->
+
+<section class="score-section">
+  <div class="score-left">
+    <div class="section-eyebrow">Health Score</div>
+    <h2 class="section-h2">A single number that tells you everything.</h2>
+    <p style="font-size:15px;color:var(--muted2);font-weight:300;line-height:1.75;margin-bottom:32px;">Each store gets a live health score based on recent run history. 100% means every check passed. Any degradation or failure is reflected immediately — giving you and your clients instant confidence or instant clarity on what to fix.</p>
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div style="display:flex;align-items:center;gap:12px;font-size:13px;">
+        <span style="width:10px;height:10px;border-radius:50%;background:var(--green);flex-shrink:0;box-shadow:0 0 8px rgba(0,217,126,0.5)"></span>
+        <span style="color:var(--muted2)"><strong style="color:var(--text)">90–100%</strong> — Healthy. All checks passing.</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;font-size:13px;">
+        <span style="width:10px;height:10px;border-radius:50%;background:var(--amber);flex-shrink:0;box-shadow:0 0 8px rgba(245,166,35,0.5)"></span>
+        <span style="color:var(--muted2)"><strong style="color:var(--text)">60–89%</strong> — Degraded. Partial failure, needs attention.</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;font-size:13px;">
+        <span style="width:10px;height:10px;border-radius:50%;background:var(--red);flex-shrink:0;box-shadow:0 0 8px rgba(255,71,87,0.5)"></span>
+        <span style="color:var(--muted2)"><strong style="color:var(--text)">Below 60%</strong> — Failing. Customers can't complete checkout.</span>
+      </div>
+    </div>
   </div>
 
-  <div class="catches-right reveal">
-    <h2 class="section-h2">Structured output on every failure</h2>
-    <div class="output-box">
-      <div><span class="out-key">Result: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="out-fail">DEGRADED</span></div>
-      <div><span class="out-key">Store: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="out-val">example-store.com</span></div>
-      <div><span class="out-key">Score: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="out-warn">0.58 / 1.00</span></div>
-      <div><span class="out-key">Issue: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="out-fail">payment_form_incomplete</span></div>
-      <div><span class="out-key">Trigger: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="out-val">theme_update_detected</span></div>
-      <div><span class="out-key">Artifacts: &nbsp;&nbsp;&nbsp;</span><span class="out-pass">screenshot + html_snapshot ↗</span></div>
-      <div><span class="out-key">Alert sent: &nbsp;&nbsp;</span><span class="out-pass">914ms after detection</span></div>
+  <div class="score-right">
+    <div class="score-widget">
+      <svg class="score-ring" viewBox="0 0 200 200">
+        <circle class="score-ring-bg" cx="100" cy="100" r="85"/>
+        <circle class="score-ring-fill" cx="100" cy="100" r="85"/>
+      </svg>
+      <div class="score-center">
+        <div class="score-num">85</div>
+        <div class="score-label">HEALTH SCORE</div>
+      </div>
     </div>
-    <p style="font-size:12px;color:var(--muted);line-height:1.7;font-weight:300;">
-      Every failed run includes a full screenshot and HTML snapshot —
-      so you're not debugging blind. You see exactly what broke,
-      exactly when it broke, and exactly what changed.
-    </p>
+
+```
+<div class="score-stores">
+  <div class="score-store-item">
+    <span class="score-store-name">flagship</span>
+    <div class="score-bar-wrap">
+      <div class="score-bar" style="width:100%;background:var(--green)"></div>
+    </div>
+    <span class="score-pct" style="color:var(--green)">100%</span>
+  </div>
+  <div class="score-store-item">
+    <span class="score-store-name">boutique</span>
+    <div class="score-bar-wrap">
+      <div class="score-bar" style="width:100%;background:var(--green)"></div>
+    </div>
+    <span class="score-pct" style="color:var(--green)">100%</span>
+  </div>
+  <div class="score-store-item">
+    <span class="score-store-name">shop-luxe</span>
+    <div class="score-bar-wrap">
+      <div class="score-bar" style="width:82%;background:var(--amber)"></div>
+    </div>
+    <span class="score-pct" style="color:var(--amber)">82%</span>
+  </div>
+  <div class="score-store-item">
+    <span class="score-store-name">brand-store</span>
+    <div class="score-bar-wrap">
+      <div class="score-bar" style="width:41%;background:var(--red)"></div>
+    </div>
+    <span class="score-pct" style="color:var(--red)">41%</span>
+  </div>
+</div>
+```
+
+  </div>
+</section>
+
+<!-- OUTPUT -->
+
+<section class="output-section">
+  <div class="section-eyebrow">Validation output</div>
+  <h2 class="section-h2">Structured results on every run.</h2>
+  <p class="section-sub">Every validation run returns a structured result — pass, degraded, or fail — with a screenshot and HTML snapshot attached. No guessing what broke.</p>
+
+  <div class="output-grid">
+    <div class="output-box">
+      <div class="output-box-header">
+        <span class="output-box-title">RUN #170 · example-store.com</span>
+        <span class="output-status pass">PASS</span>
+      </div>
+      <div class="output-body">
+        <div class="out-row"><span class="out-k">Confidence:</span><span class="out-pass">100%</span></div>
+        <div class="out-row"><span class="out-k">Product:</span><span class="out-pass">✓ discovered</span></div>
+        <div class="out-row"><span class="out-k">Variant:</span><span class="out-pass">✓ selected</span></div>
+        <div class="out-row"><span class="out-k">Cart:</span><span class="out-pass">✓ confirmed · 1 item</span></div>
+        <div class="out-row"><span class="out-k">Checkout:</span><span class="out-pass">✓ reachable</span></div>
+        <div class="out-row"><span class="out-k">Payment:</span><span class="out-pass">✓ form visible</span></div>
+        <div class="out-row"><span class="out-k">Artifacts:</span><span class="out-v">screenshot + html ↗</span></div>
+      </div>
+    </div>
+    <div class="output-box">
+      <div class="output-box-header">
+        <span class="output-box-title">RUN #168 · example-store.com</span>
+        <span class="output-status fail">FAIL</span>
+      </div>
+      <div class="output-body">
+        <div class="out-row"><span class="out-k">Confidence:</span><span class="out-fail">0%</span></div>
+        <div class="out-row"><span class="out-k">Product:</span><span class="out-pass">✓ discovered</span></div>
+        <div class="out-row"><span class="out-k">Variant:</span><span class="out-pass">✓ selected</span></div>
+        <div class="out-row"><span class="out-k">Cart:</span><span class="out-pass">✓ confirmed · 1 item</span></div>
+        <div class="out-row"><span class="out-k">Checkout:</span><span class="out-pass">✓ reachable</span></div>
+        <div class="out-row"><span class="out-k">Payment:</span><span class="out-fail">✗ form not visible</span></div>
+        <div class="out-row"><span class="out-k">Artifacts:</span><span class="out-pass">screenshot + html ↗</span></div>
+      </div>
+    </div>
   </div>
 </section>
 
 <!-- FAQ -->
 
-<section class="faq-section reveal">
-  <h2 class="section-h2">Common questions</h2>
+<section class="faq-section">
+  <div class="section-eyebrow">FAQ</div>
+  <h2 class="section-h2" style="margin-bottom:40px;">Common questions</h2>
 
   <div class="faq-item">
     <div class="faq-q">Do I need to write any code or scripts?</div>
     <div class="faq-a">No. TestPilotAI requires <strong>zero code, zero Playwright knowledge, and zero configuration</strong>. Paste your store URL, set a check frequency, and you're live in under 60 seconds.</div>
   </div>
-
   <div class="faq-item">
     <div class="faq-q">How is this different from uptime monitoring tools?</div>
-    <div class="faq-a">Uptime monitoring checks if your site loads — it has no idea if checkout actually works. TestPilotAI validates the full purchase flow: add to cart, variant selection, checkout page structure. <strong>Your site can be 100% "up" while checkout is completely broken.</strong> Tools like Checkly or Datadog can do this too, but require you to write and maintain Playwright scripts — one per store. TestPilotAI needs only a URL.</div>
+    <div class="faq-a">Uptime monitoring checks if your site loads — it has no idea if checkout actually works. <strong>Your site can be 100% "up" while checkout is completely broken.</strong> TestPilotAI runs a real browser through your full purchase flow: product discovery, variant selection, add to cart, checkout page, payment form — everything a real customer would need to actually buy.</div>
   </div>
-
   <div class="faq-item">
     <div class="faq-q">Does it execute real transactions?</div>
-    <div class="faq-a">No. The engine validates deterministic checkout signals — cart, variant selection, checkout page structure — <strong>without completing live payments</strong>. Nothing touches your payment gateway.</div>
+    <div class="faq-a">No. TestPilotAI runs a real browser through your storefront — discovering a product, selecting a variant, adding to cart, and reaching checkout — <strong>without completing a live payment</strong>. Nothing touches your payment gateway.</div>
   </div>
-
   <div class="faq-item">
     <div class="faq-q">Where does it run?</div>
     <div class="faq-a">Against your <strong>live production storefront</strong>, not staging. It catches regressions that only surface under real storefront conditions — after a theme update, app install, or payment config change.</div>
   </div>
-
   <div class="faq-item">
     <div class="faq-q">What does a health score mean?</div>
     <div class="faq-a">Each store gets a health score based on recent run history. A score of 100% means every validation has passed. Degraded and failed runs both affect the score — giving you an <strong>at-a-glance view of store health over time</strong>.</div>
   </div>
-
   <div class="faq-item">
     <div class="faq-q">What happens when an issue is detected?</div>
-    <div class="faq-a">You get an immediate alert with the status (degraded or fail), what was missing, a screenshot, and an HTML snapshot — <strong>everything you need to debug fast</strong>, before a customer notices.</div>
+    <div class="faq-a">You get an immediate alert with the status, what was missing, a screenshot, and an HTML snapshot — <strong>everything you need to debug fast</strong>, before a customer notices.</div>
   </div>
 </section>
 
 <!-- CTA -->
 
 <section class="cta-section">
-  <div class="cta-left reveal">
-    <h2 class="section-h2">Stop finding out from customers.</h2>
-    <p>Get early access free. No credit card, no scripts, no setup. Paste a URL and know your checkout works — always.</p>
-    <a href="waitlist.html" class="btn-white">Get Early Access</a>
+  <div>
+    <h2 class="cta-h2">Know your stores are <span class="green">healthy.</span><br>Always.</h2>
+    <p class="cta-sub">Free early access. No scripts, no setup, no credit card. Paste a URL and get a live health score for every store you manage.</p>
+    <a href="waitlist.html" class="btn-primary">Get Early Access Free</a>
   </div>
-
-  <div class="cta-right reveal">
+  <div class="cta-right-content">
     <div class="cta-fact">
-      <div class="fact-label">The silent failure problem</div>
-      <div class="fact-text">When checkout breaks after a theme update, <strong>there's no error page</strong>. Your site loads fine. Ads keep running. Customers hit a dead end and leave — and you won't know until revenue drops or someone emails you.</div>
+      <div class="cta-fact-label">The silent failure problem</div>
+      <div class="cta-fact-text">When checkout breaks after a theme update, there's no error page. Your site loads fine. Ads keep running. <strong>Customers hit a dead end and leave</strong> — and you won't know until revenue drops.</div>
     </div>
     <div class="cta-fact">
-      <div class="fact-label">Why agencies need this</div>
-      <div class="fact-text">Managing 10+ stores manually is impossible. One broken checkout you miss costs more than your monthly retainer. <strong>TestPilotAI is the automated safety net</strong> between every deployment and your clients' revenue.</div>
+      <div class="cta-fact-label">Why agencies need this</div>
+      <div class="cta-fact-text">Managing 10+ stores manually is impossible. One broken checkout you miss costs more than your monthly retainer. <strong>TestPilotAI is the health dashboard</strong> between every deployment and your clients' revenue.</div>
     </div>
   </div>
 </section>
 
 <footer>
-  <a class="footer-logo" href="#">TESTPILOTAI</a>
+  <a class="footer-logo" href="#">
+    <span style="width:6px;height:6px;border-radius:50%;background:var(--green);display:inline-block"></span>
+    TESTPILOTAI
+  </a>
   <div class="footer-right">
     <a href="blog.html" class="footer-link">Blog</a>
-    <a href="/cdn-cgi/l/email-protection#21484f474e615544525551484d4e5540480f484e" class="footer-link"><span class="__cf_email__" data-cfemail="6a03040c052a1e0f191e1a0306051e0b03440305">[email&#160;protected]</span></a>
-    <span class="footer-copy">© 2026 TestPilotAI</span>
+    <a href="mailto:info@testpilotai.io" class="footer-link">info@testpilotai.io</a>
+    <span style="font-size:12px;color:var(--muted)">© 2026 TestPilotAI</span>
   </div>
 </footer>
-
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-
-// Add js-ready class so reveal animation only runs with JS
-document.documentElement.classList.add(‘js-ready’);
+</body>
+</html>
