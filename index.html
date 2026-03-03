@@ -1,289 +1,955 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- SEO -->
-<title>TestPilotAI — Checkout Health Monitoring for Ecommerce Agencies</title>
-
-<meta name="description" content="One dashboard. Every client. Every checkout. Continuous checkout health monitoring for ecommerce agencies — no scripts, no Playwright, just a URL per store.">
-
-<meta name="keywords" content="checkout monitoring, ecommerce agency tools, checkout health score, no code checkout testing, multi-store checkout monitoring">
-
+<title>TestPilotAI — Your Shopify Checkout Broke. You Just Don't Know It Yet.</title>
+<meta name="description" content="TestPilotAI catches silent Shopify checkout failures before your customers do. No scripts, no setup — paste a URL and know your checkout works after every theme update, app install, or payment change.">
+<meta name="keywords" content="shopify checkout monitoring, checkout health, shopify theme update testing, ecommerce agency tools, checkout validation">
 <meta name="author" content="TestPilotAI">
 
-<!-- Open Graph (LinkedIn, Facebook, Slack previews) -->
-<meta property="og:title" content="TestPilotAI — Know your checkout works. Always.">
-<meta property="og:description" content="One dashboard. Every client. Every checkout. Continuous checkout health monitoring for ecommerce agencies — no scripts, no Playwright, just a URL per store.">
+<meta property="og:title" content="TestPilotAI — Silent checkout failures are costing Shopify stores thousands.">
+<meta property="og:description" content="TestPilotAI catches checkout failures before your customers do. No scripts, no Playwright, no setup. Just paste a URL.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://testpilotai.io">
 
-<!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="TestPilotAI — Checkout Health Monitoring for Ecommerce Agencies">
-<meta name="twitter:description" content="One dashboard. Every client. Every checkout. No scripts, no Playwright, no setup. Just paste a URL per store.">
+<meta name="twitter:title" content="TestPilotAI — Shopify Checkout Monitoring">
+<meta name="twitter:description" content="Know when your checkout breaks — before a customer tells you. No scripts, no setup. Paste a URL.">
 
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon32.png">
 <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon-512x512.png">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@300;400;500&family=Fraunces:ital,wght@0,300;0,600;1,300&display=swap" rel="stylesheet">
 
 <style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-/* RESET */
-*{margin:0;padding:0;box-sizing:border-box}
-
-@keyframes pulse{0%,100%{opacity:.3}50%{opacity:.8}}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
-
-body{
-font-family:'Courier New', monospace;
-background:#0a0a0f;
-color:white;
-overflow-x:hidden;
-min-height:100vh;
+:root {
+  --bg: #f5f2eb;
+  --bg2: #ede9e0;
+  --ink: #0f0e0c;
+  --ink2: #3a3830;
+  --muted: #8a8070;
+  --red: #c8391a;
+  --red-light: #fdf0ec;
+  --green: #1a6b3a;
+  --green-light: #edf5f0;
+  --border: #d4cfc4;
+  --mono: 'IBM Plex Mono', monospace;
+  --display: 'Bebas Neue', sans-serif;
+  --serif: 'Fraunces', serif;
 }
 
-.grid-bg{
-position:fixed;
-inset:0;
-background-image:
-linear-gradient(rgba(99,102,241,.08) 1px,transparent 1px),
-linear-gradient(90deg,rgba(99,102,241,.08) 1px,transparent 1px);
-background-size:40px 40px;
-z-index:0;
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--mono);
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
-.orb{
-position:fixed;
-border-radius:50%;
-filter:blur(80px);
-animation:pulse 4s ease-in-out infinite;
-z-index:1;
+/* Subtle noise texture */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 999;
 }
 
-.orb1{width:400px;height:400px;background:radial-gradient(circle,rgba(99,102,241,.4),transparent);top:-100px;left:-100px}
-.orb2{width:300px;height:300px;background:radial-gradient(circle,rgba(139,92,246,.3),transparent);top:30%;right:-50px;animation-delay:2s}
-.orb3{width:350px;height:350px;background:radial-gradient(circle,rgba(16,185,129,.2),transparent);bottom:-100px;right:20%;animation-delay:1s}
-
-.container{position:relative;z-index:2;max-width:1200px;margin:auto;padding:0 20px}
-
-header{display:flex;justify-content:space-between;align-items:center;padding:30px 0}
-
-.logo{display:flex;align-items:center;gap:10px}
-
-.logo-img{height:64px;width:auto;display:block}
-
-.brand-text{font-size:20px;font-weight:500;letter-spacing:1px}
-
-.logo-ai{color:#6366f1}
-
-.btn{
-padding:12px 24px;
-background:rgba(99,102,241,.1);
-border:1px solid rgba(99,102,241,.3);
-border-radius:8px;
-color:white;
-text-decoration:none;
-font-weight:600;
-transition:.3s
+/* NAV */
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 48px;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  background: rgba(245, 242, 235, 0.95);
+  backdrop-filter: blur(8px);
+  z-index: 100;
+  animation: fadeDown 0.5s ease both;
 }
 
-.btn:hover{
-background:rgba(99,102,241,.2);
-border-color:rgba(99,102,241,.6);
-transform:translateY(-2px)
+.nav-logo {
+  font-family: var(--display);
+  font-size: 22px;
+  letter-spacing: 0.05em;
+  color: var(--ink);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.hero{text-align:center;padding:100px 20px 80px;max-width:900px;margin:auto}
-
-h1{font-size:56px;margin-bottom:24px;animation:float 6s infinite}
-
-.gradient{
-background:linear-gradient(135deg,#6366f1,#8b5cf6,#10b981);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent
+.logo-status {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 0 3px rgba(26, 107, 58, 0.15);
+  animation: statusPulse 2.5s ease infinite;
 }
 
-.subtitle{
-font-size:18px;
-color:rgba(255,255,255,.65);
-margin-bottom:40px;
-line-height:1.6;
-font-family:system-ui
+@keyframes statusPulse {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(26,107,58,0.15); }
+  50% { box-shadow: 0 0 0 6px rgba(26,107,58,0.05); }
 }
 
-.cta{
-padding:16px 32px;
-background:linear-gradient(135deg,#6366f1,#8b5cf6);
-border-radius:10px;
-color:white;
-font-weight:600;
-text-decoration:none;
-box-shadow:0 10px 30px rgba(99,102,241,.3);
-transition:.3s;
-display:inline-block
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
 }
 
-.cta:hover{
-transform:translateY(-2px);
-box-shadow:0 15px 40px rgba(99,102,241,.5)
+.nav-link {
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
 }
 
-.section{padding:80px 20px;text-align:center}
+.nav-link:hover { color: var(--ink); }
 
-.section h2{font-size:36px;margin-bottom:40px}
-
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:24px;
-max-width:900px;
-margin:auto
+.nav-cta {
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: white;
+  background: var(--ink);
+  padding: 10px 20px;
+  text-decoration: none;
+  transition: background 0.2s;
+  border: 1px solid var(--ink);
 }
 
-.card{
-background:rgba(99,102,241,.05);
-border:1px solid rgba(99,102,241,.2);
-border-radius:12px;
-padding:24px;
-transition:.3s
+.nav-cta:hover { background: var(--red); border-color: var(--red); }
+
+/* HERO */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: calc(100vh - 61px);
+  border-bottom: 1px solid var(--border);
 }
 
-.card:hover{
-background:rgba(99,102,241,.1);
-transform:translateY(-4px)
+.hero-left {
+  padding: 80px 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-right: 1px solid var(--border);
 }
 
-.alert-box{
-max-width:800px;
-margin:auto;
-background:rgba(0,0,0,.6);
-border:1px solid rgba(99,102,241,.3);
-border-radius:16px;
-padding:32px;
-font-size:14px;
-line-height:1.7;
-text-align:left
+.hero-tag {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  animation: fadeUp 0.6s 0.1s ease both;
 }
 
-.faq{max-width:900px;margin:auto;text-align:left}
-
-.faq h3{margin-bottom:10px;margin-top:25px;color:#10b981}
-
-footer{
-text-align:center;
-padding:60px 20px;
-color:rgba(255,255,255,.4);
-font-size:12px;
-border-top:1px solid rgba(99,102,241,.1)
+.hero-tag::before {
+  content: '';
+  width: 24px; height: 1px;
+  background: var(--red);
 }
 
-@media(max-width:768px){h1{font-size:36px}}
+.hero-h1 {
+  font-family: var(--display);
+  font-size: clamp(52px, 6vw, 84px);
+  line-height: 0.95;
+  letter-spacing: 0.02em;
+  margin-bottom: 28px;
+  animation: fadeUp 0.6s 0.15s ease both;
+}
 
+.hero-h1 .red { color: var(--red); }
+.hero-h1 .serif-word {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 300;
+  font-size: 0.85em;
+}
+
+.hero-body {
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--ink2);
+  max-width: 440px;
+  margin-bottom: 40px;
+  font-weight: 300;
+  animation: fadeUp 0.6s 0.2s ease both;
+}
+
+.hero-body strong { color: var(--ink); font-weight: 500; }
+
+.hero-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  animation: fadeUp 0.6s 0.25s ease both;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: white;
+  background: var(--red);
+  padding: 16px 28px;
+  text-decoration: none;
+  transition: all 0.2s;
+  width: fit-content;
+  border: 1px solid var(--red);
+}
+
+.btn-primary:hover {
+  background: #a82e14;
+  border-color: #a82e14;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(200, 57, 26, 0.25);
+}
+
+.btn-primary::after { content: '→'; }
+
+.hero-note {
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+}
+
+/* INCIDENT COUNTER */
+.incident-strip {
+  display: flex;
+  gap: 0;
+  margin-top: 56px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+  animation: fadeUp 0.6s 0.35s ease both;
+}
+
+.incident-stat {
+  flex: 1;
+  padding-right: 24px;
+}
+
+.incident-stat + .incident-stat {
+  padding-left: 24px;
+  border-left: 1px solid var(--border);
+}
+
+.stat-num {
+  font-family: var(--display);
+  font-size: 40px;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  line-height: 1;
+}
+
+.stat-num.red { color: var(--red); }
+
+.stat-label {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 6px;
+  line-height: 1.4;
+}
+
+/* HERO RIGHT */
+.hero-right {
+  background: var(--ink);
+  padding: 60px 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Diagonal lines background */
+.hero-right::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 20px,
+    rgba(255,255,255,0.015) 20px,
+    rgba(255,255,255,0.015) 21px
+  );
+}
+
+.terminal-label {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+  animation: fadeUp 0.6s 0.3s ease both;
+  position: relative;
+}
+
+.terminal {
+  background: #0a0a08;
+  border: 1px solid rgba(255,255,255,0.08);
+  overflow: hidden;
+  position: relative;
+  animation: fadeUp 0.6s 0.35s ease both;
+}
+
+.terminal-bar {
+  background: #161614;
+  padding: 10px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tdot { width: 10px; height: 10px; border-radius: 50%; }
+.tdot.r { background: #ff5f57; }
+.tdot.y { background: #febc2e; }
+.tdot.g { background: #28c840; }
+
+.ttitle {
+  font-size: 11px;
+  color: rgba(255,255,255,0.25);
+  margin-left: 8px;
+  letter-spacing: 0.05em;
+}
+
+.terminal-body {
+  padding: 20px 24px;
+  font-size: 12px;
+  line-height: 2;
+}
+
+.tl { display: flex; gap: 10px; align-items: flex-start; }
+.tp { color: #c8391a; flex-shrink: 0; }
+.tc { color: rgba(255,255,255,0.7); }
+.to { color: rgba(255,255,255,0.35); padding-left: 18px; }
+.tpass { color: #28c840; }
+.tfail { color: #ff5f57; }
+.twarn { color: #febc2e; }
+.tdivider { border: none; border-top: 1px solid rgba(255,255,255,0.06); margin: 8px 0; }
+
+.blink { animation: blink 1s step-end infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+/* ALERT CARD */
+.alert-card {
+  border: 1px solid rgba(200, 57, 26, 0.4);
+  background: rgba(200, 57, 26, 0.08);
+  padding: 16px 20px;
+  display: flex;
+  gap: 14px;
+  animation: fadeUp 0.6s 0.45s ease both;
+  position: relative;
+}
+
+.alert-icon { font-size: 16px; flex-shrink: 0; }
+
+.alert-content { flex: 1; }
+
+.alert-title {
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #ff6b4a;
+  margin-bottom: 4px;
+}
+
+.alert-body {
+  font-size: 12px;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+.alert-time {
+  font-size: 10px;
+  color: rgba(255,255,255,0.2);
+  margin-top: 6px;
+  letter-spacing: 0.05em;
+}
+
+/* PROOF STRIP */
+.proof-strip {
+  border-bottom: 1px solid var(--border);
+  padding: 16px 48px;
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  background: var(--bg2);
+  overflow: hidden;
+}
+
+.proof-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.proof-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--green);
+  flex-shrink: 0;
+}
+
+/* DASHBOARD SECTION */
+.dashboard-section {
+  padding: 80px 48px;
+  border-bottom: 1px solid var(--border);
+}
+
+.section-label {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.dashboard-section img {
+  width: 100%;
+  border: 1px solid var(--border);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+}
+
+/* WHAT WE CATCH */
+.catches-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-bottom: 1px solid var(--border);
+}
+
+.catches-left {
+  padding: 80px 48px;
+  border-right: 1px solid var(--border);
+}
+
+.catches-right {
+  padding: 80px 48px;
+}
+
+.section-h2 {
+  font-family: var(--display);
+  font-size: 48px;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  margin-bottom: 40px;
+}
+
+.check-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.check-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink2);
+}
+
+.check-item:last-child { border-bottom: none; }
+
+.check-icon {
+  font-size: 12px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  width: 20px;
+  text-align: center;
+}
+
+/* OUTPUT BOX */
+.output-box {
+  background: var(--ink);
+  color: rgba(255,255,255,0.8);
+  padding: 28px;
+  font-size: 12px;
+  line-height: 2;
+  margin-bottom: 20px;
+  border-left: 3px solid var(--red);
+}
+
+.out-key { color: rgba(255,255,255,0.35); }
+.out-val { color: rgba(255,255,255,0.8); }
+.out-fail { color: #ff5f57; }
+.out-pass { color: #28c840; }
+.out-warn { color: #febc2e; }
+
+/* FAQ */
+.faq-section {
+  padding: 80px 48px;
+  border-bottom: 1px solid var(--border);
+  max-width: 800px;
+}
+
+.faq-section .section-h2 { margin-bottom: 48px; }
+
+.faq-item {
+  border-top: 1px solid var(--border);
+  padding: 28px 0;
+}
+
+.faq-item:last-child { border-bottom: 1px solid var(--border); }
+
+.faq-q {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 12px;
+  letter-spacing: 0.02em;
+}
+
+.faq-a {
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--ink2);
+  font-weight: 300;
+}
+
+.faq-a strong { color: var(--ink); font-weight: 500; }
+
+/* CTA SECTION */
+.cta-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-bottom: 1px solid var(--border);
+}
+
+.cta-left {
+  background: var(--red);
+  padding: 80px 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.cta-left .section-h2 {
+  color: white;
+  margin-bottom: 20px;
+}
+
+.cta-left p {
+  color: rgba(255,255,255,0.75);
+  font-size: 14px;
+  line-height: 1.7;
+  font-weight: 300;
+  margin-bottom: 36px;
+}
+
+.btn-white {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--red);
+  background: white;
+  padding: 16px 28px;
+  text-decoration: none;
+  transition: all 0.2s;
+  width: fit-content;
+  border: 1px solid white;
+}
+
+.btn-white:hover {
+  background: var(--ink);
+  color: white;
+  border-color: var(--ink);
+}
+
+.btn-white::after { content: '→'; }
+
+.cta-right {
+  background: var(--bg2);
+  padding: 80px 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 24px;
+}
+
+.cta-fact {
+  padding: 20px 24px;
+  border: 1px solid var(--border);
+  background: white;
+}
+
+.fact-label {
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.fact-text {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ink2);
+  font-weight: 300;
+}
+
+.fact-text strong { color: var(--red); font-weight: 500; }
+
+/* FOOTER */
+footer {
+  padding: 40px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg2);
+}
+
+.footer-logo {
+  font-family: var(--display);
+  font-size: 18px;
+  letter-spacing: 0.05em;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.footer-right {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.footer-link {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-link:hover { color: var(--ink); }
+
+.footer-copy {
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+}
+
+/* ANIMATIONS */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; }
+  .hero-right { display: none; }
+  .catches-section { grid-template-columns: 1fr; }
+  .catches-left { border-right: none; border-bottom: 1px solid var(--border); }
+  .cta-section { grid-template-columns: 1fr; }
+  nav { padding: 16px 24px; }
+  .hero-left, .catches-left, .catches-right,
+  .faq-section, .cta-left, .cta-right,
+  .dashboard-section { padding: 60px 24px; }
+  .proof-strip { padding: 16px 24px; gap: 24px; }
+  footer { padding: 32px 24px; flex-direction: column; gap: 20px; text-align: center; }
+  .nav-links { gap: 16px; }
+}
 </style>
-</head>
 
+</head>
 <body>
 
-<div class="grid-bg"></div>
-<div class="orb orb1"></div>
-<div class="orb orb2"></div>
-<div class="orb orb3"></div>
+<nav>
+  <a class="nav-logo" href="#">
+    <span class="logo-status"></span>
+    TESTPILOT<span style="opacity:0.4">AI</span>
+  </a>
+  <div class="nav-links">
+    <a href="blog.html" class="nav-link">Blog</a>
+    <a href="waitlist.html" class="nav-cta">Get Early Access</a>
+  </div>
+</nav>
 
-<div class="container">
-
-<header>
-<div class="logo">
-<img src="assets/brain-icon.png" alt="TestPilotAI" class="logo-img">
-<span class="brand-text">TestPilot<span class="logo-ai">AI</span></span>
-</div>
-<div style="display:flex;align-items:center;gap:16px">
-<a href="blog.html" style="color:rgba(255,255,255,.6);text-decoration:none;font-size:14px;transition:.2s" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,.6)'">Blog</a>
-<a href="waitlist.html" class="btn">REQUEST ACCESS</a>
-</div>
-</header>
+<!-- HERO -->
 
 <section class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">Shopify Checkout Monitoring</div>
 
-<h1>
-<span class="gradient">Know your checkout works.</span><br>
-Always.
+```
+<h1 class="hero-h1">
+  Your checkout<br>
+  <span class="red">broke.</span><br>
+  <span class="serif-word">you had no idea.</span>
 </h1>
 
-<p class="subtitle">
-After every theme update, app install, or payment change — TestPilotAI automatically
-validates your live checkout is still working. No scripts, no Playwright, no setup.
-Just paste a URL.
+<p class="hero-body">
+  After every theme update, app install, or payment change —
+  something can silently break your Shopify checkout.
+  <strong>No error message. No alert. Just lost revenue.</strong><br><br>
+  TestPilotAI continuously validates your live checkout and alerts you
+  the moment something fails — before a customer does.
 </p>
 
-<a href="waitlist.html" class="cta">Request Access →</a>
+<div class="hero-actions">
+  <a href="waitlist.html" class="btn-primary">Get Early Access Free</a>
+  <span class="hero-note">No scripts · No Playwright · 60-second setup · Just paste a URL</span>
+</div>
 
-<p style="margin-top:16px;font-size:13px;color:rgba(255,255,255,.5)">
-Built for agencies managing multiple stores who need continuous proof their clients' checkout is healthy.
-</p>
+<div class="incident-strip">
+  <div class="incident-stat">
+    <div class="stat-num red">9hrs</div>
+    <div class="stat-label">Avg. time before a store owner discovers a broken checkout</div>
+  </div>
+  <div class="incident-stat">
+    <div class="stat-num">60s</div>
+    <div class="stat-label">Time to set up monitoring per store</div>
+  </div>
+  <div class="incident-stat">
+    <div class="stat-num red">$0</div>
+    <div class="stat-label">Cost to get started — free early access</div>
+  </div>
+</div>
+```
 
+  </div>
+
+  <div class="hero-right">
+    <div class="terminal-label">Live validation run</div>
+
+```
+<div class="terminal">
+  <div class="terminal-bar">
+    <div class="tdot r"></div>
+    <div class="tdot y"></div>
+    <div class="tdot g"></div>
+    <span class="ttitle">testpilot — checkout-validator · example-store.com</span>
+  </div>
+  <div class="terminal-body">
+    <div class="tl"><span class="tp">▸</span><span class="tc">Trigger: theme-update detected → running validation</span></div>
+    <hr class="tdivider">
+    <div class="tl"><span class="tpass">✓</span><span class="tc">Add to cart — product &amp; variant confirmed</span></div>
+    <div class="tl"><span class="tpass">✓</span><span class="tc">Cart drawer — rendered correctly</span></div>
+    <div class="tl"><span class="tpass">✓</span><span class="tc">Checkout page — reachable &amp; loaded</span></div>
+    <div class="tl"><span class="tfail">✗</span><span class="tc">Payment form — fields missing after update</span></div>
+    <div class="tl"><span class="twarn">⚠</span><span class="tc">App conflict — auth redirect loop detected</span></div>
+    <hr class="tdivider">
+    <div class="tl"><span class="tp">▸</span><span class="twarn">Status: DEGRADED · Score: 0.58 / 1.00</span></div>
+    <div class="to">Classification: payment_form_incomplete</div>
+    <div class="to">Screenshot + HTML snapshot saved ↗</div>
+    <hr class="tdivider">
+    <div class="tl"><span class="tp">▸</span><span class="tc">Alert dispatched → team@agency.com</span></div>
+    <div class="to">Delivered in <span class="tpass">914ms</span> · 2:07 AM</div>
+    <div class="tl"><span class="to"><span class="blink">█</span></span></div>
+  </div>
+</div>
+
+<div class="alert-card">
+  <span class="alert-icon">🔴</span>
+  <div class="alert-content">
+    <div class="alert-title">Checkout failure detected — 2:07 AM</div>
+    <div class="alert-body">Payment form fields missing on example-store.com after theme v3.2 deployment. Screenshot and HTML snapshot ready for debugging.</div>
+    <div class="alert-time">Caught 8h 43m before store owner opened their laptop</div>
+  </div>
+</div>
+```
+
+  </div>
 </section>
 
-<section style="padding:20px 20px 80px;text-align:center">
-<div style="max-width:1000px;margin:auto">
-<p style="font-size:13px;color:rgba(99,102,241,.8);letter-spacing:2px;margin-bottom:16px;text-transform:uppercase">Live Dashboard</p>
-<img src="assets/dashboard-run-preview.png" alt="TestPilotAI monitoring dashboard showing checkout health scores and run history" style="width:100%;border-radius:12px;border:1px solid rgba(99,102,241,.2);box-shadow:0 20px 60px rgba(0,0,0,.5)">
+<!-- PROOF STRIP -->
+
+<div class="proof-strip reveal">
+  <div class="proof-item"><span class="proof-dot"></span>Zero code required</div>
+  <div class="proof-item"><span class="proof-dot"></span>Runs on your live storefront</div>
+  <div class="proof-item"><span class="proof-dot"></span>Catches what Datadog &amp; Checkly miss</div>
+  <div class="proof-item"><span class="proof-dot"></span>Built for Shopify — not generic uptime monitoring</div>
+  <div class="proof-item"><span class="proof-dot"></span>Alerts in under 60 seconds of detection</div>
 </div>
+
+<!-- DASHBOARD -->
+
+<div class="dashboard-section reveal">
+  <div class="section-label">Live Dashboard</div>
+  <img src="assets/dashboard-run-preview.png" alt="TestPilotAI monitoring dashboard showing checkout health scores and run history">
+</div>
+
+<!-- WHAT WE CATCH -->
+
+<section class="catches-section">
+  <div class="catches-left reveal">
+    <h2 class="section-h2">What gets caught on every run</h2>
+    <ul class="check-list">
+      <li class="check-item"><span class="check-icon">✓</span>Add to cart — product, variant, and quantity confirmed</li>
+      <li class="check-item"><span class="check-icon">✓</span>Checkout reachability — page loads with all critical elements present</li>
+      <li class="check-item"><span class="check-icon">✓</span>Payment form integrity — fields visible and functional</li>
+      <li class="check-item"><span class="check-icon">✓</span>Theme change detection — structural regressions caught automatically</li>
+      <li class="check-item"><span class="check-icon">✓</span>App conflict detection — flow interruptions and auth redirects flagged</li>
+      <li class="check-item"><span class="check-icon">✓</span>Screenshot + HTML snapshot on every run for instant debugging</li>
+    </ul>
+  </div>
+
+  <div class="catches-right reveal">
+    <h2 class="section-h2">Structured output on every failure</h2>
+    <div class="output-box">
+      <div><span class="out-key">Result: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="out-fail">DEGRADED</span></div>
+      <div><span class="out-key">Store: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="out-val">example-store.com</span></div>
+      <div><span class="out-key">Score: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="out-warn">0.58 / 1.00</span></div>
+      <div><span class="out-key">Issue: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="out-fail">payment_form_incomplete</span></div>
+      <div><span class="out-key">Trigger: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="out-val">theme_update_detected</span></div>
+      <div><span class="out-key">Artifacts: &nbsp;&nbsp;&nbsp;</span><span class="out-pass">screenshot + html_snapshot ↗</span></div>
+      <div><span class="out-key">Alert sent: &nbsp;&nbsp;</span><span class="out-pass">914ms after detection</span></div>
+    </div>
+    <p style="font-size:12px;color:var(--muted);line-height:1.7;font-weight:300;">
+      Every failed run includes a full screenshot and HTML snapshot —
+      so you're not debugging blind. You see exactly what broke,
+      exactly when it broke, and exactly what changed.
+    </p>
+  </div>
 </section>
 
-<section class="section">
-<h2>What gets validated on every run</h2>
-<div class="grid">
-<div class="card">Add to cart — product, variant, and quantity confirmed</div>
-<div class="card">Checkout reachability — page loads with all critical elements</div>
-<div class="card">Payment form integrity — fields visible and functional</div>
-<div class="card">Theme change detection — structural regressions caught automatically</div>
-<div class="card">App conflict detection — flow interruptions and auth redirects</div>
-<div class="card">Screenshot + HTML snapshot captured on every run for instant debugging</div>
-</div>
+<!-- FAQ -->
+
+<section class="faq-section reveal">
+  <h2 class="section-h2">Common questions</h2>
+
+  <div class="faq-item">
+    <div class="faq-q">Do I need to write any code or scripts?</div>
+    <div class="faq-a">No. TestPilotAI requires <strong>zero code, zero Playwright knowledge, and zero configuration</strong>. Paste your store URL, set a check frequency, and you're live in under 60 seconds.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">How is this different from Checkly or Datadog?</div>
+    <div class="faq-a">Checkly and Datadog require you to write and maintain Playwright test scripts — one per store. TestPilotAI needs only a URL. For agencies managing 10, 20, or 50 stores, <strong>that's the difference between hours of setup and 60 seconds</strong>.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">Does it execute real transactions?</div>
+    <div class="faq-a">No. The engine validates deterministic checkout signals — cart, variant selection, checkout page structure — <strong>without completing live payments</strong>. Nothing touches your payment gateway.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">Where does it run?</div>
+    <div class="faq-a">Against your <strong>live production storefront</strong>, not staging. It catches regressions that only surface under real storefront conditions — after a theme update, app install, or payment config change.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">What does a health score mean?</div>
+    <div class="faq-a">Each store gets a health score based on recent run history. A score of 100% means every validation has passed. Degraded and failed runs both affect the score — giving you an <strong>at-a-glance view of store health over time</strong>.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">What happens when an issue is detected?</div>
+    <div class="faq-a">You get an immediate alert with the status (degraded or fail), what was missing, a screenshot, and an HTML snapshot — <strong>everything you need to debug fast</strong>, before a customer notices.</div>
+  </div>
 </section>
 
-<section class="section">
-<h2>Structured Validation Output</h2>
-<div class="alert-box">
-Validation Result: Degraded<br><br>
-Store: example-store.com<br>
-Structural Score: 0.82<br>
-Classification: checkout_structure_incomplete<br><br>
-Artifacts: Screenshot + HTML snapshot available for inspection
-</div>
-</section>
+<!-- CTA -->
 
-<section class="section">
-<h2>Technical FAQ</h2>
-<div class="faq">
+<section class="cta-section">
+  <div class="cta-left reveal">
+    <h2 class="section-h2">Stop finding out from customers.</h2>
+    <p>Get early access free. No credit card, no scripts, no setup. Paste a URL and know your checkout works — always.</p>
+    <a href="waitlist.html" class="btn-white">Get Early Access</a>
+  </div>
 
-<h3>Do I need to write any code or scripts?</h3>
-<p>No. TestPilotAI requires zero code, zero Playwright knowledge, and zero configuration. Paste your store URL, set a check frequency, and you're live in under 60 seconds.</p>
-
-<h3>How is this different from Checkly or Datadog?</h3>
-<p>Checkly and Datadog require you to write and maintain Playwright test scripts — one per store. TestPilotAI needs only a URL. For agencies managing 10, 20, or 50 stores, that's the difference between hours of setup and 60 seconds.</p>
-
-<h3>Does it execute real transactions?</h3>
-<p>No. The engine validates deterministic checkout signals — cart, variant, checkout page structure — without completing live payments.</p>
-
-<h3>Where does it run?</h3>
-<p>Against your live production storefront, not staging. It catches regressions that only surface under real storefront conditions — after a theme update, app install, or payment config change.</p>
-
-<h3>What does a health score mean?</h3>
-<p>Each store gets a health score based on recent run history. A score of 100% means every validation has passed. Degraded runs (partial checkout issues) and failures both affect the score, giving you an at-a-glance view of store health over time.</p>
-
-<h3>What happens when an issue is detected?</h3>
-<p>You get an immediate email alert with the status (degraded or fail), what was missing, a screenshot, and an HTML snapshot — everything you need to debug fast.</p>
-
-</div>
+  <div class="cta-right reveal">
+    <div class="cta-fact">
+      <div class="fact-label">The silent failure problem</div>
+      <div class="fact-text">When checkout breaks after a theme update, <strong>there's no error page</strong>. Your site loads fine. Ads keep running. Customers hit a dead end and leave — and you won't know until revenue drops or someone emails you.</div>
+    </div>
+    <div class="cta-fact">
+      <div class="fact-label">Why agencies need this</div>
+      <div class="fact-text">Managing 10+ stores manually is impossible. One broken checkout you miss costs more than your monthly retainer. <strong>TestPilotAI is the automated safety net</strong> between every deployment and your clients' revenue.</div>
+    </div>
+  </div>
 </section>
 
 <footer>
-<p>© 2026 TestPilotAI</p>
-<p style="margin-top:8px"><a href="mailto:info@testpilotai.io" style="color:rgba(255,255,255,.4)">info@testpilotai.io</a></p>
+  <a class="footer-logo" href="#">TESTPILOTAI</a>
+  <div class="footer-right">
+    <a href="blog.html" class="footer-link">Blog</a>
+    <a href="mailto:info@testpilotai.io" class="footer-link">info@testpilotai.io</a>
+    <span class="footer-copy">© 2026 TestPilotAI</span>
+  </div>
 </footer>
 
-</div>
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+
 </body>
 </html>
