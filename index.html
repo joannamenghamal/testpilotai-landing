@@ -692,12 +692,17 @@ footer {
 
 /* Scroll reveal */
 .reveal {
-  opacity: 0;
-  transform: translateY(20px);
+  opacity: 1;
+  transform: translateY(0);
   transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
-.reveal.visible {
+.js-ready .reveal {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.js-ready .reveal.visible {
   opacity: 1;
   transform: translateY(0);
 }
@@ -709,13 +714,22 @@ footer {
   .catches-section { grid-template-columns: 1fr; }
   .catches-left { border-right: none; border-bottom: 1px solid var(--border); }
   .cta-section { grid-template-columns: 1fr; }
-  nav { padding: 16px 24px; }
+  nav { padding: 16px 20px; }
+  .nav-cta { padding: 8px 14px; font-size: 11px; }
   .hero-left, .catches-left, .catches-right,
   .faq-section, .cta-left, .cta-right,
-  .dashboard-section { padding: 60px 24px; }
-  .proof-strip { padding: 16px 24px; gap: 24px; }
-  footer { padding: 32px 24px; flex-direction: column; gap: 20px; text-align: center; }
-  .nav-links { gap: 16px; }
+  .dashboard-section { padding: 48px 20px; }
+  .proof-strip { padding: 16px 20px; gap: 16px; flex-wrap: wrap; }
+  footer { padding: 28px 20px; flex-direction: column; gap: 16px; text-align: center; }
+  .footer-right { flex-direction: column; gap: 12px; }
+  .nav-links { gap: 12px; }
+  .hero-h1 { font-size: clamp(40px, 10vw, 60px); }
+  .incident-strip { flex-direction: column; gap: 0; }
+  .incident-stat { padding: 16px 0; border-left: none !important; border-top: 1px solid var(--border); }
+  .section-h2 { font-size: clamp(32px, 8vw, 48px); }
+  .output-box { font-size: 11px; padding: 16px; overflow-x: auto; }
+  .faq-section { max-width: 100%; }
+  .btn-primary { width: 100%; justify-content: center; }
 }
 </style>
 
@@ -761,8 +775,8 @@ footer {
 
 <div class="incident-strip">
   <div class="incident-stat">
-    <div class="stat-num red">9hrs</div>
-    <div class="stat-label">Avg. time before a store owner discovers a broken checkout</div>
+    <div class="stat-num red">$18B</div>
+    <div class="stat-label">Lost annually to checkout abandonment — broken checkouts make it worse</div>
   </div>
   <div class="incident-stat">
     <div class="stat-num">60s</div>
@@ -812,7 +826,7 @@ footer {
   <div class="alert-content">
     <div class="alert-title">Checkout failure detected — 2:07 AM</div>
     <div class="alert-body">Payment form fields missing on example-store.com after theme v3.2 deployment. Screenshot and HTML snapshot ready for debugging.</div>
-    <div class="alert-time">Caught 8h 43m before store owner opened their laptop</div>
+    <div class="alert-time">Detected before any customer reported an issue</div>
   </div>
 </div>
 ```
@@ -938,6 +952,9 @@ footer {
 </footer>
 
 <script>
+  // Add js-ready class so reveal animation only runs with JS
+  document.documentElement.classList.add('js-ready');
+
   // Scroll reveal
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {
@@ -947,9 +964,5 @@ footer {
         observer.unobserve(e.target);
       }
     });
-  }, { threshold: 0.1 });
+  }, { threshold: 0.08 });
   reveals.forEach(el => observer.observe(el));
-</script>
-
-</body>
-</html>
