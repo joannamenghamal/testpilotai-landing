@@ -145,13 +145,13 @@ footer { padding: 24px 48px; background: var(--bg); border-top: 1px solid var(--
   </div>
 
   <article class="article-body">
-    <h2>The gap no one talks about</h2>
+    <h2 id="gap">The gap no one talks about</h2>
     <p>After a Shopify store goes live, most agencies move on. There are new projects, new clients, new deadlines. The store was working when you shipped it. That should be enough.</p>
     <p>The problem is that Shopify stores aren't static. Every theme update, app install, or payment configuration change is an opportunity for something to break quietly. And when checkout breaks in Shopify, it almost never announces itself. Your site loads. Your product pages look fine. Ads keep running. But somewhere in the purchase flow, a customer hits a wall they can't get past — and just leaves.</p>
     <p>The failure is silent. You find out days later when a client emails asking why revenue dropped last week.</p>
     <div class="callout"><p><strong>The key insight:</strong> Uptime monitoring tells you if your site loads. It has no idea if checkout actually works. Your site can be 100% "up" while customers are unable to complete a purchase.</p></div>
 
-    <h2>What actually breaks — and why</h2>
+    <h2 id="what-breaks">What actually breaks — and why</h2>
     <p>Shopify checkout failures typically fall into a few patterns, and almost all share one characteristic: they're invisible from the outside.</p>
     <h3>Theme updates</h3>
     <p>A theme update that looks fine on the surface can introduce subtle regressions in the purchase flow. A cart drawer that no longer opens. A payment form whose fields stop rendering. These failures require someone to actually walk through the live purchase flow to detect — which almost no one does systematically after every deployment.</p>
@@ -160,7 +160,7 @@ footer { padding: 24px 48px; background: var(--bg); border-top: 1px solid var(--
     <h3>Payment configuration changes</h3>
     <p>Payment gateway settings and checkout customizations can quietly affect what the customer sees. A misconfigured Shopify Payments setup can cause the payment form to not render at all — which looks identical to a working checkout from the outside.</p>
 
-    <h2>What a real validation run looks like</h2>
+    <h2 id="validation-run">What a real validation run looks like</h2>
     <p>Detecting these failures requires actually running through the purchase flow — not just pinging a URL. TestPilotAI runs a real browser through six validation steps on every check:</p>
     <div class="step-list">
       <div class="step-item"><span class="step-check">✓</span><div><div class="step-title">Browser launched</div><div class="step-desc">A real headless browser session starts — the same kind a customer uses.</div></div></div>
@@ -172,12 +172,12 @@ footer { padding: 24px 48px; background: var(--bg); border-top: 1px solid var(--
     </div>
     <p>If any step fails, you get an immediate alert — with a screenshot and HTML snapshot showing exactly what the failure looked like at detection time. No guessing. You see exactly what broke and when.</p>
 
-    <h2>Why this matters for agencies specifically</h2>
+    <h2 id="agencies">Why this matters for agencies specifically</h2>
     <p>For a store owner managing one store, a broken checkout is eventually detectable — someone tells them. For an agency managing ten, twenty, or fifty stores, manual monitoring is simply not possible.</p>
     <p>The math is brutal: one missed checkout failure that costs a client several thousand dollars in lost sales can wipe out the retainer profit for that client entirely. And the client will remember it as your failure, even if the root cause was a Shopify app auto-update at 3am.</p>
     <p>The agencies that win the next few years are the ones that can credibly tell clients: <em>we monitor your store's checkout health continuously, and we'll know before you do when something breaks.</em> That's not just a service — it's a retention argument and a pricing argument.</p>
 
-    <h2>Getting started</h2>
+    <h2 id="getting-started">Getting started</h2>
     <p>TestPilotAI is currently in free early access. Setup takes under 60 seconds — paste your store URL, set a check frequency, and TestPilotAI starts running validations against your live storefront immediately. No scripts, no Playwright, no configuration required.</p>
     <p>For agencies, you can add multiple stores to a single dashboard and see the health score for each at a glance. When something degrades or fails, you're alerted with a full screenshot and HTML snapshot before any client notices.</p>
 
@@ -204,11 +204,11 @@ footer { padding: 24px 48px; background: var(--bg); border-top: 1px solid var(--
         <div class="sidebar-card-header"><div class="sidebar-card-title">In this article</div></div>
         <div class="sidebar-card-body">
           <ul class="toc-list">
-            <li class="toc-item"><a href="#">The gap no one talks about</a></li>
-            <li class="toc-item"><a href="#">What actually breaks — and why</a></li>
-            <li class="toc-item"><a href="#">What a real validation run looks like</a></li>
-            <li class="toc-item"><a href="#">Why this matters for agencies</a></li>
-            <li class="toc-item"><a href="#">Getting started</a></li>
+            <li class="toc-item"><a href="#gap">The gap no one talks about</a></li>
+            <li class="toc-item"><a href="#what-breaks">What actually breaks — and why</a></li>
+            <li class="toc-item"><a href="#validation-run">What a real validation run looks like</a></li>
+            <li class="toc-item"><a href="#agencies">Why this matters for agencies</a></li>
+            <li class="toc-item"><a href="#getting-started">Getting started</a></li>
           </ul>
         </div>
       </div>
@@ -221,3 +221,8 @@ footer { padding: 24px 48px; background: var(--bg); border-top: 1px solid var(--
   <div class="footer-right">
     <a href="../blog.html" class="footer-link">Blog</a>
     <a href="mailto:info@testpilotai.io" class="footer-link">info@testpilotai.io</a>
+    <span style="font-size:11px;color:var(--muted2)">© 2026 TestPilotAI</span>
+  </div>
+</footer>
+</body>
+</html>
