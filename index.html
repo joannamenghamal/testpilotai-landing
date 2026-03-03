@@ -815,7 +815,7 @@ footer {
     <div class="to">Classification: payment_form_incomplete</div>
     <div class="to">Screenshot + HTML snapshot saved ↗</div>
     <hr class="tdivider">
-    <div class="tl"><span class="tp">▸</span><span class="tc">Alert dispatched → team@agency.com</span></div>
+    <div class="tl"><span class="tp">▸</span><span class="tc">Alert dispatched → <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1d69787c705d7c7a78737e64337e7270">[email&#160;protected]</a></span></div>
     <div class="to">Delivered in <span class="tpass">914ms</span> · 2:07 AM</div>
     <div class="tl"><span class="to"><span class="blink">█</span></span></div>
   </div>
@@ -839,7 +839,7 @@ footer {
 <div class="proof-strip reveal">
   <div class="proof-item"><span class="proof-dot"></span>Zero code required</div>
   <div class="proof-item"><span class="proof-dot"></span>Runs on your live storefront</div>
-  <div class="proof-item"><span class="proof-dot"></span>Catches what Datadog &amp; Checkly miss</div>
+  <div class="proof-item"><span class="proof-dot"></span>Catches what uptime monitoring misses</div>
   <div class="proof-item"><span class="proof-dot"></span>Built for Shopify — not generic uptime monitoring</div>
   <div class="proof-item"><span class="proof-dot"></span>Alerts in under 60 seconds of detection</div>
 </div>
@@ -896,8 +896,8 @@ footer {
   </div>
 
   <div class="faq-item">
-    <div class="faq-q">How is this different from Checkly or Datadog?</div>
-    <div class="faq-a">Checkly and Datadog require you to write and maintain Playwright test scripts — one per store. TestPilotAI needs only a URL. For agencies managing 10, 20, or 50 stores, <strong>that's the difference between hours of setup and 60 seconds</strong>.</div>
+    <div class="faq-q">How is this different from uptime monitoring tools?</div>
+    <div class="faq-a">Uptime monitoring checks if your site loads — it has no idea if checkout actually works. TestPilotAI validates the full purchase flow: add to cart, variant selection, checkout page structure. <strong>Your site can be 100% "up" while checkout is completely broken.</strong> Tools like Checkly or Datadog can do this too, but require you to write and maintain Playwright scripts — one per store. TestPilotAI needs only a URL.</div>
   </div>
 
   <div class="faq-item">
@@ -946,23 +946,12 @@ footer {
   <a class="footer-logo" href="#">TESTPILOTAI</a>
   <div class="footer-right">
     <a href="blog.html" class="footer-link">Blog</a>
-    <a href="mailto:info@testpilotai.io" class="footer-link">info@testpilotai.io</a>
+    <a href="/cdn-cgi/l/email-protection#21484f474e615544525551484d4e5540480f484e" class="footer-link"><span class="__cf_email__" data-cfemail="6a03040c052a1e0f191e1a0306051e0b03440305">[email&#160;protected]</span></a>
     <span class="footer-copy">© 2026 TestPilotAI</span>
   </div>
 </footer>
 
-<script>
-  // Add js-ready class so reveal animation only runs with JS
-  document.documentElement.classList.add('js-ready');
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 
-  // Scroll reveal
-  const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        observer.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.08 });
-  reveals.forEach(el => observer.observe(el));
+// Add js-ready class so reveal animation only runs with JS
+document.documentElement.classList.add(‘js-ready’);
