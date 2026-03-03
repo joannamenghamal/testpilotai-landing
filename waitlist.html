@@ -1,484 +1,115 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TestPilotAI — Get Early Access Free</title>
-<meta name="description" content="Get free early access to TestPilotAI. Continuous Shopify checkout health monitoring — no scripts, no Playwright, just paste a URL.">
+<meta name="description" content="Get free early access to TestPilotAI. Continuous Shopify checkout health monitoring — no scripts, just paste a URL.">
+<meta name="keywords" content="shopify checkout monitoring, free early access, store health score, shopify agency tools">
+<meta name="author" content="TestPilotAI">
+<meta property="og:title" content="TestPilotAI — Get Early Access Free">
+<meta property="og:description" content="Free early access to continuous Shopify checkout health monitoring. No scripts, no setup — paste a URL and go.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://testpilotai.io/waitlist.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="TestPilotAI — Get Early Access Free">
+<meta name="twitter:description" content="Free early access to continuous Shopify checkout health monitoring. No scripts, no setup — paste a URL and go.">
+<link rel="canonical" href="https://testpilotai.io/waitlist.html">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon32.png">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
 :root {
-–bg: #0b0f1a;
-–bg2: #0f1525;
-–surface: #141929;
-–surface2: #1a2035;
-–border: rgba(255,255,255,0.07);
-–border2: rgba(255,255,255,0.12);
-–text: #e8eaf0;
-–muted: #5a6080;
-–muted2: #8a90a8;
-–green: #00d97e;
-–green-dim: rgba(0,217,126,0.12);
-–red: #ff4757;
-–mono: ‘Space Mono’, monospace;
-–sans: ‘DM Sans’, sans-serif;
+  --bg: #ffffff; --bg2: #f5f7fa; --bg3: #edf0f5;
+  --border: #e3e8ef; --border2: #cdd5df;
+  --text: #0d1526; --text2: #364152; --muted: #677489; --muted2: #9aa5b4;
+  --blue: #2563eb; --blue2: #1d4ed8; --blue-bg: #eff6ff; --blue-bd: #bfdbfe; --blue-txt: #1e40af;
+  --green: #12b76a; --green-bg: #ecfdf3; --green-bd: #a9efc5;
+  --red: #f04438; --red-bg: #fef3f2; --red-bd: #fda29b;
+  --mono: 'JetBrains Mono', monospace; --sans: 'DM Sans', sans-serif;
 }
-
 html { scroll-behavior: smooth; }
+body { background: var(--bg2); color: var(--text); font-family: var(--sans); min-height: 100vh; }
 
-body {
-background: var(–bg);
-color: var(–text);
-font-family: var(–sans);
-min-height: 100vh;
-overflow-x: hidden;
-}
+nav { background: var(--bg); border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; padding: 0 48px; height: 56px; position: sticky; top: 0; z-index: 100; }
+.nav-logo { font-family: var(--mono); font-size: 13px; font-weight: 700; letter-spacing: 0.06em; color: var(--text); text-decoration: none; display: flex; align-items: center; gap: 9px; }
+.nav-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--blue); animation: pulse 2s ease infinite; }
+@keyframes pulse { 0%,100%{box-shadow:0 0 0 0 rgba(37,99,235,.4)} 50%{box-shadow:0 0 0 6px rgba(37,99,235,0)} }
+.nav-back { font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color .15s; display: flex; align-items: center; gap: 6px; }
+.nav-back::before { content: '←'; }
+.nav-back:hover { color: var(--text); }
 
-body::before {
-content: ‘’;
-position: fixed;
-inset: 0;
-background-image:
-linear-gradient(rgba(79,142,247,0.03) 1px, transparent 1px),
-linear-gradient(90deg, rgba(79,142,247,0.03) 1px, transparent 1px);
-background-size: 48px 48px;
-pointer-events: none;
-z-index: 0;
-}
+.page { display: grid; grid-template-columns: 1fr 1fr; min-height: calc(100vh - 56px); }
 
-body::after {
-content: ‘’;
-position: fixed;
-top: -200px;
-left: 50%;
-transform: translateX(-50%);
-width: 800px;
-height: 400px;
-background: radial-gradient(ellipse, rgba(0,217,126,0.05) 0%, transparent 70%);
-pointer-events: none;
-z-index: 0;
-}
+.page-left { padding: 72px 56px; background: var(--blue); display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden; }
+.page-left::before { content: ''; position: absolute; top: -100px; right: -100px; width: 300px; height: 300px; background: radial-gradient(circle, rgba(255,255,255,.08), transparent); pointer-events: none; }
+.page-left::after { content: ''; position: absolute; bottom: -60px; left: -60px; width: 240px; height: 240px; background: radial-gradient(circle, rgba(255,255,255,.05), transparent); pointer-events: none; }
 
-/* NAV */
-nav {
-display: flex;
-justify-content: space-between;
-align-items: center;
-padding: 0 48px;
-height: 64px;
-border-bottom: 1px solid var(–border);
-background: rgba(11,15,26,0.9);
-backdrop-filter: blur(16px);
-position: sticky;
-top: 0;
-z-index: 100;
-}
+.left-eyebrow { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,.6); margin-bottom: 18px; position: relative; z-index: 1; }
+.left-h1 { font-size: clamp(30px, 3.2vw, 44px); font-weight: 700; line-height: 1.1; letter-spacing: -0.025em; color: #fff; margin-bottom: 18px; position: relative; z-index: 1; }
+.left-body { font-size: 15px; line-height: 1.8; color: rgba(255,255,255,.75); margin-bottom: 40px; max-width: 400px; position: relative; z-index: 1; }
+.left-body strong { color: #fff; font-weight: 600; }
 
-.nav-logo {
-font-family: var(–mono);
-font-size: 15px;
-font-weight: 700;
-letter-spacing: 0.06em;
-color: var(–text);
-text-decoration: none;
-display: flex;
-align-items: center;
-gap: 10px;
-}
+.perks { display: flex; flex-direction: column; position: relative; z-index: 1; }
+.perk { display: flex; align-items: flex-start; gap: 14px; padding: 14px 0; border-top: 1px solid rgba(255,255,255,.12); }
+.perk:last-child { border-bottom: 1px solid rgba(255,255,255,.12); }
+.perk-icon { width: 30px; height: 30px; border-radius: 7px; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.18); display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+.perk-title { font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 2px; }
+.perk-desc { font-size: 13px; color: rgba(255,255,255,.65); line-height: 1.5; }
 
-.nav-pulse {
-width: 8px; height: 8px;
-border-radius: 50%;
-background: var(–green);
-animation: navPulse 2s ease infinite;
-}
+.page-right { padding: 72px 56px; background: var(--bg); display: flex; flex-direction: column; justify-content: center; border-left: 1px solid var(--border); }
+.form-eyebrow { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted2); margin-bottom: 14px; }
+.form-h2 { font-size: clamp(24px, 2.6vw, 34px); font-weight: 700; letter-spacing: -0.025em; line-height: 1.1; color: var(--text); margin-bottom: 7px; }
+.form-sub { font-size: 14px; color: var(--muted); margin-bottom: 32px; line-height: 1.6; }
 
-@keyframes navPulse {
-0% { box-shadow: 0 0 0 0 rgba(0,217,126,0.4); }
-70% { box-shadow: 0 0 0 8px rgba(0,217,126,0); }
-100% { box-shadow: 0 0 0 0 rgba(0,217,126,0); }
-}
+.form { display: flex; flex-direction: column; gap: 16px; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field-label { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text2); }
+.field-input { font-family: var(--mono); font-size: 13px; color: var(--text); background: var(--bg2); border: 1px solid var(--border2); border-radius: 7px; padding: 11px 14px; outline: none; transition: border-color .15s, box-shadow .15s; width: 100%; }
+.field-input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(37,99,235,.1); }
+.field-input::placeholder { color: var(--muted2); }
+textarea.field-input { min-height: 76px; resize: vertical; line-height: 1.6; }
 
-.nav-back {
-font-family: var(–mono);
-font-size: 12px;
-letter-spacing: 0.08em;
-text-transform: uppercase;
-color: var(–muted2);
-text-decoration: none;
-transition: color 0.2s;
-display: flex;
-align-items: center;
-gap: 8px;
-}
+.submit-btn { font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: #fff; background: var(--blue); border: none; border-radius: 6px; padding: 14px 28px; cursor: pointer; transition: all .15s; width: 100%; margin-top: 4px; }
+.submit-btn:hover { background: var(--blue2); box-shadow: 0 4px 14px rgba(37,99,235,.3); }
+.form-note { font-family: var(--mono); font-size: 10px; color: var(--muted2); text-align: center; letter-spacing: 0.04em; }
+.success-msg { display: none; padding: 13px 16px; border: 1px solid var(--green-bd); background: var(--green-bg); border-radius: 7px; font-size: 13px; color: var(--green); line-height: 1.6; margin-top: 6px; }
+.error-msg { display: none; padding: 13px 16px; border: 1px solid var(--red-bd); background: var(--red-bg); border-radius: 7px; font-size: 13px; color: var(--red); line-height: 1.6; margin-top: 6px; }
 
-.nav-back::before { content: ‘←’; }
-.nav-back:hover { color: var(–text); }
-
-/* LAYOUT */
-.page {
-display: grid;
-grid-template-columns: 1fr 1fr;
-min-height: calc(100vh - 64px);
-position: relative;
-z-index: 1;
-}
-
-/* LEFT */
-.page-left {
-padding: 80px 64px;
-border-right: 1px solid var(–border);
-display: flex;
-flex-direction: column;
-justify-content: center;
-background: var(–surface);
-position: relative;
-overflow: hidden;
-}
-
-.page-left::before {
-content: ‘’;
-position: absolute;
-top: -100px;
-left: -100px;
-width: 400px;
-height: 400px;
-background: radial-gradient(ellipse, rgba(0,217,126,0.06) 0%, transparent 65%);
-pointer-events: none;
-}
-
-.left-eyebrow {
-font-family: var(–mono);
-font-size: 11px;
-letter-spacing: 0.15em;
-text-transform: uppercase;
-color: var(–green);
-margin-bottom: 24px;
-display: flex;
-align-items: center;
-gap: 10px;
-animation: fadeUp 0.6s 0.1s ease both;
-}
-
-.left-eyebrow::before {
-content: ‘’;
-width: 20px; height: 1px;
-background: var(–green);
-}
-
-.left-h1 {
-font-size: clamp(36px, 4vw, 52px);
-font-weight: 600;
-line-height: 1.1;
-letter-spacing: -0.02em;
-color: #f0f2f8;
-margin-bottom: 24px;
-animation: fadeUp 0.6s 0.15s ease both;
-}
-
-.left-h1 .green { color: var(–green); }
-
-.left-body {
-font-size: 14px;
-line-height: 1.8;
-color: var(–muted2);
-font-weight: 300;
-max-width: 380px;
-margin-bottom: 48px;
-animation: fadeUp 0.6s 0.2s ease both;
-}
-
-.left-body strong { color: var(–text); font-weight: 500; }
-
-/* PERKS */
-.perks {
-display: flex;
-flex-direction: column;
-animation: fadeUp 0.6s 0.25s ease both;
-}
-
-.perk {
-display: flex;
-align-items: flex-start;
-gap: 16px;
-padding: 16px 0;
-border-top: 1px solid var(–border);
-}
-
-.perk:last-child { border-bottom: 1px solid var(–border); }
-
-.perk-icon {
-width: 32px; height: 32px;
-border-radius: 8px;
-background: var(–green-dim);
-border: 1px solid rgba(0,217,126,0.15);
-display: flex;
-align-items: center;
-justify-content: center;
-font-size: 14px;
-flex-shrink: 0;
-}
-
-.perk-text { flex: 1; }
-
-.perk-title {
-font-size: 14px;
-font-weight: 500;
-color: var(–text);
-margin-bottom: 3px;
-}
-
-.perk-desc {
-font-size: 13px;
-color: var(–muted2);
-font-weight: 300;
-line-height: 1.5;
-}
-
-/* RIGHT — form */
-.page-right {
-padding: 80px 64px;
-display: flex;
-flex-direction: column;
-justify-content: center;
-}
-
-.form-eyebrow {
-font-family: var(–mono);
-font-size: 11px;
-letter-spacing: 0.15em;
-text-transform: uppercase;
-color: var(–muted);
-margin-bottom: 20px;
-animation: fadeUp 0.6s 0.1s ease both;
-}
-
-.form-h2 {
-font-size: clamp(28px, 3vw, 40px);
-font-weight: 600;
-letter-spacing: -0.02em;
-line-height: 1.1;
-color: #f0f2f8;
-margin-bottom: 8px;
-animation: fadeUp 0.6s 0.15s ease both;
-}
-
-.form-sub {
-font-size: 14px;
-color: var(–muted2);
-font-weight: 300;
-margin-bottom: 40px;
-line-height: 1.6;
-animation: fadeUp 0.6s 0.2s ease both;
-}
-
-.form {
-display: flex;
-flex-direction: column;
-gap: 20px;
-animation: fadeUp 0.6s 0.25s ease both;
-}
-
-.field { display: flex; flex-direction: column; gap: 8px; }
-
-.field-label {
-font-family: var(–mono);
-font-size: 10px;
-letter-spacing: 0.12em;
-text-transform: uppercase;
-color: var(–muted2);
-}
-
-.field-input {
-font-family: var(–mono);
-font-size: 13px;
-font-weight: 400;
-color: var(–text);
-background: var(–surface);
-border: 1px solid var(–border2);
-border-radius: 6px;
-padding: 12px 16px;
-outline: none;
-transition: border-color 0.2s, box-shadow 0.2s;
-width: 100%;
-}
-
-.field-input:focus {
-border-color: rgba(0,217,126,0.4);
-box-shadow: 0 0 0 3px rgba(0,217,126,0.08);
-}
-
-.field-input::placeholder { color: var(–muted); }
-
-textarea.field-input {
-min-height: 80px;
-resize: vertical;
-line-height: 1.6;
-}
-
-.submit-btn {
-font-family: var(–mono);
-font-size: 12px;
-font-weight: 700;
-letter-spacing: 0.08em;
-text-transform: uppercase;
-color: var(–bg);
-background: var(–green);
-border: none;
-border-radius: 4px;
-padding: 15px 28px;
-cursor: pointer;
-transition: all 0.2s;
-width: 100%;
-margin-top: 4px;
-}
-
-.submit-btn:hover {
-background: #00f090;
-box-shadow: 0 8px 28px rgba(0,217,126,0.3);
-}
-
-.form-note {
-font-family: var(–mono);
-font-size: 11px;
-color: var(–muted);
-text-align: center;
-letter-spacing: 0.04em;
-line-height: 1.6;
-}
-
-.success-msg {
-display: none;
-padding: 16px 20px;
-border: 1px solid rgba(0,217,126,0.3);
-background: var(–green-dim);
-border-radius: 6px;
-font-size: 13px;
-color: var(–green);
-line-height: 1.6;
-margin-top: 8px;
-}
-
-.error-msg {
-display: none;
-padding: 16px 20px;
-border: 1px solid rgba(255,71,87,0.3);
-background: rgba(255,71,87,0.08);
-border-radius: 6px;
-font-size: 13px;
-color: var(–red);
-line-height: 1.6;
-margin-top: 8px;
-}
-
-/* FOOTER */
-footer {
-padding: 32px 48px;
-display: flex;
-justify-content: space-between;
-align-items: center;
-border-top: 1px solid var(–border);
-position: relative;
-z-index: 1;
-}
-
-.footer-logo {
-font-family: var(–mono);
-font-size: 14px;
-font-weight: 700;
-letter-spacing: 0.06em;
-color: var(–muted2);
-text-decoration: none;
-display: flex;
-align-items: center;
-gap: 8px;
-}
-
-.footer-right {
-display: flex;
-align-items: center;
-gap: 32px;
-}
-
-.footer-link {
-font-size: 13px;
-color: var(–muted);
-text-decoration: none;
-transition: color 0.2s;
-}
-
-.footer-link:hover { color: var(–text); }
-
-@keyframes fadeUp {
-from { opacity: 0; transform: translateY(16px); }
-to { opacity: 1; transform: translateY(0); }
-}
+footer { padding: 24px 48px; background: var(--bg); border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+.footer-logo { font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: 0.06em; color: var(--muted2); text-decoration: none; display: flex; align-items: center; gap: 7px; }
+.footer-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--blue); display: inline-block; }
+.footer-right { display: flex; align-items: center; gap: 24px; }
+.footer-link { font-size: 13px; color: var(--muted2); text-decoration: none; transition: color .15s; }
+.footer-link:hover { color: var(--text); }
 
 @media (max-width: 900px) {
-nav { padding: 0 20px; }
-.page { grid-template-columns: 1fr; }
-.page-left { padding: 60px 20px; border-right: none; border-bottom: 1px solid var(–border); }
-.page-right { padding: 60px 20px; }
-footer { padding: 24px 20px; flex-direction: column; gap: 16px; text-align: center; }
-.footer-right { flex-direction: column; gap: 12px; }
+  nav { padding: 0 20px; }
+  .page { grid-template-columns: 1fr; }
+  .page-left { padding: 56px 20px; }
+  .page-right { padding: 56px 20px; }
+  footer { padding: 20px; flex-direction: column; gap: 12px; text-align: center; }
+  .footer-right { flex-direction: column; gap: 8px; }
 }
 </style>
-
 </head>
 <body>
 
 <nav>
-  <a class="nav-logo" href="index.html">
-    <span class="nav-pulse"></span>
-    TESTPILOTAI
-  </a>
+  <a class="nav-logo" href="index.html"><span class="nav-dot"></span>TESTPILOTAI</a>
   <a href="index.html" class="nav-back">Back to home</a>
 </nav>
 
 <div class="page">
   <div class="page-left">
     <div class="left-eyebrow">Early Access</div>
-    <h1 class="left-h1">
-      Know your stores<br>are <span class="green">healthy.</span><br>Always.
-    </h1>
-    <p class="left-body">
-      No waitlist. No gatekeeping. Get immediate free access to TestPilotAI and
-      <strong>know your Shopify checkout works after every update</strong> —
-      before a customer finds out it doesn't.
-    </p>
+    <h1 class="left-h1">Know your stores are healthy. Always.</h1>
+    <p class="left-body">No waitlist. No gatekeeping. Get immediate free access and <strong>know your Shopify checkout works after every update</strong> — before a customer finds out it doesn't.</p>
     <div class="perks">
-      <div class="perk">
-        <div class="perk-icon">⚡</div>
-        <div class="perk-text">
-          <div class="perk-title">60-second setup</div>
-          <div class="perk-desc">Paste your store URL and you're live. No scripts, no Playwright, no configuration.</div>
-        </div>
-      </div>
-      <div class="perk">
-        <div class="perk-icon">🔍</div>
-        <div class="perk-text">
-          <div class="perk-title">Full purchase flow validation</div>
-          <div class="perk-desc">Product discovery, variant selection, add to cart, checkout, payment form — all validated on every run.</div>
-        </div>
-      </div>
-      <div class="perk">
-        <div class="perk-icon">🔴</div>
-        <div class="perk-text">
-          <div class="perk-title">Real-time failure alerts</div>
-          <div class="perk-desc">Email alerts with screenshot + HTML snapshot within seconds of detection.</div>
-        </div>
-      </div>
-      <div class="perk">
-        <div class="perk-icon">🤝</div>
-        <div class="perk-text">
-          <div class="perk-title">Founder onboarding</div>
-          <div class="perk-desc">Direct access to the founder. We'll help you get set up personally.</div>
-        </div>
-      </div>
+      <div class="perk"><div class="perk-icon">⚡</div><div><div class="perk-title">60-second setup</div><div class="perk-desc">Paste your store URL and you're live. No scripts, no Playwright, no configuration.</div></div></div>
+      <div class="perk"><div class="perk-icon">🔍</div><div><div class="perk-title">Full purchase flow validation</div><div class="perk-desc">Product discovery, variant selection, add to cart, checkout, payment form — validated every run.</div></div></div>
+      <div class="perk"><div class="perk-icon">🔔</div><div><div class="perk-title">Real-time failure alerts</div><div class="perk-desc">Email alerts with screenshot + HTML snapshot within seconds of detection.</div></div></div>
+      <div class="perk"><div class="perk-icon">🤝</div><div><div class="perk-title">Founder onboarding</div><div class="perk-desc">Direct access to the founder. We'll help you get set up personally.</div></div></div>
     </div>
   </div>
 
@@ -487,56 +118,27 @@ footer { padding: 24px 20px; flex-direction: column; gap: 16px; text-align: cent
     <h2 class="form-h2">Request Access</h2>
     <p class="form-sub">Free for early users. We'll reach out within 24 hours with your login.</p>
 
-```
-<form id="accessForm" class="form" action="https://formspree.io/f/xdalpvel" method="POST">
-  <input type="hidden" name="_subject" value="New TestPilotAI Access Request">
-  <input type="hidden" name="_format" value="plain">
-
-  <div class="field">
-    <label class="field-label" for="email">Email address</label>
-    <input class="field-input" id="email" name="email" type="email" placeholder="you@store.com" required>
-  </div>
-
-  <div class="field">
-    <label class="field-label" for="store">Store URL</label>
-    <input class="field-input" id="store" name="store" type="url" placeholder="https://yourstore.com" required>
-  </div>
-
-  <div class="field">
-    <label class="field-label" for="role">Your role</label>
-    <input class="field-input" id="role" name="role" type="text" placeholder="e.g. Store owner, Agency developer, CTO">
-  </div>
-
-  <div class="field">
-    <label class="field-label" for="note">What's your biggest checkout concern? (optional)</label>
-    <textarea class="field-input" id="note" name="note" placeholder="e.g. theme updates breaking checkout, managing multiple client stores, no visibility after deployments..."></textarea>
-  </div>
-
-  <button class="submit-btn" type="submit">Get Free Access →</button>
-
-  <p class="form-note">Free early access · No credit card · We'll reach out within 24hrs</p>
-
-  <div id="success" class="success-msg">
-    ✓ You're in. Check your inbox — we'll reach out within 24 hours with your access details.
-  </div>
-  <div id="error" class="error-msg">
-    Something went wrong. Please try again or email info@testpilotai.io directly.
-  </div>
-</form>
-```
-
+    <form id="accessForm" class="form" action="https://formspree.io/f/xdalpvel" method="POST">
+      <input type="hidden" name="_subject" value="New TestPilotAI Access Request">
+      <input type="hidden" name="_format" value="plain">
+      <div class="field"><label class="field-label" for="email">Email address</label><input class="field-input" id="email" name="email" type="email" placeholder="you@store.com" required></div>
+      <div class="field"><label class="field-label" for="store">Store URL</label><input class="field-input" id="store" name="store" type="url" placeholder="https://yourstore.com" required></div>
+      <div class="field"><label class="field-label" for="role">Your role</label><input class="field-input" id="role" name="role" type="text" placeholder="e.g. Store owner, Agency developer, CTO"></div>
+      <div class="field"><label class="field-label" for="note">Biggest checkout concern? (optional)</label><textarea class="field-input" id="note" name="note" placeholder="e.g. theme updates breaking checkout, managing multiple client stores..."></textarea></div>
+      <button class="submit-btn" type="submit">Get Free Access →</button>
+      <p class="form-note">Free early access · No credit card · We'll reach out within 24hrs</p>
+      <div id="success" class="success-msg">✓ You're in. Check your inbox — we'll reach out within 24 hours with your access details.</div>
+      <div id="error" class="error-msg">Something went wrong. Please try again or email info@testpilotai.io directly.</div>
+    </form>
   </div>
 </div>
 
 <footer>
-  <a class="footer-logo" href="index.html">
-    <span style="width:6px;height:6px;border-radius:50%;background:var(--green);display:inline-block"></span>
-    TESTPILOTAI
-  </a>
+  <a class="footer-logo" href="index.html"><span class="footer-dot"></span>TESTPILOTAI</a>
   <div class="footer-right">
     <a href="blog.html" class="footer-link">Blog</a>
     <a href="mailto:info@testpilotai.io" class="footer-link">info@testpilotai.io</a>
-    <span style="font-size:11px;color:var(--muted)">© 2026 TestPilotAI</span>
+    <span style="font-size:11px;color:var(--muted2)">© 2026 TestPilotAI</span>
   </div>
 </footer>
 
@@ -544,30 +146,15 @@ footer { padding: 24px 20px; flex-direction: column; gap: 16px; text-align: cent
   const form = document.getElementById('accessForm');
   const success = document.getElementById('success');
   const error = document.getElementById('error');
-
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    success.style.display = 'none';
-    error.style.display = 'none';
-
+    success.style.display = 'none'; error.style.display = 'none';
     try {
-      const res = await fetch(form.action, {
-        method: 'POST',
-        body: new FormData(form),
-        headers: { 'Accept': 'application/json' }
-      });
-
-      if (res.ok) {
-        form.reset();
-        success.style.display = 'block';
-      } else {
-        error.style.display = 'block';
-      }
-    } catch (err) {
-      error.style.display = 'block';
-    }
+      const res = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } });
+      if (res.ok) { form.reset(); success.style.display = 'block'; }
+      else { error.style.display = 'block'; }
+    } catch { error.style.display = 'block'; }
   });
 </script>
-
 </body>
 </html>
