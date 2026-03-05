@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Automated Checkout Monitoring for Shopify Agencies — TestPilotAI</title>
+<meta name="robots" content="noindex">
+<meta name="author" content="TestPilotAI">
+<meta property="og:title" content="Automated Checkout Monitoring for Shopify Agencies">
+<meta property="og:description" content="TestPilotAI automatically monitors your clients' Shopify checkout flows and alerts you the moment something breaks — before they do.">
+<meta property="og:type" content="website">
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-17988032729"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-17988032729');
+</script>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #ffffff; --bg2: #f5f7fa; --bg3: #edf0f5;
+  --border: #e3e8ef; --border2: #cdd5df;
+  --text: #0d1526; --text2: #364152; --muted: #677489; --muted2: #9aa5b4;
+  --blue: #2563eb; --blue2: #1d4ed8; --blue-bg: #eff6ff; --blue-bd: #bfdbfe; --blue-txt: #1e40af;
+  --green: #12b76a; --green-bg: #ecfdf3; --green-bd: #a9efc5;
+  --mono: 'JetBrains Mono', monospace; --sans: 'DM Sans', sans-serif;
+}
+
+body {
+  font-family: var(--sans);
+  background: var(--bg2);
+  color: var(--text);
+  min-height: 100vh;
+  padding-top: 56px;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; height: 56px;
+  background: var(--bg); border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 40px; z-index: 10;
+}
+.nav-logo {
+  font-family: var(--mono); font-size: 13px; font-weight: 700;
+  letter-spacing: 0.06em; color: var(--text);
+  text-decoration: none; display: flex; align-items: center; gap: 9px;
+}
+.nav-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--blue); animation: pulse 2s ease infinite;
+}
+@keyframes pulse {
+  0%,100%{box-shadow:0 0 0 0 rgba(37,99,235,.4)}
+  50%{box-shadow:0 0 0 6px rgba(37,99,235,0)}
+}
+.nav-cta {
+  font-family: var(--mono); font-size: 11px; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--blue); text-decoration: none;
+  padding: 6px 14px; border: 1px solid var(--blue-bd);
+  border-radius: 6px; background: var(--blue-bg);
+  transition: all .15s;
+}
+.nav-cta:hover { background: var(--blue); color: #fff; border-color: var(--blue); }
+
+/* ── HERO ── */
+.hero {
+  max-width: 720px; margin: 0 auto;
+  padding: 64px 24px 48px;
+  text-align: center;
+}
+
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--mono); font-size: 10px; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--blue); margin-bottom: 20px;
+  padding: 5px 14px; border-radius: 999px;
+  background: var(--blue-bg); border: 1px solid var(--blue-bd);
+}
+.hero-eyebrow-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--blue); animation: pulse 2s ease infinite;
+}
+
+.hero h1 {
+  font-size: clamp(28px, 4vw, 42px); font-weight: 700;
+  letter-spacing: -0.03em; line-height: 1.2;
+  color: var(--text); margin-bottom: 18px;
+}
+.hero h1 .accent { color: var(--blue); }
+
+.hero-sub {
+  font-size: 17px; color: var(--muted); line-height: 1.7;
+  max-width: 560px; margin: 0 auto 40px;
+}
+
+/* ── FEATURES ── */
+.features {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 12px; max-width: 720px; margin: 0 auto 56px;
+  padding: 0 24px;
+}
+
+.feature {
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: 10px; padding: 20px 18px;
+  text-align: left;
+}
+
+.feature-icon {
+  width: 32px; height: 32px; border-radius: 8px;
+  background: var(--blue-bg); border: 1px solid var(--blue-bd);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 12px; font-size: 15px;
+}
+
+.feature h3 {
+  font-size: 13px; font-weight: 700; color: var(--text);
+  margin-bottom: 5px; letter-spacing: -0.01em;
+}
+
+.feature p {
+  font-size: 12px; color: var(--muted); line-height: 1.6;
+}
+
+/* ── DIVIDER ── */
+.divider {
+  max-width: 720px; margin: 0 auto 40px;
+  padding: 0 24px;
+  display: flex; align-items: center; gap: 14px;
+}
+.divider-line { flex: 1; height: 1px; background: var(--border); }
+.divider-label {
+  font-family: var(--mono); font-size: 10px; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted2);
+  white-space: nowrap;
+}
+
+/* ── SURVEY CARD ── */
+.card {
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: 12px; padding: 40px 40px;
+  max-width: 580px; width: calc(100% - 48px);
+  margin: 0 auto 80px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.06), 0 8px 24px rgba(0,0,0,.05);
+}
+
+.eyebrow {
+  font-family: var(--mono); font-size: 10px; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--blue); margin-bottom: 14px;
+  display: flex; align-items: center; gap: 8px;
+}
+.eyebrow::before { content: ''; width: 16px; height: 1px; background: var(--blue); }
+
+.card h2 {
+  font-size: clamp(17px, 2.4vw, 21px); font-weight: 700;
+  letter-spacing: -0.02em; line-height: 1.35;
+  color: var(--text); margin-bottom: 10px;
+}
+
+.card-sub {
+  font-size: 14px; color: var(--muted); line-height: 1.7;
+  margin-bottom: 28px;
+}
+
+.options { display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px; }
+
+.opt {
+  padding: 13px 16px;
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 8px; color: var(--text2);
+  font-size: 14px; font-family: var(--sans); font-weight: 500;
+  cursor: pointer; text-align: left;
+  transition: all .15s;
+  display: flex; align-items: center; gap: 12px;
+}
+.opt::before {
+  content: ''; width: 16px; height: 16px; border-radius: 50%;
+  border: 1px solid var(--border2); flex-shrink: 0; transition: all .15s;
+}
+.opt:hover { background: var(--blue-bg); border-color: var(--blue-bd); color: var(--blue-txt); }
+.opt:hover::before { background: var(--blue); border-color: var(--blue); }
+
+.opt-label {
+  font-family: var(--mono); font-size: 10px;
+  color: var(--muted2); letter-spacing: 0.06em; text-align: center;
+  margin-top: 2px;
+}
+
+/* ── THANK YOU ── */
+.thank-you { display: none; }
+
+.ty-check {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--green-bg); border: 1px solid var(--green-bd);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; margin-bottom: 18px;
+}
+
+.thank-you h2 {
+  font-size: 21px; font-weight: 700; letter-spacing: -0.02em;
+  color: var(--text); margin-bottom: 10px;
+}
+.thank-you h2 .accent { color: var(--blue); }
+
+.thank-you p {
+  font-size: 14px; color: var(--muted); line-height: 1.75; margin-bottom: 24px;
+}
+
+.email-label {
+  font-family: var(--mono); font-size: 10px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text2); margin-bottom: 7px;
+}
+
+.email-row { display: flex; gap: 8px; }
+
+.email-row input {
+  flex: 1; padding: 11px 14px;
+  background: var(--bg2); border: 1px solid var(--border2);
+  border-radius: 7px; color: var(--text);
+  font-size: 13px; font-family: var(--mono);
+  outline: none; transition: border-color .15s, box-shadow .15s;
+}
+.email-row input::placeholder { color: var(--muted2); }
+.email-row input:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(37,99,235,.1);
+}
+
+.email-btn {
+  padding: 11px 20px; background: var(--blue); border: none;
+  border-radius: 7px; color: #fff;
+  font-size: 11px; font-family: var(--mono); font-weight: 700;
+  letter-spacing: 0.07em; text-transform: uppercase;
+  cursor: pointer; white-space: nowrap; transition: all .15s;
+}
+.email-btn:hover { background: var(--blue2); box-shadow: 0 4px 12px rgba(37,99,235,.25); }
+.email-btn:disabled { opacity: .5; cursor: not-allowed; }
+
+.email-sent {
+  display: none;
+  font-family: var(--mono); font-size: 12px;
+  color: var(--green); margin-top: 10px;
+}
+
+.no-spam {
+  font-family: var(--mono); font-size: 10px;
+  color: var(--muted2); margin-top: 14px;
+  letter-spacing: 0.04em; text-align: center;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 640px) {
+  .features { grid-template-columns: 1fr; }
+  nav { padding: 0 20px; }
+  .card { padding: 28px 20px; }
+  .hero { padding: 48px 20px 36px; }
+  .email-row { flex-direction: column; }
+}
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+  <a class="nav-logo" href="https://testpilotai.io"><span class="nav-dot"></span>TESTPILOTAI</a>
+  <a class="nav-cta" href="https://testpilotai.io">See how it works →</a>
+</nav>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-eyebrow"><span class="hero-eyebrow-dot"></span>For Shopify agencies</div>
+  <h1>Checkout broke.<br><span class="accent">Did you find out first?</span></h1>
+  <p class="hero-sub">
+    TestPilotAI runs automated checkout flows on your clients' Shopify stores around the clock —
+    and alerts you the moment something breaks, before they do.
+  </p>
+</div>
+
+<!-- Features -->
+<div class="features">
+  <div class="feature">
+    <div class="feature-icon">🔁</div>
+    <h3>Automated monitoring</h3>
+    <p>Simulates a real purchase every 30 minutes across all your client stores.</p>
+  </div>
+  <div class="feature">
+    <div class="feature-icon">⚡</div>
+    <h3>Instant alerts</h3>
+    <p>Get notified by email the moment a cart, checkout, or payment step fails.</p>
+  </div>
+  <div class="feature">
+    <div class="feature-icon">🏷️</div>
+    <h3>White-label ready</h3>
+    <p>Send alerts from your own domain. Your brand, your client relationships.</p>
+  </div>
+</div>
+
+<!-- Divider -->
+<div class="divider">
+  <div class="divider-line"></div>
+  <div class="divider-label">Quick question while we build</div>
+  <div class="divider-line"></div>
+</div>
+
+<!-- Survey Card -->
+<div class="card">
+
+  <div id="survey">
+    <div class="eyebrow">30 seconds</div>
+    <h2>How does your agency currently catch broken checkout issues?</h2>
+    <p class="card-sub">
+      Theme updates and third-party apps can silently break buying flows.
+      Help us understand how agencies handle this today.
+    </p>
+    <div class="options">
+      <button class="opt" onclick="selectOption(this)">We test manually before going live</button>
+      <button class="opt" onclick="selectOption(this)">We wait for client reports</button>
+      <button class="opt" onclick="selectOption(this)">We use existing monitoring tools</button>
+      <button class="opt" onclick="selectOption(this)">This hasn't been a real problem for us</button>
+    </div>
+    <p class="opt-label">Select the option that best describes your agency</p>
+  </div>
+
+  <div class="thank-you" id="thankyou">
+    <div class="ty-check">✓</div>
+    <h2>Thanks — <span class="accent">this helps a lot.</span></h2>
+    <p>We're building the automated checkout monitor agencies actually need.
+       Drop your email to get early access when we launch — and skip the waitlist.</p>
+    <div class="email-label">Get early access</div>
+    <div class="email-row">
+      <input type="email" id="emailInput" placeholder="your@agency.com" autocomplete="email">
+      <button class="email-btn" id="emailBtn" onclick="submitEmail()">Notify me</button>
+    </div>
+    <p class="email-sent" id="emailSent">✓ You're on the list. We'll be in touch.</p>
+    <p class="no-spam">No spam · One email when we launch</p>
+  </div>
+
+</div>
+
+<script>
+function selectOption(btn) {
+  var answer = btn.textContent.trim();
+  var slug = answer.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  history.replaceState(null, '', '?answer=' + encodeURIComponent(slug));
+  document.getElementById('survey').style.display = 'none';
+  document.getElementById('thankyou').style.display = 'block';
+}
+
+function submitEmail() {
+  var email = document.getElementById('emailInput').value.trim();
+  if (!email || !email.includes('@') || !email.includes('.')) return;
+
+  var btn = document.getElementById('emailBtn');
+  btn.disabled = true;
+  btn.textContent = 'Sending…';
+
+  var params = new URLSearchParams(window.location.search);
+  var payload = {
+    email: email,
+    survey_answer:  params.get('answer')       || 'unknown',
+    utm_source:     params.get('utm_source')   || '',
+    utm_medium:     params.get('utm_medium')   || '',
+    utm_campaign:   params.get('utm_campaign') || '',
+    utm_term:       params.get('utm_term')     || '',
+  };
+
+  fetch('https://formspree.io/f/xpqjgrbk', {
+    method: 'POST',
+    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  })
+  .then(function(res) {
+    if (res.ok) {
+      document.querySelector('.email-row').style.display = 'none';
+      document.getElementById('emailSent').style.display = 'block';
+      document.querySelector('.no-spam').style.display = 'none';
+
+      // Fire Google Ads conversion — only on real submission
+      gtag('event', 'conversion', { send_to: 'AW-17988032729' });
+    } else {
+      btn.disabled = false;
+      btn.textContent = 'Notify me';
+      alert('Something went wrong. Please try again.');
+    }
+  })
+  .catch(function() {
+    btn.disabled = false;
+    btn.textContent = 'Notify me';
+    alert('Something went wrong. Please try again.');
+  });
+}
+</script>
+
+</body>
+</html>
