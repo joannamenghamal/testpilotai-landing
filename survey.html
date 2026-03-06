@@ -17,7 +17,9 @@
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'AW-17988032729');
+  gtag('config', 'G-NLLSCNN9KC');
 </script>
+
 
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 
@@ -355,6 +357,13 @@ function selectOption(btn) {
   var answer = btn.textContent.trim();
   var slug = answer.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
   history.replaceState(null, '', '?answer=' + encodeURIComponent(slug));
+
+  // GA4 funnel event — survey answered, email step reached
+  gtag('event', 'survey_answered', {
+    event_category: 'funnel',
+    survey_answer: slug
+  });
+
   document.getElementById('survey').style.display = 'none';
   document.getElementById('thankyou').style.display = 'block';
 }
@@ -388,7 +397,13 @@ function submitEmail() {
       document.getElementById('emailSent').style.display = 'block';
       document.querySelector('.no-spam').style.display = 'none';
 
-      // Fire Google Ads conversion — only on real submission
+      // GA4 funnel event — email actually submitted
+      gtag('event', 'email_submitted', {
+        event_category: 'funnel',
+        survey_answer: params.get('answer') || 'unknown'
+      });
+
+      // Google Ads conversion — only on real submission
       gtag('event', 'conversion', { send_to: 'AW-17988032729/ZwneCOrLqYMcENmxroFD' });
     } else {
       btn.disabled = false;
@@ -403,6 +418,7 @@ function submitEmail() {
   });
 }
 </script>
+
 
 </body>
 </html>
