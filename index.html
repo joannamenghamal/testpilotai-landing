@@ -19,7 +19,7 @@
 </script>
 
 
-<title>TestPilotAI — Checkout Health Monitoring for Shopify</title>
+<title>Automated Shopify Checkout Testing After Every Deploy | TestPilotAI</title>
 <meta name="description" content="TestPilotAI gives Shopify agencies a live health score for every store they manage. Know what's working, what's degraded, and what needs attention — before your clients do.">
 <meta name="keywords" content="shopify checkout monitoring, store health score, shopify agency tools, checkout health, ecommerce monitoring">
 <meta name="author" content="TestPilotAI">
@@ -329,6 +329,21 @@ footer { padding: 24px 48px; background: var(--bg); border-top: 1px solid var(--
 .faq-a { font-size: 14px; line-height: 1.8; color: var(--muted); padding-bottom: 20px; }
 .faq-a strong { color: var(--text2); font-weight: 600; }
 
+/* ── CI SECTION ── */
+.ci-section { padding: 64px 48px; background: var(--bg); border-bottom: 1px solid var(--border); }
+.ci-section h2 { font-size: clamp(22px, 2.4vw, 32px); font-weight: 700; letter-spacing: -0.025em; color: var(--text); margin-bottom: 12px; line-height: 1.2; }
+.ci-section p { font-size: 15px; color: var(--muted); line-height: 1.75; margin-bottom: 20px; max-width: 560px; }
+.ci-section ul { list-style: none; display: flex; gap: 10px; flex-wrap: wrap; }
+.ci-section ul li { font-family: var(--mono); font-size: 11px; font-weight: 600; color: var(--text2); background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; padding: 7px 14px; }
+
+/* ── BUILT FOR TEAMS SECTION ── */
+.teams-section { padding: 64px 48px; background: var(--bg2); border-bottom: 1px solid var(--border); }
+.teams-section h2 { font-size: clamp(22px, 2.4vw, 32px); font-weight: 700; letter-spacing: -0.025em; color: var(--text); margin-bottom: 12px; line-height: 1.2; }
+.teams-section p { font-size: 15px; color: var(--muted); line-height: 1.75; margin-bottom: 20px; max-width: 560px; }
+.teams-section ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.teams-section ul li { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--text2); }
+.teams-section ul li::before { content: '✓'; font-family: var(--mono); font-size: 11px; font-weight: 700; color: var(--blue); background: var(--blue-bg); border: 1px solid var(--blue-bd); border-radius: 4px; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+
 @media (max-width: 960px) {
   nav { padding: 0 20px; }
   .hero { grid-template-columns: 1fr; }
@@ -362,10 +377,10 @@ footer { padding: 24px 48px; background: var(--bg); border-top: 1px solid var(--
 <section class="hero">
   <div class="hero-left">
     <div class="hero-badge"><span class="badge-dot"></span>Shopify Store Health Monitoring</div>
-    <h1 class="hero-h1">Every store.<br>Every checkout.<br><span class="accent">One health score.</span></h1>
-    <p class="hero-sub">TestPilotAI gives you <strong>live health score for every store you run or manage</strong> — so you always know what's working, what's degraded, and what needs attention. Before your customers do.</p>
+    <h1 class="hero-h1">Stop Manually<br>Testing Checkout<br><span class="accent">After Every Deploy</span></h1>
+    <p class="hero-sub">TestPilotAI automatically runs your homepage → product → cart → checkout flow after every release — so you ship faster without regression anxiety.</p>
     <div class="hero-actions">
-      <a href="waitlist.html" class="btn-primary">Get Early Access Free</a>
+      <a href="waitlist.html" class="btn-primary">Get Early Access (Free During Beta)</a>
       <span class="hero-note">No scripts · 60s setup · Paste a URL</span>
     </div>
     <div class="metrics-strip">
@@ -425,6 +440,17 @@ footer { padding: 24px 48px; background: var(--bg); border-top: 1px solid var(--
   </div>
 </section>
 
+<section class="ci-section">
+  <h2>Trigger Tests Automatically After Every Deploy</h2>
+  <p>Add one webhook call at the end of your CI pipeline and TestPilotAI validates checkout automatically.</p>
+  <ul>
+    <li>Works with GitHub Actions</li>
+    <li>Shopify CLI</li>
+    <li>Vercel</li>
+    <li>Custom deploy scripts</li>
+  </ul>
+</section>
+
 <div class="proof-strip">
   <div class="proof-item"><span class="proof-check">✓</span>Zero code required</div>
   <div class="proof-item"><span class="proof-check">✓</span>Runs on your live storefront</div>
@@ -433,10 +459,20 @@ footer { padding: 24px 48px; background: var(--bg); border-top: 1px solid var(--
   <div class="proof-item"><span class="proof-check">✓</span>Alerts in under 60 seconds</div>
 </div>
 
+<section class="teams-section">
+  <h2>Built for Teams Shipping Weekly</h2>
+  <p>If you're deploying often, manually testing checkout every time gets repetitive — and easy to skip.</p>
+  <ul>
+    <li>Runs after every deploy</li>
+    <li>Runs every 30 minutes</li>
+    <li>Alerts instantly on failure</li>
+  </ul>
+</section>
+
 <section class="monitors-section">
   <div class="section-eyebrow reveal">What TestPilotAI monitors</div>
-  <h2 class="section-h2 reveal reveal-delay-1">More than uptime.<br>Full checkout health.</h2>
-  <p class="section-sub reveal reveal-delay-2">Uptime monitoring tells you if your site loads. TestPilotAI tells you if a customer can actually complete a purchase — and exactly what broke if they can't.</p>
+  <h3 class="section-h2 reveal reveal-delay-1">Because Uptime ≠ Working Checkout</h3>
+  <p class="section-sub reveal reveal-delay-2">Your store can be "up" while checkout is silently broken. TestPilotAI runs real browser-based purchase flows — not just ping checks — so you know customers can actually complete orders.</p>
   <div class="monitors-grid">
     <div class="monitor-card"><div class="monitor-icon">🔍</div><div class="monitor-title">Product Discovery</div><div class="monitor-desc">Automatically finds a real product on your live storefront — no configuration needed. Adapts when your catalog changes.</div></div>
     <div class="monitor-card reveal-delay-1"><div class="monitor-icon">🎛️</div><div class="monitor-title">Variant Selection</div><div class="monitor-desc">Finds and selects a valid product variant. Catches variant-level failures a simple uptime check would never see.</div></div>
