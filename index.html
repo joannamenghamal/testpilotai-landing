@@ -168,9 +168,15 @@ nav {
 .ss-a { color: var(--amber); }
 .ss-r { color: var(--red); }
 
-/* ── PROOF STRIP ── */
-.proof-strip { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 12px 48px; background: var(--bg); display: flex; align-items: center; gap: 32px; flex-wrap: wrap; }
-.proof-item { display: flex; align-items: center; gap: 7px; font-size: 13px; color: var(--muted); white-space: nowrap; }
+/* ── PROOF STRIP MARQUEE ── */
+.proof-strip { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--bg); overflow: hidden; position: relative; }
+.proof-strip::before, .proof-strip::after { content: ''; position: absolute; top: 0; bottom: 0; width: 80px; z-index: 2; pointer-events: none; }
+.proof-strip::before { left: 0; background: linear-gradient(to right, var(--bg), transparent); }
+.proof-strip::after { right: 0; background: linear-gradient(to left, var(--bg), transparent); }
+.marquee-track { display: flex; align-items: center; width: max-content; animation: marquee 28s linear infinite; }
+.marquee-track:hover { animation-play-state: paused; }
+@keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+.proof-item { display: flex; align-items: center; gap: 7px; font-size: 13px; color: var(--muted); white-space: nowrap; padding: 12px 36px; border-right: 1px solid var(--border); }
 .proof-check { color: var(--blue); font-family: var(--mono); font-size: 11px; font-weight: 700; }
 
 /* ── MONITORS ── */
@@ -441,9 +447,9 @@ footer { padding: 24px 48px; background: var(--bg); border-top: 1px solid var(--
 </section>
 
 <section class="ci-section">
-  <h2>Trigger Tests Automatically After Every Deploy</h2>
-  <p>Add one webhook call at the end of your CI pipeline and TestPilotAI validates checkout automatically.</p>
-  <ul>
+  <h2 class="reveal">Trigger Tests Automatically After Every Deploy</h2>
+  <p class="reveal reveal-delay-1">Add one webhook call at the end of your CI pipeline and TestPilotAI validates checkout automatically.</p>
+  <ul class="reveal reveal-delay-2">
     <li>Works with GitHub Actions</li>
     <li>Shopify CLI</li>
     <li>Vercel</li>
@@ -452,17 +458,29 @@ footer { padding: 24px 48px; background: var(--bg); border-top: 1px solid var(--
 </section>
 
 <div class="proof-strip">
-  <div class="proof-item"><span class="proof-check">✓</span>Zero code required</div>
-  <div class="proof-item"><span class="proof-check">✓</span>Runs on your live storefront</div>
-  <div class="proof-item"><span class="proof-check">✓</span>Catches what uptime monitoring misses</div>
-  <div class="proof-item"><span class="proof-check">✓</span>Built for Shopify — not generic monitoring</div>
-  <div class="proof-item"><span class="proof-check">✓</span>Alerts in under 60 seconds</div>
+  <div class="marquee-track">
+    <div class="proof-item"><span class="proof-check">✓</span>Zero code required</div>
+    <div class="proof-item"><span class="proof-check">✓</span>Runs on your live storefront</div>
+    <div class="proof-item"><span class="proof-check">✓</span>Catches what uptime monitoring misses</div>
+    <div class="proof-item"><span class="proof-check">✓</span>Built for Shopify — not generic monitoring</div>
+    <div class="proof-item"><span class="proof-check">✓</span>Alerts in under 60 seconds</div>
+    <div class="proof-item"><span class="proof-check">✓</span>No scripts · 60s setup</div>
+    <div class="proof-item"><span class="proof-check">✓</span>Real browser-based testing</div>
+    <!-- duplicate for seamless loop -->
+    <div class="proof-item"><span class="proof-check">✓</span>Zero code required</div>
+    <div class="proof-item"><span class="proof-check">✓</span>Runs on your live storefront</div>
+    <div class="proof-item"><span class="proof-check">✓</span>Catches what uptime monitoring misses</div>
+    <div class="proof-item"><span class="proof-check">✓</span>Built for Shopify — not generic monitoring</div>
+    <div class="proof-item"><span class="proof-check">✓</span>Alerts in under 60 seconds</div>
+    <div class="proof-item"><span class="proof-check">✓</span>No scripts · 60s setup</div>
+    <div class="proof-item"><span class="proof-check">✓</span>Real browser-based testing</div>
+  </div>
 </div>
 
 <section class="teams-section">
-  <h2>Built for Teams Shipping Weekly</h2>
-  <p>If you're deploying often, manually testing checkout every time gets repetitive — and easy to skip.</p>
-  <ul>
+  <h2 class="reveal">Built for Teams Shipping Weekly</h2>
+  <p class="reveal reveal-delay-1">If you're deploying often, manually testing checkout every time gets repetitive — and easy to skip.</p>
+  <ul class="reveal reveal-delay-2">
     <li>Runs after every deploy</li>
     <li>Runs every 30 minutes</li>
     <li>Alerts instantly on failure</li>
