@@ -1,0 +1,25 @@
+name: Checkout Health Check
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: # allows manual trigger from GitHub UI
+
+jobs:
+  trigger-testpilot:
+    name: Trigger TestPilotAI checkout test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger checkout test
+        run: |
+          curl -s -X POST https://testpilot-backend-production.up.railway.app/api/webhooks/trigger \
+            -H "Authorization: Bearer ${{ secrets.TESTPILOTAI_WEBHOOK_SECRET }}" \
+            -H "Content-Type: application/json" \
+            -d '{"flowId": "${{ secrets.TESTPILOTAI_FLOW_ID }}"}' | tee response.json
+
+          STATUS=$(cat response.json | python3 -c "import sys,json; print(json.load(sys.stdin).get('status',''))")
+          if [ "$STATUS" != "triggered" ]; then
+            echo "❌ Failed to trigger TestPilotAI: $(cat response.json)"
+            exit 1
+          fi
+          echo "✅ Checkout test triggered successfully"
