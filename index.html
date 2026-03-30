@@ -364,10 +364,33 @@ footer { padding: 24px 48px; background: var(--bg); border-top: 1px solid var(--
   .output-grid { grid-template-columns: 1fr; }
   .faq-section { padding: 56px 20px; grid-template-columns: 1fr; gap: 40px; }
   .faq-sidebar { position: static; }
+  .pricing-section { padding: 56px 20px; }
+  .pricing-grid { grid-template-columns: 1fr; max-width: 400px; }
   .cta-section { padding: 56px 20px; grid-template-columns: 1fr; gap: 24px; }
   footer { padding: 20px; flex-direction: column; gap: 14px; text-align: center; }
   .footer-right { flex-direction: column; gap: 8px; }
 }
+
+/* ── Pricing ── */
+.pricing-section { padding: 80px 48px; background: var(--bg); border-top: 1px solid var(--border); text-align: center; }
+.pricing-label { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted2); margin-bottom: 10px; }
+.pricing-h2 { font-size: clamp(22px, 2.4vw, 30px); font-weight: 700; letter-spacing: -0.02em; color: var(--text); margin-bottom: 40px; }
+.pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 900px; margin: 0 auto; text-align: left; }
+.plan { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 32px 28px; display: flex; flex-direction: column; position: relative; }
+.plan.featured { border-color: var(--blue); box-shadow: 0 0 0 1px var(--blue); background: var(--bg); }
+.plan-badge { position: absolute; top: -11px; left: 50%; transform: translateX(-50%); font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; background: var(--blue); color: #fff; padding: 3px 10px; border-radius: 20px; white-space: nowrap; }
+.plan-name { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+.plan-price { font-size: 38px; font-weight: 700; letter-spacing: -0.03em; color: var(--text); line-height: 1; }
+.plan-price span { font-size: 14px; font-weight: 500; color: var(--muted); letter-spacing: 0; }
+.plan-price.custom { font-size: 28px; }
+.plan-stores { font-size: 13px; color: var(--muted); margin-top: 4px; margin-bottom: 20px; }
+.plan-features { list-style: none; display: flex; flex-direction: column; gap: 10px; flex: 1; margin-bottom: 24px; padding: 0; }
+.plan-features li { font-size: 13px; color: var(--text2); display: flex; align-items: flex-start; gap: 8px; line-height: 1.4; }
+.plan-features li::before { content: '✓'; color: var(--green); font-weight: 700; flex-shrink: 0; }
+.plan-cta { font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: #fff; background: var(--blue); border: none; border-radius: 6px; padding: 12px 20px; text-align: center; text-decoration: none; display: block; transition: all .15s; }
+.plan-cta:hover { background: var(--blue2); }
+.plan-cta.outline { background: transparent; color: var(--blue); border: 1px solid var(--blue-bd); }
+.plan-cta.outline:hover { background: var(--blue-bg); }
 </style>
 </head>
 <body>
@@ -610,6 +633,57 @@ footer { padding: 24px 48px; background: var(--bg); border-top: 1px solid var(--
   <div class="cta-facts">
     <div class="cta-fact"><div class="cta-fact-label">The silent failure problem</div><div class="cta-fact-text">When checkout breaks after a theme update, your site looks fine. Ads keep running. <strong>Customers hit a dead end and leave</strong> — and you won't know until revenue drops.</div></div>
     <div class="cta-fact"><div class="cta-fact-label">Why agencies need this</div><div class="cta-fact-text">Managing 10+ stores manually is impossible. One broken checkout costs more than your retainer. <strong>TestPilotAI is the health dashboard</strong> between every deployment and your clients' revenue.</div></div>
+  </div>
+</section>
+
+<section class="pricing-section">
+  <div class="pricing-label">Pricing</div>
+  <h2 class="pricing-h2">Simple, transparent pricing</h2>
+  <div class="pricing-grid">
+
+    <div class="plan">
+      <div class="plan-name">Starter</div>
+      <div class="plan-price">$29<span>/mo</span></div>
+      <div class="plan-stores">1 store</div>
+      <ul class="plan-features">
+        <li>Full checkout flow validation</li>
+        <li>Checks every 30 minutes</li>
+        <li>Email alerts with screenshot</li>
+        <li>CI/CD webhook integration</li>
+        <li>Run history &amp; analytics</li>
+      </ul>
+      <a href="waitlist.html" class="plan-cta outline">Get Started</a>
+    </div>
+
+    <div class="plan featured">
+      <div class="plan-badge">Most Popular</div>
+      <div class="plan-name">Agency</div>
+      <div class="plan-price">$99<span>/mo</span></div>
+      <div class="plan-stores">Up to 10 stores</div>
+      <ul class="plan-features">
+        <li>Everything in Starter</li>
+        <li>Multi-store dashboard</li>
+        <li>Checks every 15 minutes</li>
+        <li>Per-store health scores</li>
+        <li>Priority support</li>
+      </ul>
+      <a href="waitlist.html" class="plan-cta">Get Started</a>
+    </div>
+
+    <div class="plan">
+      <div class="plan-name">Enterprise</div>
+      <div class="plan-price custom">Custom</div>
+      <div class="plan-stores">Unlimited stores</div>
+      <ul class="plan-features">
+        <li>Everything in Agency</li>
+        <li>White-label alerts</li>
+        <li>Custom check frequency</li>
+        <li>Dedicated onboarding</li>
+        <li>SLA &amp; priority response</li>
+      </ul>
+      <a href="mailto:info@testpilotai.io" class="plan-cta outline">Contact Us</a>
+    </div>
+
   </div>
 </section>
 
