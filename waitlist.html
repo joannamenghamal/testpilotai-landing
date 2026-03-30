@@ -3,17 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TestPilotAI — Get Early Access Free</title>
-<meta name="description" content="Get free early access to TestPilotAI. Continuous Shopify checkout health monitoring — no scripts, just paste a URL.">
-<meta name="keywords" content="shopify checkout monitoring, free early access, store health score, shopify agency tools">
+<title>TestPilotAI — Shopify Checkout Monitoring</title>
+<meta name="description" content="Automated Shopify checkout monitoring. Starts at $29/mo per store. No scripts, just paste a URL.">
+<meta name="keywords" content="shopify checkout monitoring, shopify agency tools, store health score, checkout testing">
 <meta name="author" content="TestPilotAI">
-<meta property="og:title" content="TestPilotAI — Get Early Access Free">
-<meta property="og:description" content="Free early access to continuous Shopify checkout health monitoring. No scripts, no setup — paste a URL and go.">
+<meta property="og:title" content="TestPilotAI — Shopify Checkout Monitoring">
+<meta property="og:description" content="Automated Shopify checkout monitoring. Starts at $29/mo per store. No scripts, no setup — paste a URL and go.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://testpilotai.io/waitlist.html">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="TestPilotAI — Get Early Access Free">
-<meta name="twitter:description" content="Free early access to continuous Shopify checkout health monitoring. No scripts, no setup — paste a URL and go.">
+<meta name="twitter:title" content="TestPilotAI — Shopify Checkout Monitoring">
+<meta name="twitter:description" content="Automated Shopify checkout monitoring. Starts at $29/mo per store. No scripts, no setup — paste a URL and go.">
 <link rel="canonical" href="https://testpilotai.io/waitlist.html">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon32.png">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -83,11 +83,32 @@ footer { padding: 24px 48px; background: var(--bg); border-top: 1px solid var(--
 .footer-link { font-size: 13px; color: var(--muted2); text-decoration: none; transition: color .15s; }
 .footer-link:hover { color: var(--text); }
 
+.pricing { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 56px 48px; }
+.pricing-label { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted2); text-align: center; margin-bottom: 10px; }
+.pricing-h2 { font-size: clamp(22px, 2.4vw, 30px); font-weight: 700; letter-spacing: -0.02em; color: var(--text); text-align: center; margin-bottom: 40px; }
+.pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 860px; margin: 0 auto; }
+.plan { background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 32px 28px; display: flex; flex-direction: column; gap: 6px; position: relative; }
+.plan.featured { border-color: var(--blue); box-shadow: 0 0 0 1px var(--blue); }
+.plan-badge { position: absolute; top: -11px; left: 50%; transform: translateX(-50%); font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; background: var(--blue); color: #fff; padding: 3px 10px; border-radius: 20px; white-space: nowrap; }
+.plan-name { font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.plan-price { font-size: 36px; font-weight: 700; letter-spacing: -0.03em; color: var(--text); line-height: 1; }
+.plan-price span { font-size: 14px; font-weight: 500; color: var(--muted); letter-spacing: 0; }
+.plan-stores { font-size: 13px; color: var(--muted); margin-top: 4px; margin-bottom: 20px; }
+.plan-features { display: flex; flex-direction: column; gap: 10px; flex: 1; }
+.plan-feature { font-size: 13px; color: var(--text2); display: flex; align-items: flex-start; gap: 8px; line-height: 1.4; }
+.plan-feature::before { content: '✓'; color: var(--green); font-weight: 700; flex-shrink: 0; }
+.plan-cta { margin-top: 24px; font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: #fff; background: var(--blue); border: none; border-radius: 6px; padding: 12px 20px; cursor: pointer; text-align: center; text-decoration: none; display: block; transition: all .15s; }
+.plan-cta:hover { background: var(--blue2); }
+.plan-cta.outline { background: transparent; color: var(--blue); border: 1px solid var(--blue-bd); }
+.plan-cta.outline:hover { background: var(--blue-bg); }
+
 @media (max-width: 900px) {
   nav { padding: 0 20px; }
   .page { grid-template-columns: 1fr; }
   .page-left { padding: 56px 20px; }
   .page-right { padding: 56px 20px; }
+  .pricing { padding: 40px 20px; }
+  .pricing-grid { grid-template-columns: 1fr; max-width: 400px; }
   footer { padding: 20px; flex-direction: column; gap: 12px; text-align: center; }
   .footer-right { flex-direction: column; gap: 8px; }
 }
@@ -104,7 +125,7 @@ footer { padding: 24px 48px; background: var(--bg); border-top: 1px solid var(--
   <div class="page-left">
     <div class="left-eyebrow">Early Access</div>
     <h1 class="left-h1">Know your stores are healthy. Always.</h1>
-    <p class="left-body">No waitlist. No gatekeeping. Get immediate free access and <strong>know your Shopify checkout works after every update</strong> — before a customer finds out it doesn't.</p>
+    <p class="left-body">No waitlist. No gatekeeping. <strong>Know your Shopify checkout works after every update</strong> — before a customer finds out it doesn't.</p>
     <div class="perks">
       <div class="perk"><div class="perk-icon">⚡</div><div><div class="perk-title">60-second setup</div><div class="perk-desc">Paste your store URL and you're live. No scripts, no Playwright, no configuration.</div></div></div>
       <div class="perk"><div class="perk-icon">🔍</div><div><div class="perk-title">Full purchase flow validation</div><div class="perk-desc">Product discovery, variant selection, add to cart, checkout, payment form — validated every run.</div></div></div>
@@ -116,7 +137,7 @@ footer { padding: 24px 48px; background: var(--bg); border-top: 1px solid var(--
   <div class="page-right">
     <div class="form-eyebrow">Get started</div>
     <h2 class="form-h2">Request Access</h2>
-    <p class="form-sub">Free for early users. We'll reach out within 24 hours with your login.</p>
+    <p class="form-sub">Starts at $29/mo per store. We'll reach out within 24 hours with your login.</p>
 
     <form id="accessForm" class="form" action="https://formspree.io/f/xdalpvel" method="POST">
       <input type="hidden" name="_subject" value="New TestPilotAI Access Request">
@@ -125,13 +146,64 @@ footer { padding: 24px 48px; background: var(--bg); border-top: 1px solid var(--
       <div class="field"><label class="field-label" for="store">Store URL</label><input class="field-input" id="store" name="store" type="url" placeholder="https://yourstore.com" required></div>
       <div class="field"><label class="field-label" for="role">Your role</label><input class="field-input" id="role" name="role" type="text" placeholder="e.g. Store owner, Agency developer, CTO"></div>
       <div class="field"><label class="field-label" for="note">Biggest checkout concern? (optional)</label><textarea class="field-input" id="note" name="note" placeholder="e.g. theme updates breaking checkout, managing multiple client stores..."></textarea></div>
-      <button class="submit-btn" type="submit">Get Free Access →</button>
-      <p class="form-note">Free early access · No credit card · We'll reach out within 24hrs</p>
+      <button class="submit-btn" type="submit">Request Access →</button>
+      <p class="form-note">Starts at $29/mo · No credit card to request access · We'll reach out within 24hrs</p>
       <div id="success" class="success-msg">✓ You're in. Check your inbox — we'll reach out within 24 hours with your access details.</div>
       <div id="error" class="error-msg">Something went wrong. Please try again or email <a href="mailto:info@testpilotai.io">info@testpilotai.io</a> directly.</div>
     </form>
   </div>
 </div>
+
+<section class="pricing">
+  <div class="pricing-label">Pricing</div>
+  <h2 class="pricing-h2">Simple, transparent pricing</h2>
+  <div class="pricing-grid">
+
+    <div class="plan">
+      <div class="plan-name">Starter</div>
+      <div class="plan-price">$29<span>/mo</span></div>
+      <div class="plan-stores">1 store</div>
+      <div class="plan-features">
+        <div class="plan-feature">Full checkout flow validation</div>
+        <div class="plan-feature">Checks every 30 minutes</div>
+        <div class="plan-feature">Email alerts with screenshot</div>
+        <div class="plan-feature">CI/CD webhook integration</div>
+        <div class="plan-feature">Run history &amp; analytics</div>
+      </div>
+      <a href="#accessForm" class="plan-cta outline">Get Started</a>
+    </div>
+
+    <div class="plan featured">
+      <div class="plan-badge">Most Popular</div>
+      <div class="plan-name">Agency</div>
+      <div class="plan-price">$99<span>/mo</span></div>
+      <div class="plan-stores">Up to 10 stores</div>
+      <div class="plan-features">
+        <div class="plan-feature">Everything in Starter</div>
+        <div class="plan-feature">Multi-store dashboard</div>
+        <div class="plan-feature">Checks every 15 minutes</div>
+        <div class="plan-feature">Per-store health scores</div>
+        <div class="plan-feature">Priority support</div>
+      </div>
+      <a href="#accessForm" class="plan-cta">Get Started</a>
+    </div>
+
+    <div class="plan">
+      <div class="plan-name">Enterprise</div>
+      <div class="plan-price" style="font-size:28px;">Custom</div>
+      <div class="plan-stores">Unlimited stores</div>
+      <div class="plan-features">
+        <div class="plan-feature">Everything in Agency</div>
+        <div class="plan-feature">White-label alerts</div>
+        <div class="plan-feature">Custom check frequency</div>
+        <div class="plan-feature">Dedicated onboarding</div>
+        <div class="plan-feature">SLA &amp; priority response</div>
+      </div>
+      <a href="mailto:info@testpilotai.io" class="plan-cta outline">Contact Us</a>
+    </div>
+
+  </div>
+</section>
 
 <footer>
   <a class="footer-logo" href="index.html"><span class="footer-dot"></span>TESTPILOTAI</a>
