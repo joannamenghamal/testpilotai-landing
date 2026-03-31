@@ -121,7 +121,7 @@ footer { padding: 24px 48px; background: var(--bg); border-top: 1px solid var(--
   </div>
   <div class="header-right">
     <p class="header-desc">Insights on Shopify checkout failures, ecommerce reliability, and what it actually costs when your store breaks silently.</p>
-    <span class="post-count">1 article published</span>
+    <span class="post-count">2 articles published</span>
   </div>
 </div>
 
@@ -149,9 +149,29 @@ footer { padding: 24px 48px; background: var(--bg); border-top: 1px solid var(--
     </div>
   </a>
 
-  <div class="empty-state">
-    <p class="empty-text">More articles coming soon — on Shopify checkout failures, agency workflows, and ecommerce reliability.</p>
-  </div>
+  <a href="posts/stop-manually-testing-shopify-after-deploy.html" class="post-featured">
+    <div class="featured-left">
+      <div class="post-meta">
+        <span class="post-tag">Agencies</span>
+        <span class="post-tag">Deployment</span>
+        <span class="post-tag">QA</span>
+        <span class="post-date">March 30, 2026</span>
+      </div>
+      <h2 class="post-h2">Stop Manually Testing Shopify Stores After Every Deploy</h2>
+      <p class="post-excerpt">Every Shopify agency has a version of this ritual: someone opens a browser, adds a product to cart, and clicks through checkout just to make sure nothing broke. At one store it takes five minutes. At ten stores, it's your afternoon.</p>
+      <div class="post-readmore"><span>Read article</span><span class="post-arrow">→</span></div>
+    </div>
+    <div class="featured-right">
+      <div class="feat-card">
+        <div class="feat-card-label">The scaling problem</div>
+        <div class="feat-card-text">Manual post-deploy testing doesn't scale past 3 stores. <strong>One deploy trigger automates checkout QA</strong> across every client store — no Playwright, no test scripts.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-card-label">Deploy webhook</div>
+        <div class="feat-card-text">Drop one <strong>curl command into your GitHub Actions workflow</strong> and every deploy automatically triggers a full checkout validation on your client's live store.</div>
+      </div>
+    </div>
+  </a>
 
   <div class="blog-cta">
     <div>
