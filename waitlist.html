@@ -113,6 +113,14 @@ footer { padding: 24px 48px; background: var(--bg); border-top: 1px solid var(--
 .plan-cta.outline { background: transparent; color: var(--blue); border: 1px solid var(--blue-bd); }
 .plan-cta.outline:hover { background: var(--blue-bg); }
 
+.plan-selector { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 4px; }
+.plan-option { border: 1px solid var(--border2); border-radius: 8px; padding: 12px 14px; cursor: pointer; transition: border-color .15s, background .15s; }
+.plan-option:hover { border-color: var(--blue); background: var(--blue-bg); }
+.plan-option.selected { border-color: var(--blue); background: var(--blue-bg); box-shadow: 0 0 0 1px var(--blue); }
+.plan-option-name { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
+.plan-option-price { font-size: 15px; font-weight: 700; color: var(--text); }
+.plan-option-stores { font-size: 11px; color: var(--muted2); margin-top: 1px; }
+
 @media (max-width: 900px) {
   nav { padding: 0 20px; }
   .page { grid-template-columns: 1fr; }
@@ -153,6 +161,22 @@ footer { padding: 24px 48px; background: var(--bg); border-top: 1px solid var(--
     <form id="accessForm" class="form" action="https://formspree.io/f/xdalpvel" method="POST">
       <input type="hidden" name="_subject" value="New TestPilotAI Access Request">
       <input type="hidden" name="_format" value="plain">
+      <input type="hidden" name="plan" id="planInput" value="starter">
+      <div class="field">
+        <label class="field-label">Plan</label>
+        <div class="plan-selector">
+          <div class="plan-option selected" data-plan="starter" onclick="selectPlan('starter')">
+            <div class="plan-option-name">Starter</div>
+            <div class="plan-option-price">$29<span style="font-size:11px;font-weight:500;color:var(--muted)">/mo</span></div>
+            <div class="plan-option-stores">1 store</div>
+          </div>
+          <div class="plan-option" data-plan="agency" onclick="selectPlan('agency')">
+            <div class="plan-option-name">Agency</div>
+            <div class="plan-option-price">$99<span style="font-size:11px;font-weight:500;color:var(--muted)">/mo</span></div>
+            <div class="plan-option-stores">Up to 10 stores</div>
+          </div>
+        </div>
+      </div>
       <div class="field"><label class="field-label" for="email">Email address</label><input class="field-input" id="email" name="email" type="email" placeholder="you@store.com" required></div>
       <div class="field"><label class="field-label" for="store">Store URL</label><input class="field-input" id="store" name="store" type="url" placeholder="https://yourstore.com" required></div>
       <div class="field"><label class="field-label" for="role">Your role</label><input class="field-input" id="role" name="role" type="text" placeholder="e.g. Store owner, Agency developer, CTO"></div>
@@ -226,9 +250,31 @@ footer { padding: 24px 48px; background: var(--bg); border-top: 1px solid var(--
 </footer>
 
 <script>
+  function selectPlan(plan) {
+    document.getElementById('planInput').value = plan;
+    document.querySelectorAll('.plan-option').forEach(el => {
+      el.classList.toggle('selected', el.dataset.plan === plan);
+    });
+  }
+
+  // Pre-select plan from query param (?plan=agency)
+  const urlPlan = new URLSearchParams(window.location.search).get('plan');
+  if (urlPlan === 'agency' || urlPlan === 'starter') selectPlan(urlPlan);
+
   const form = document.getElementById('accessForm');
   const success = document.getElementById('success');
   const error = document.getElementById('error');
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    success.style.display = 'none'; er
+    success.style.display = 'none';
+    error.style.display = 'none';
+    const data = new FormData(form);
+    try {
+      const res = await fetch(form.action, { method: 'POST', body: data, headers: { 'Accept': 'application/json' } });
+      if (res.ok) { success.style.display = 'block'; form.reset(); selectPlan('starter'); }
+      else { error.style.display = 'block'; }
+    } catch { error.style.display = 'block'; }
+  });
+</script>
+</body>
+</html>
